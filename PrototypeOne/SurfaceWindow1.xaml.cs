@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
+
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
@@ -32,6 +34,8 @@ namespace PrototypeOne
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
+
+            PlaceTreeMap();
         }
 
         /// <summary>
@@ -98,6 +102,83 @@ namespace PrototypeOne
         private void OnWindowUnavailable(object sender, EventArgs e)
         {
             //TODO: disable audio, animations here
+        }
+        public void PlaceTreeMap()
+        {
+            {
+            Square one;
+            FillInfo oneFill = new FillInfo(Brushes.Aqua);
+            Square two;
+            FillInfo twoFill = new FillInfo(Brushes.Red);
+            Square three;
+            FillInfo threeFill = new FillInfo(Brushes.Green);
+            Square four;
+            FillInfo fourFill = new FillInfo(Brushes.Ivory);
+            SquareList thislist = new SquareList();
+            one = new Square(4.8,oneFill);
+            two = new Square(3.6,twoFill);
+            three = new Square(2.4,threeFill);
+            four = new Square(1.2,fourFill);
+            thislist.Add(one);
+            thislist.Add(two);
+            thislist.Add(three);
+            thislist.Add(four);
+            
+            Tree map = new Tree(thislist, 3, 4);
+
+            /*DrawingImage myDrawingImage = new DrawingImage();
+            myDrawingImage.Drawing = map.Squares;
+
+            Image thisImage = new Image();
+            thisImage.Source = myDrawingImage;
+         */
+            DrawingBrush theBrush = new DrawingBrush();
+            theBrush.Stretch = Stretch.Uniform;
+            theBrush.Drawing = map.Squares;
+
+            Imagescatter.Background = theBrush;
+            }
+            {
+            Square one;
+            FillInfo oneFill = new FillInfo(Brushes.Aqua);
+            Square two;
+            FillInfo twoFill = new FillInfo(Brushes.Red);
+            Square three;
+            FillInfo threeFill = new FillInfo(Brushes.Green);
+            Square four;
+            FillInfo fourFill = new FillInfo(Brushes.Ivory);
+            Square five;
+            FillInfo fiveFill = new FillInfo(Brushes.Purple);
+            Square six;
+            FillInfo sixFill = new FillInfo(Brushes.LightGoldenrodYellow);
+            Square seven;
+            FillInfo sevenFill = new FillInfo(Brushes.Firebrick);
+            SquareList thislist = new SquareList();
+            one = new Square(6, oneFill);
+            two = new Square(6, twoFill);
+            three = new Square(4, threeFill);
+            four = new Square(3, fourFill);
+            five = new Square(2, fiveFill);
+            six = new Square(2, sixFill);
+            seven = new Square(1, sevenFill);
+            thislist.Add(one);
+            thislist.Add(two);
+            thislist.Add(three);
+            thislist.Add(four);
+            thislist.Add(five);
+            thislist.Add(six);
+            thislist.Add(seven);
+
+            Tree map = new Tree(thislist, 4, 6);
+
+            DrawingImage myDrawingImage = new DrawingImage();
+            myDrawingImage.Drawing = map.Squares;
+
+            Image thisImage = new Image();
+            thisImage.Source = myDrawingImage;
+
+            brushscatter.Content = thisImage;
+            }
         }
     }
 }

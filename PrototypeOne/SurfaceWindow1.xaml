@@ -4,7 +4,12 @@
     xmlns:s="http://schemas.microsoft.com/surface/2008"
     Title="PrototypeOne"
     >
-  <Grid><!--file changed-->
-      
-  </Grid>
+  <Grid>
+        
+            <s:ScatterView>
+                <s:ScatterViewItem Name="Imagescatter"/>
+                <s:ScatterViewItem Name="brushscatter"/>
+            </s:ScatterView>
+       
+    </Grid>
 </s:SurfaceWindow>
