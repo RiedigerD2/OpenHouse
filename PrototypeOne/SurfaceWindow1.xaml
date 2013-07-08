@@ -5,11 +5,14 @@
     Title="PrototypeOne"
     >
   <Grid>
-        
-            <s:ScatterView>
-                <s:ScatterViewItem Name="Imagescatter"/>
+
+        <s:ScatterView Name="scatter">
+            <s:ScatterViewItem Name="Imagescatter"/>
                 <s:ScatterViewItem Name="brushscatter"/>
-            </s:ScatterView>
+            <s:ScatterViewItem>
+                <Canvas Name="canvas"/>
+            </s:ScatterViewItem>
+        </s:ScatterView>
        
     </Grid>
 </s:SurfaceWindow>

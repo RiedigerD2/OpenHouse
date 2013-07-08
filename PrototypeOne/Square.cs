@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows;
+using System.Windows.Shapes;
 
 namespace PrototypeOne
 {
@@ -9,6 +13,7 @@ namespace PrototypeOne
     {
         private double curWidth, curHeight, newWidth, newHeight, x,y;//x,y bottom left hand corner of square
         private double area;
+        Path path;
         FillInfo fill;
         //new class later with display info string,background color, text color
         //once placed need to set a their location x,y
@@ -32,10 +37,18 @@ namespace PrototypeOne
                 newWidth = area / newHeight;
             }
         }
+        public Path Path
+        {
+            get { return path; }
+            set { path = value; }
+        }
         public double Area
         {
             get { return area; }
             private set { area = value; }
+        }
+        public string Name {
+            get { return fill.Name; }
         }
         public  FillInfo Fill
         {
@@ -44,10 +57,11 @@ namespace PrototypeOne
         }
         public double X { get { return x; } set { x = value; } }
         public double Y { get { return y; } set { y = value; } }
-        public Square(Double size,FillInfo brush) 
+        public Square(Double size,FillInfo filler) 
         {
-            fill = brush;
+            fill = filler;
             area = size;
+          
         }
 
         int IComparable<Square>.CompareTo(Square obj) {
@@ -72,7 +86,22 @@ namespace PrototypeOne
         {
             return newHeight / newWidth > newWidth / newHeight ? newHeight / newWidth : newWidth / newHeight;
         }
-        
+
+        public TextBlock GetTextBlock()
+        {
+            TextBlock text = new TextBlock();
+           
+            text.Text = fill.Name;
+            text.RenderTransform = new TranslateTransform(X, Y + 0.5 * curHeight);
+            text.Height = curHeight;
+            text.Width = curWidth;
+            text.Focusable = false;
+            text.IsHitTestVisible = false;
+            text.Foreground = fill.TextColor;
+            text.TextAlignment = TextAlignment.Center;
+
+            return text;
+        }
 
         public override string ToString()
         {

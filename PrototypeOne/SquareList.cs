@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Windows.Shapes;
 
 namespace PrototypeOne
 {
@@ -14,13 +15,24 @@ namespace PrototypeOne
         public SquareList() {
             list = new List<Square>();
         }
-      /*  public Square Get(int x, int y) {
-
-            return (Square)list[0];//later return the square containing x,y
-        }*/
+     
         public Square Get(int i)
         {
             return (Square)list[i];
+        }
+        /**
+         * returns the square that was drawn using path p
+         */
+        public Square Get(Path p)
+        {
+            foreach (Square s in list)
+            {
+                if (s.Path.Equals(p))
+                {
+                    return s;
+                }
+            }
+            return null;
         }
         public void Add(Square s)
         {
@@ -106,5 +118,7 @@ namespace PrototypeOne
         IEnumerator IEnumerable.GetEnumerator() {
             return list.GetEnumerator();
         }
+
+       
     }
 }

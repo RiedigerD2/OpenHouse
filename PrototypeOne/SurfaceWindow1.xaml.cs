@@ -18,6 +18,9 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 
+
+
+
 namespace PrototypeOne
 {
     /// <summary>
@@ -25,6 +28,7 @@ namespace PrototypeOne
     /// </summary>
     public partial class SurfaceWindow1 : SurfaceWindow
     {
+        
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -105,15 +109,15 @@ namespace PrototypeOne
         }
         public void PlaceTreeMap()
         {
-            {
+           /* {
             Square one;
-            FillInfo oneFill = new FillInfo(Brushes.Aqua);
+            FillInfo oneFill = new FillInfo(Colors.Aqua,"");
             Square two;
-            FillInfo twoFill = new FillInfo(Brushes.Red);
+            FillInfo twoFill = new FillInfo(Colors.Red, "");
             Square three;
-            FillInfo threeFill = new FillInfo(Brushes.Green);
+            FillInfo threeFill = new FillInfo(Colors.Green, "");
             Square four;
-            FillInfo fourFill = new FillInfo(Brushes.Ivory);
+            FillInfo fourFill = new FillInfo(Colors.Ivory, "");
             SquareList thislist = new SquareList();
             one = new Square(4.8,oneFill);
             two = new Square(3.6,twoFill);
@@ -131,36 +135,36 @@ namespace PrototypeOne
 
             Image thisImage = new Image();
             thisImage.Source = myDrawingImage;
-         */
+         *
             DrawingBrush theBrush = new DrawingBrush();
             theBrush.Stretch = Stretch.Uniform;
             theBrush.Drawing = map.Squares;
 
             Imagescatter.Background = theBrush;
-            }
+            }*/
             {
             Square one;
-            FillInfo oneFill = new FillInfo(Brushes.Aqua);
+            FillInfo oneFill = new FillInfo(Colors.Aqua, "Computer Software Developer",Colors.Black);
             Square two;
-            FillInfo twoFill = new FillInfo(Brushes.Red);
+            FillInfo twoFill = new FillInfo(Colors.Red, "Website Designer",Color.FromRgb(0,255,255));
             Square three;
-            FillInfo threeFill = new FillInfo(Brushes.Green);
+            FillInfo threeFill = new FillInfo(Colors.Green, "It Specialist", Color.FromArgb(255, 255, 127, 255));
             Square four;
-            FillInfo fourFill = new FillInfo(Brushes.Ivory);
+            FillInfo fourFill = new FillInfo(Colors.Ivory, "Systems Analysist",Color.FromRgb(0,0,15));
             Square five;
-            FillInfo fiveFill = new FillInfo(Brushes.Purple);
+            FillInfo fiveFill = new FillInfo(Colors.Purple, "Data Miner", Color.FromArgb(255,127,255,127));
             Square six;
-            FillInfo sixFill = new FillInfo(Brushes.LightGoldenrodYellow);
+            FillInfo sixFill = new FillInfo(Colors.LightGoldenrodYellow,"Game Developer" ,Color.FromRgb(5,5,40));
             Square seven;
-            FillInfo sevenFill = new FillInfo(Brushes.Firebrick);
+            FillInfo sevenFill = new FillInfo(Colors.Firebrick, "Network Manager",Color.FromRgb(77,221,221));
             SquareList thislist = new SquareList();
-            one = new Square(6, oneFill);
-            two = new Square(6, twoFill);
-            three = new Square(4, threeFill);
-            four = new Square(3, fourFill);
-            five = new Square(2, fiveFill);
-            six = new Square(2, sixFill);
-            seven = new Square(1, sevenFill);
+            one = new Square(60000, oneFill);
+            two = new Square(60000, twoFill);
+            three = new Square(40000, threeFill);
+            four = new Square(30000, fourFill);
+            five = new Square(20000, fiveFill);
+            six = new Square(20000, sixFill);
+            seven = new Square(10000, sevenFill);
             thislist.Add(one);
             thislist.Add(two);
             thislist.Add(three);
@@ -169,16 +173,22 @@ namespace PrototypeOne
             thislist.Add(six);
             thislist.Add(seven);
 
-            Tree map = new Tree(thislist, 4, 6);
+            Tree map2 = new Tree(thislist, 400, 600);
 
             DrawingImage myDrawingImage = new DrawingImage();
-            myDrawingImage.Drawing = map.Squares;
+            myDrawingImage.Drawing = map2.Squares;
 
             Image thisImage = new Image();
             thisImage.Source = myDrawingImage;
 
             brushscatter.Content = thisImage;
+
+            //foreach (Path path in map.paths)
+            canvas.Children.Add(map2.Picture);
+                
             }
         }
+
+        
     }
 }
