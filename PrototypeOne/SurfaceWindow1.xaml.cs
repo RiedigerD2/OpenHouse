@@ -38,8 +38,9 @@ namespace PrototypeOne
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
-
+           
             PlaceTreeMap();
+            MakeMenu();
         }
 
         /// <summary>
@@ -107,42 +108,51 @@ namespace PrototypeOne
         {
             //TODO: disable audio, animations here
         }
-        public void PlaceTreeMap()
+        public void MakeMenu()
         {
-           /* {
+            menuLocation.Center = new Point(this.Width / 2, this.Height / 2);
+
             Square one;
-            FillInfo oneFill = new FillInfo(Colors.Aqua,"");
+            FillInfo oneFill = new FillInfo(Colors.Aqua, "MacEwan University", Colors.Black);
             Square two;
-            FillInfo twoFill = new FillInfo(Colors.Red, "");
+            FillInfo twoFill = new FillInfo(Colors.Red, "What is Computer Science", Color.FromRgb(0, 255, 255));
             Square three;
-            FillInfo threeFill = new FillInfo(Colors.Green, "");
+            FillInfo threeFill = new FillInfo(Colors.Green, "Careers in Computer Science", Color.FromArgb(255, 255, 127, 255));
             Square four;
-            FillInfo fourFill = new FillInfo(Colors.Ivory, "");
+            FillInfo fourFill = new FillInfo(Colors.Ivory, "Admission information", Color.FromRgb(0, 0, 15));
+            Square five;
+            FillInfo fiveFill = new FillInfo(Colors.Purple, "Our People", Color.FromArgb(255, 127, 255, 127));
+            Square six;
+            FillInfo sixFill = new FillInfo(Colors.LightGoldenrodYellow, "Our Program", Color.FromRgb(5, 5, 40));
+            Square seven;
+            FillInfo sevenFill = new FillInfo(Colors.Firebrick, "Why Macewan", Color.FromRgb(77, 221, 221));
             SquareList thislist = new SquareList();
-            one = new Square(4.8,oneFill);
-            two = new Square(3.6,twoFill);
-            three = new Square(2.4,threeFill);
-            four = new Square(1.2,fourFill);
+            one = new Square(60000, oneFill);
+            two = new Square(60000, twoFill);
+            three = new Square(40000, threeFill);
+            four = new Square(30000, fourFill);
+            five = new Square(20000, fiveFill);
+            six = new Square(20000, sixFill);
+            seven = new Square(10000, sevenFill);
             thislist.Add(one);
             thislist.Add(two);
             thislist.Add(three);
             thislist.Add(four);
+            thislist.Add(five);
+            thislist.Add(six);
+            thislist.Add(seven);
             
-            Tree map = new Tree(thislist, 3, 4);
+            StartMenu wheel = new StartMenu(thislist);
 
-            /*DrawingImage myDrawingImage = new DrawingImage();
-            myDrawingImage.Drawing = map.Squares;
+            //foreach (Path path in map.paths)
+            menu.Children.Add(wheel.DrawMenu());
+           
+        }
 
-            Image thisImage = new Image();
-            thisImage.Source = myDrawingImage;
-         *
-            DrawingBrush theBrush = new DrawingBrush();
-            theBrush.Stretch = Stretch.Uniform;
-            theBrush.Drawing = map.Squares;
-
-            Imagescatter.Background = theBrush;
-            }*/
-            {
+        public void PlaceTreeMap()
+        {
+           
+        
             Square one;
             FillInfo oneFill = new FillInfo(Colors.Aqua, "Computer Software Developer",Colors.Black);
             Square two;
@@ -175,18 +185,10 @@ namespace PrototypeOne
 
             Tree map2 = new Tree(thislist, 400, 600);
 
-            DrawingImage myDrawingImage = new DrawingImage();
-            myDrawingImage.Drawing = map2.Squares;
-
-            Image thisImage = new Image();
-            thisImage.Source = myDrawingImage;
-
-            brushscatter.Content = thisImage;
-
-            //foreach (Path path in map.paths)
+           
             canvas.Children.Add(map2.Picture);
                 
-            }
+            
         }
 
         

@@ -102,6 +102,19 @@ namespace PrototypeOne
 
             return text;
         }
+        
+        public TextBlock GetTextBlockNoTransform()
+        {
+            TextBlock text = new TextBlock();
+
+            text.Text = fill.Name;
+            text.Focusable = false;
+            text.IsHitTestVisible = false;
+            text.Foreground = fill.TextColor;
+            text.TextAlignment = TextAlignment.Center;
+
+            return text;
+        }
 
         public override string ToString()
         {

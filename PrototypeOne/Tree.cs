@@ -16,12 +16,12 @@ namespace PrototypeOne
     {
         public SquareList children;
         private double height, width;
-        private DrawingGroup squares;
+       
         public ArrayList paths;
         private Canvas canvas;
 
         public Canvas Picture {  get { return canvas; } private set { canvas = value; } }
-       public DrawingGroup Squares {  set { squares = value; }  get { return squares; } }
+       
 
         public Tree(SquareList children, double height,double width)
         {
@@ -29,7 +29,7 @@ namespace PrototypeOne
             this.height = height;
             this.width = width;
             this.canvas = new Canvas();
-            squares = new DrawingGroup();
+            
             paths = new ArrayList();
             MakeTree(0, width, height);
             FillDrawing();
@@ -46,10 +46,6 @@ namespace PrototypeOne
                 System.Windows.Rect rect = new System.Windows.Rect(block.X, block.Y, block.Width, block.Height);
                 RectangleGeometry rectangle = new RectangleGeometry(rect);
 
-                System.Windows.Rect bor = new System.Windows.Rect(block.X, block.Y, block.GetTextBlock().Width, block.GetTextBlock().Height);
-                RectangleGeometry border = new RectangleGeometry(bor);
-
-                
                 Path path = new Path();
                 path.Data = rectangle;
               
@@ -70,9 +66,10 @@ namespace PrototypeOne
                 GeometryDrawing drawing = new GeometryDrawing();
                 drawing.Pen = mypen;
                 drawing.Geometry = rectangle;
-                squares.Children.Add(drawing);
+                
                 Console.Out.WriteLine("\n\n\n" + block.GetTextBlock().RenderSize + "\n" + block.GetTextBlock().RenderSize.Height);
             }
+            canvas.RenderTransform = new TranslateTransform(-0.5*width,-0.5*height);
         }
 
         

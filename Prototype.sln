@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototypeOne", "PrototypeOne\PrototypeOne.csproj", "{5E38EEDF-3949-4F2F-86D0-23DB93BA119F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{269FEF01-F3A5-4747-8A2C-E24A1405DC55}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		Prototype.vsmdi = Prototype.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{DADE2212-0152-458D-A8ED-03C2D25DB21D}"
 EndProject

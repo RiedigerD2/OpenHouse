@@ -2,15 +2,56 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:s="http://schemas.microsoft.com/surface/2008"
+    xmlns:local="clr-namespace:PrototypeOne"  
     Title="PrototypeOne"
     >
-  <Grid>
+  
+    <Grid Style="{StaticResource MainGrid}">
 
-        <s:ScatterView Name="scatter">
-            <s:ScatterViewItem Name="Imagescatter"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="26" />
+            <ColumnDefinition Width="224" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="224"/>
+            <ColumnDefinition Width="26" />
+        </Grid.ColumnDefinitions>
+
+        <!-- defines border and fill of different grid rows using other UI elements (need to find better way to do this)-->
+        <Border Grid.Row="0" Style="{StaticResource OuterRow}">
+            <Rectangle Fill="{StaticResource TopOuterGradient}" Grid.Row="0" Grid.RowSpan="1" />
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource OuterRow}">
+            <Rectangle Fill="{StaticResource BottomOuterGradient}" Grid.Row="2" Grid.RowSpan="1" />
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Logo}">
+            <Image Source="Resources/Images/Logo/macewanlogo.png" ></Image>
+        </Border>
+
+        <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource Logo}">
+            <Image Source="Resources/Images/Logo/macewanlogo.png" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleX="-1" ScaleY="-1" />
+                </Image.RenderTransform>
+            </Image>
+        </Border>
+    
+   
+        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter" Background="Transparent">
+            <s:ScatterViewItem Name="menuLocation" CanMove="False" CanScale="False">
+                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center" Name="menu"/>
+            </s:ScatterViewItem>
+                
+            
                 <s:ScatterViewItem Name="brushscatter"/>
+      
             <s:ScatterViewItem>
-                <Canvas Name="canvas"/>
+                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center" Name="canvas"/>
             </s:ScatterViewItem>
         </s:ScatterView>
        
