@@ -28,7 +28,9 @@ namespace PrototypeOne
     /// </summary>
     public partial class SurfaceWindow1 : SurfaceWindow
     {
-        
+        public static double treeHeight = 325;
+        public static double treeWidth = 450;
+        public static double treeArea = treeWidth * treeHeight;
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -38,7 +40,8 @@ namespace PrototypeOne
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
-           
+
+            //CreateXAML();
             PlaceTreeMap();
             MakeMenu();
         }
@@ -108,40 +111,33 @@ namespace PrototypeOne
         {
             //TODO: disable audio, animations here
         }
+
+        public void CreateXAML() {
+
+            List<Catagory> saveList = new List<Catagory>();
+            Catagory first = new Catagory();
+            Catagory second = new Catagory();
+            first.BackGroundColor = Colors.AntiqueWhite;
+            first.TextColor = Colors.Black;
+            first.Ratio = 0.45;
+            first.Title = "firstTitle";
+
+            second.BackGroundColor = Colors.AntiqueWhite;
+            second.TextColor = Colors.Black;
+            second.Ratio = 0.55;
+            second.Title = "SecondTitle";
+
+            saveList.Add(first);
+            saveList.Add(second);
+
+            Catagory.WriteFile(saveList, "Information/XMLFile4.xml");
+        
+        }
+
         public void MakeMenu()
         {
             menuLocation.Center = new Point(this.Width / 2, this.Height / 2);
-
-            Square one;
-            FillInfo oneFill = new FillInfo(Colors.Aqua, "MacEwan University", Colors.Black);
-            Square two;
-            FillInfo twoFill = new FillInfo(Colors.Red, "What is Computer Science", Color.FromRgb(0, 255, 255));
-            Square three;
-            FillInfo threeFill = new FillInfo(Colors.Green, "Careers in Computer Science", Color.FromArgb(255, 255, 127, 255));
-            Square four;
-            FillInfo fourFill = new FillInfo(Colors.Ivory, "Admission information", Color.FromRgb(0, 0, 15));
-            Square five;
-            FillInfo fiveFill = new FillInfo(Colors.Purple, "Our People", Color.FromArgb(255, 127, 255, 127));
-            Square six;
-            FillInfo sixFill = new FillInfo(Colors.LightGoldenrodYellow, "Our Program", Color.FromRgb(5, 5, 40));
-            Square seven;
-            FillInfo sevenFill = new FillInfo(Colors.Firebrick, "Why Macewan", Color.FromRgb(77, 221, 221));
-            SquareList thislist = new SquareList();
-            one = new Square(60000, oneFill);
-            two = new Square(60000, twoFill);
-            three = new Square(40000, threeFill);
-            four = new Square(30000, fourFill);
-            five = new Square(20000, fiveFill);
-            six = new Square(20000, sixFill);
-            seven = new Square(10000, sevenFill);
-            thislist.Add(one);
-            thislist.Add(two);
-            thislist.Add(three);
-            thislist.Add(four);
-            thislist.Add(five);
-            thislist.Add(six);
-            thislist.Add(seven);
-            
+            SquareList thislist = Catagory.ReadFile("Information/Top.xml");
             StartMenu wheel = new StartMenu(thislist);
 
             //foreach (Path path in map.paths)
@@ -151,41 +147,8 @@ namespace PrototypeOne
 
         public void PlaceTreeMap()
         {
-           
-        
-            Square one;
-            FillInfo oneFill = new FillInfo(Colors.Aqua, "Computer Software Developer",Colors.Black);
-            Square two;
-            FillInfo twoFill = new FillInfo(Colors.Red, "Website Designer",Color.FromRgb(0,255,255));
-            Square three;
-            FillInfo threeFill = new FillInfo(Colors.Green, "It Specialist", Color.FromArgb(255, 255, 127, 255));
-            Square four;
-            FillInfo fourFill = new FillInfo(Colors.Ivory, "Systems Analysist",Color.FromRgb(0,0,15));
-            Square five;
-            FillInfo fiveFill = new FillInfo(Colors.Purple, "Data Miner", Color.FromArgb(255,127,255,127));
-            Square six;
-            FillInfo sixFill = new FillInfo(Colors.LightGoldenrodYellow,"Game Developer" ,Color.FromRgb(5,5,40));
-            Square seven;
-            FillInfo sevenFill = new FillInfo(Colors.Firebrick, "Network Manager",Color.FromRgb(77,221,221));
-            SquareList thislist = new SquareList();
-            one = new Square(60000, oneFill);
-            two = new Square(60000, twoFill);
-            three = new Square(40000, threeFill);
-            four = new Square(30000, fourFill);
-            five = new Square(20000, fiveFill);
-            six = new Square(20000, sixFill);
-            seven = new Square(10000, sevenFill);
-            thislist.Add(one);
-            thislist.Add(two);
-            thislist.Add(three);
-            thislist.Add(four);
-            thislist.Add(five);
-            thislist.Add(six);
-            thislist.Add(seven);
-
-            Tree map2 = new Tree(thislist, 400, 600);
-
-           
+          
+            Tree map2 = new Tree(Catagory.ReadFile("Information/Carrers.xml"));
             canvas.Children.Add(map2.Picture);
                 
             

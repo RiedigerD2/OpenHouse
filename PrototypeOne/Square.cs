@@ -50,11 +50,13 @@ namespace PrototypeOne
         public string Name {
             get { return fill.Name; }
         }
+        public Color BackGround { get { return ((GradientBrush)fill.Brush).GradientStops[0].Color; } }
         public  FillInfo Fill
         {
             get { return fill; }
             private set { fill = value; }
         }
+
         public double X { get { return x; } set { x = value; } }
         public double Y { get { return y; } set { y = value; } }
         public Square(Double size,FillInfo filler) 

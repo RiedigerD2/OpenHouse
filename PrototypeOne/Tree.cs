@@ -23,11 +23,11 @@ namespace PrototypeOne
         public Canvas Picture {  get { return canvas; } private set { canvas = value; } }
        
 
-        public Tree(SquareList children, double height,double width)
+        public Tree(SquareList children)
         {
             this.children = children;
-            this.height = height;
-            this.width = width;
+            this.height = SurfaceWindow1.treeHeight;
+            this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
             
             paths = new ArrayList();

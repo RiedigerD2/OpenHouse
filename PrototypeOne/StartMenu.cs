@@ -13,14 +13,15 @@ namespace PrototypeOne
     {
         const double smlrad = 75;//radious of the smaller circle
         const double lrgrad = 200;// radious of the larger circle
-        const int sections = 6;//number of divisions in selection fieled
-        const double baseAngle = 2 * Math.PI / sections;
+        private double baseAngle;
             
 
         SquareList children;
         public StartMenu(SquareList list)
         {
             children = list;
+            baseAngle = 2 * Math.PI / (list.Count()-1) ;
+            Console.Out.WriteLine("\n\n\n"+list.Count()+"\n\n\n");
         }
 
         public Canvas DrawMenu() {
