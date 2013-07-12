@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace PrototypeOne
 {
@@ -27,7 +28,7 @@ namespace PrototypeOne
         {
             foreach (Square s in list)
             {
-                if (s.Path.Equals(p))
+                if (s.Path!=null && s.Path.Equals(p))
                 {
                     return s;
                 }
@@ -113,6 +114,50 @@ namespace PrototypeOne
                 sublist.Add(list[start + i]);
             }
             return sublist;
+        }
+        public void addTouchUpHandler( EventHandler<TouchEventArgs> target)
+        {
+
+            foreach (Square sqr in list)
+            {
+                if (sqr.Path != null && target != null)
+                {
+                    sqr.Path.PreviewTouchUp += target;
+                }
+            }
+        }
+        public void addTouchDownHandler(EventHandler<TouchEventArgs> target)
+        {
+
+            foreach (Square sqr in list)
+            {
+                if (sqr.Path != null && target != null)
+                {
+                    sqr.Path.PreviewTouchDown += target;
+                }
+            }
+        }
+        public void addTouchEnterHandler(EventHandler<TouchEventArgs> target)
+        {
+
+            foreach (Square sqr in list)
+            {
+                if (sqr.Path != null && target != null)
+                {
+                    sqr.Path.TouchEnter += target;
+                }
+            }
+        }
+        public void addTouchLeaveHandler(EventHandler<TouchEventArgs> target)
+        {
+
+            foreach (Square sqr in list)
+            {
+                if (sqr.Path != null && target != null)
+                {
+                    sqr.Path.TouchLeave += target;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

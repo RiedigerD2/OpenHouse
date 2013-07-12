@@ -4,6 +4,7 @@
     xmlns:s="http://schemas.microsoft.com/surface/2008"
     xmlns:local="clr-namespace:PrototypeOne"  
     Title="PrototypeOne"
+                 Name="Window"
     >
   
     <Grid Style="{StaticResource MainGrid}">
@@ -42,17 +43,11 @@
         </Border>
     
    
-        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter" Background="Transparent">
-            <s:ScatterViewItem Name="menuLocation" CanMove="False" CanScale="False">
-                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center" Name="menu"/>
-            </s:ScatterViewItem>
+        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter" >
+            
                 
             
-                <s:ScatterViewItem Name="brushscatter"/>
-      
-            <s:ScatterViewItem>
-                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center" Name="canvas"/>
-            </s:ScatterViewItem>
+               
         </s:ScatterView>
        
     </Grid>

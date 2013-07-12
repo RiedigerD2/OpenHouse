@@ -30,14 +30,47 @@ namespace PrototypeOne
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Catagory>));
             
-            FileStream reader =new FileStream(file, FileMode.OpenOrCreate);
+            
             List<Catagory> simpleList=null;
             try
             {
+                StreamReader reader = new StreamReader(file);
                 simpleList = (List<Catagory>)serializer.Deserialize(reader);
-
+                
             }catch(Exception e){
-                Console.Out.WriteLine("\n\n\nProblem Reading Found: "+e.InnerException+"\n\n\n");
+                Catagory error = new Catagory();
+                error.BackGroundColor = Colors.Yellow;
+                error.TextColor = Colors.Black;
+                
+                error.Ratio = 1;
+                if(e is FileNotFoundException){
+                        error.Title = "File Not Found";
+                }
+                else if (e is DirectoryNotFoundException)
+                {
+                    error.Title = "Invalid Path to File";
+                }
+                else if (e is PathTooLongException)
+                {
+                    error.Title = "Wow Thats along path to follow";
+                }
+                else if (e is IOException)
+                {
+                    if (e.InnerException != null)
+                    {
+                        
+                        error.Title = e.InnerException.ToString();
+                    }else
+                    error.Title = e.Message;
+                }
+                else
+                {
+                    error.Title = "error while parsing";
+                }
+
+                
+                simpleList = new List<Catagory>();
+                simpleList.Add(error);
             }
     
             return createSquareList(simpleList);
@@ -57,7 +90,7 @@ namespace PrototypeOne
             }
             catch (Exception e)
             {
-                Console.Out.WriteLine("\n\n\nproblem Found: " + e.InnerException + "\n\n\n");
+                Console.Out.WriteLine("\n\n\nproblem WritingFile: " + e.InnerException + "\n\n\n");
             }
 
         }
@@ -70,6 +103,14 @@ namespace PrototypeOne
                 Catagory cat = simpleList[i];
                 FillInfo info = new FillInfo(cat.BackGroundColor, cat.Title, cat.TextColor);
                 Square square = new Square(SurfaceWindow1.treeArea * cat.Ratio, info);
+                if (cat.SubCatagoryFile!=null && !cat.SubCatagoryFile.Equals(""))
+                {
+                    square.SubFile = cat.SubCatagoryFile;
+                }
+                if (cat.Explanation != null && !cat.Explanation.Equals(""))
+                {
+                    square.Explanation = cat.Explanation;
+                }
                 newList.Add(square);
             }
             return newList;

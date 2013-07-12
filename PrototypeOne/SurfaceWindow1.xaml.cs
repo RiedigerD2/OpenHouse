@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using PrototypeOne.Menu;
 
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
@@ -31,6 +31,9 @@ namespace PrototypeOne
         public static double treeHeight = 325;
         public static double treeWidth = 450;
         public static double treeArea = treeWidth * treeHeight;
+        public static double MenuTileSize = 80;
+        //private Menu.Menu constMenu;
+        private List<Menu.Menu> MenuList;
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -42,8 +45,10 @@ namespace PrototypeOne
             AddWindowAvailabilityHandlers();
 
             //CreateXAML();
-            PlaceTreeMap();
-            MakeMenu();
+
+            MenuList = new List<Menu.Menu>(15);
+           // MakeCenterMenu();
+            MakeIndividualMenus();
         }
 
         /// <summary>
@@ -112,7 +117,8 @@ namespace PrototypeOne
             //TODO: disable audio, animations here
         }
 
-        public void CreateXAML() {
+        public void CreateXAML()
+        {
 
             List<Catagory> saveList = new List<Catagory>();
             Catagory first = new Catagory();
@@ -131,29 +137,179 @@ namespace PrototypeOne
             saveList.Add(second);
 
             Catagory.WriteFile(saveList, "Information/XMLFile4.xml");
-        
+
         }
 
-        public void MakeMenu()
+        public void MakeCenterMenu()
         {
-            menuLocation.Center = new Point(this.Width / 2, this.Height / 2);
             SquareList thislist = Catagory.ReadFile("Information/Top.xml");
-            StartMenu wheel = new StartMenu(thislist);
 
-            //foreach (Path path in map.paths)
-            menu.Children.Add(wheel.DrawMenu());
+            StartMenu centerMenu = new StartMenu(thislist);
+            ScatterViewItem item = new ScatterViewItem();
+            item.Center = new Point(this.Width / 2, this.Height / 2);
+            item.CanMove = false;
+            item.CanScale = false;
+            item.Content = centerMenu.DrawMenu();
+            scatter.Items.Add(item);
+
+            centerMenu.AddEnterListenerToButtons(new EventHandler<TouchEventArgs>(TouchEnterMenu));
+            centerMenu.AddLeaveListenerToButtons(new EventHandler<TouchEventArgs>(TouchLeaveMenu));
+            centerMenu.AddUpListenerToButtons(new EventHandler<TouchEventArgs>(TouchUpMenu));
+            MenuList.Add(centerMenu);
+        }
+
+        public void BuildMenu(Point center,double angle) {
            
-        }
-
-        public void PlaceTreeMap()
-        {
-          
-            Tree map2 = new Tree(Catagory.ReadFile("Information/Carrers.xml"));
-            canvas.Children.Add(map2.Picture);
-                
-            
-        }
-
+            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"));
+            MenuList.Add(sideMenu);
+            ScatterViewItem item = new ScatterViewItem();
+            item.Center = center;
+            item.CanMove = false;
+            item.CanScale = false;
+            item.CanRotate = false;
+            Canvas canvas = sideMenu.DrawMenu();
+            item.Orientation = angle;
+            canvas.HorizontalAlignment = HorizontalAlignment.Center;
+            item.Content = canvas;
+            scatter.Items.Add(item);
+            sideMenu.AddEnterListenerToButtons(new EventHandler<TouchEventArgs>(TouchEnterMenu));
+            sideMenu.AddLeaveListenerToButtons(new EventHandler<TouchEventArgs>(TouchLeaveMenu));
+            sideMenu.AddUpListenerToButtons(new EventHandler<TouchEventArgs>(TouchUpMenu));
         
+        }
+
+        public void MakeIndividualMenus()
+        {
+            //top
+            BuildMenu(new Point(this.Width / 2, this.Height * 0.1), 180);
+            //right
+            BuildMenu(new Point(this.Width * 0.95, this.Height / 2), -90);
+            //left
+            BuildMenu(new Point(this.Width * 0.05, this.Height / 2), 90);
+            //bottom
+            BuildMenu(new Point(this.Width / 2, this.Height * 0.85), 0);
+        }
+
+        public void PlaceTreeMap(String fileName)
+        {
+            Console.Out.WriteLine("\n\ncalled with name: Information/" + fileName + "\n\n");
+            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName));
+
+
+            map.AddUpListenerToButtons(TouchUpMenu);
+            ScatterViewItem item = new ScatterViewItem();
+            item.CanScale = false;
+            item.Width = treeWidth;
+            item.Height = treeHeight;
+            item.Content = map.DrawMenu();
+            scatter.Items.Add(item);
+            MenuList.Add(map);
+
+        }
+
+     /*   public void TouchUpMenu(object sender, TouchEventArgs e)
+        {
+            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
+            {
+                Path path = (Path)sender;
+                if (path.Fill is GradientBrush)
+                {
+                    GradientBrush brush = (GradientBrush)path.Fill;
+                    brush.GradientStops[1].Color = Colors.Black;
+                }
+                if (MenuList.Count < 15)//maybe remove the first ones opened
+                {
+
+                    PlaceTreeMap(constMenu.FileToOpen(path));
+                }
+
+            }
+        }*/
+        public void TouchEnterMenu(object sender, TouchEventArgs e)
+        {
+            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
+            {
+                Path path = (Path)sender;
+                if (path.Fill is GradientBrush)
+                {
+                    GradientBrush brush = (GradientBrush)path.Fill;
+                    brush.GradientStops[1].Color = brush.GradientStops[0].Color;
+                }
+
+            }
+        }
+        public void TouchLeaveMenu(object sender, TouchEventArgs e)
+        {
+            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
+            {
+                Path path = (Path)sender;
+                if (path.Fill is GradientBrush)
+                {
+                    GradientBrush brush = (GradientBrush)path.Fill;
+                    brush.GradientStops[1].Color =Colors.Black;
+                }
+
+            }
+        }
+        public void TouchUpMenu(object sender, TouchEventArgs e)
+        {
+            
+            if (sender is Path)
+            {
+                Path path = (Path)sender;
+                Menu.Menu menu = FindTheMenu(path);
+                string file = menu.FileToOpen(path);
+                if (menu is TreeMenu)
+                {
+                    TreeMenu map = (TreeMenu)menu;
+                    if (file != null && !file.Equals(""))
+                    {
+                        Console.Out.WriteLine("\n\nfile Exists as:\n" + file);
+                        TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file));
+                        childAdded.AddUpListenerToButtons(TouchUpMenu);
+                    }
+                    else
+                    {
+                        if (map.HasExplanation(path))
+                        {
+                            if (map.Explaning)
+                            {
+                                map.RemoveExplanation(path);
+                            }
+                            else
+                                map.Explane(path);
+
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    if (path.Fill is GradientBrush)
+                    {
+                        GradientBrush brush = (GradientBrush)path.Fill;
+                        brush.GradientStops[1].Color = Colors.Black;
+                    }
+                    if (MenuList.Count < 15)//maybe remove the first ones opened
+                    {
+
+                        PlaceTreeMap(menu.FileToOpen(path));
+                    }
+                }
+            }
+        }
+        public Menu.Menu FindTheMenu(Path path)
+        {
+            foreach (Menu.Menu menu in MenuList)
+            {
+                if (menu.ContainsPath(path))
+                {
+                    return menu;
+                }
+            }
+            return null;
+        }
+
     }
 }
