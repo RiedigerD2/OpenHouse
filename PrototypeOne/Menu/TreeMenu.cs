@@ -9,10 +9,13 @@ using System.Collections;
 using System.Windows.Input;
 using System.Windows.Controls;
 
+using Microsoft.Xna.Framework.Input.Touch;
+
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+
 
 namespace PrototypeOne
 {
@@ -22,7 +25,7 @@ namespace PrototypeOne
         private double height, width;
        
         private Canvas canvas;
-
+        
         TreeMenu child;
 
         public bool Explaning {  get;  set; }
@@ -60,10 +63,15 @@ namespace PrototypeOne
                 
                 path.Fill = block.Fill.Brush;
                 path.Stroke = Brushes.Black;
-                
-               
-                canvas.Children.Add(path);
-                canvas.Children.Add(block.GetTextBlock());
+
+                SurfaceButton button = new SurfaceButton();
+                button.Background = block.Fill.Brush;
+                button.Height = block.Height;
+                button.Width = block.Width;
+                button.RenderTransform = new TranslateTransform(block.X, block.Y);
+                button.Content = block.GetTextBlock().Text;
+                canvas.Children.Add(button);
+                //canvas.Children.Add(block.GetTextBlock());
                 
                 
                

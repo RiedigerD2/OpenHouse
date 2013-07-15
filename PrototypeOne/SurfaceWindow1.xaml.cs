@@ -16,9 +16,10 @@ using PrototypeOne.Menu;
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
+
 using Microsoft.Surface.Presentation.Input;
 
-
+using Microsoft.Xna.Framework.Input.Touch;
 
 
 namespace PrototypeOne
@@ -28,6 +29,7 @@ namespace PrototypeOne
     /// </summary>
     public partial class SurfaceWindow1 : SurfaceWindow
     {
+        
         public static double treeHeight = 325;
         public static double treeWidth = 450;
         public static double treeArea = treeWidth * treeHeight;
@@ -40,13 +42,14 @@ namespace PrototypeOne
         public SurfaceWindow1()
         {
             InitializeComponent();
-
+           
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
-
+           
             //CreateXAML();
-
+           
             MenuList = new List<Menu.Menu>(15);
+            Console.Out.WriteLine();
            // MakeCenterMenu();
             MakeIndividualMenus();
         }
@@ -152,9 +155,9 @@ namespace PrototypeOne
             item.Content = centerMenu.DrawMenu();
             scatter.Items.Add(item);
 
-            centerMenu.AddEnterListenerToButtons(new EventHandler<TouchEventArgs>(TouchEnterMenu));
-            centerMenu.AddLeaveListenerToButtons(new EventHandler<TouchEventArgs>(TouchLeaveMenu));
-            centerMenu.AddUpListenerToButtons(new EventHandler<TouchEventArgs>(TouchUpMenu));
+            centerMenu.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+            centerMenu.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
+            centerMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
             MenuList.Add(centerMenu);
         }
 
@@ -169,13 +172,15 @@ namespace PrototypeOne
             item.CanRotate = false;
             Canvas canvas = sideMenu.DrawMenu();
             item.Orientation = angle;
-            canvas.HorizontalAlignment = HorizontalAlignment.Center;
+          
+           
             item.Content = canvas;
             scatter.Items.Add(item);
-            sideMenu.AddEnterListenerToButtons(new EventHandler<TouchEventArgs>(TouchEnterMenu));
-            sideMenu.AddLeaveListenerToButtons(new EventHandler<TouchEventArgs>(TouchLeaveMenu));
-            sideMenu.AddUpListenerToButtons(new EventHandler<TouchEventArgs>(TouchUpMenu));
-        
+            sideMenu.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+            sideMenu.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
+            sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
+            sideMenu.AddDownListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+           
         }
 
         public void MakeIndividualMenus()
@@ -197,6 +202,8 @@ namespace PrototypeOne
 
 
             map.AddUpListenerToButtons(TouchUpMenu);
+            map.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+            map.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
             ScatterViewItem item = new ScatterViewItem();
             item.CanScale = false;
             item.Width = treeWidth;
@@ -225,7 +232,7 @@ namespace PrototypeOne
 
             }
         }*/
-        public void TouchEnterMenu(object sender, TouchEventArgs e)
+        public void TouchEnterMenu(object sender, System.Windows.Input.TouchEventArgs e)
         {
             if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
             {
@@ -238,7 +245,7 @@ namespace PrototypeOne
 
             }
         }
-        public void TouchLeaveMenu(object sender, TouchEventArgs e)
+        public void TouchLeaveMenu(object sender, System.Windows.Input.TouchEventArgs e)
         {
             if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
             {
@@ -251,7 +258,7 @@ namespace PrototypeOne
 
             }
         }
-        public void TouchUpMenu(object sender, TouchEventArgs e)
+        public void TouchUpMenu(object sender, System.Windows.Input.TouchEventArgs e)
         {
             
             if (sender is Path)
@@ -267,6 +274,9 @@ namespace PrototypeOne
                         Console.Out.WriteLine("\n\nfile Exists as:\n" + file);
                         TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file));
                         childAdded.AddUpListenerToButtons(TouchUpMenu);
+                        childAdded.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+                        childAdded.AddDownListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+                        childAdded.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
                     }
                     else
                     {
@@ -284,7 +294,7 @@ namespace PrototypeOne
                     }
 
                 }
-                else
+                else//non tree menu
                 {
                     if (path.Fill is GradientBrush)
                     {
@@ -310,6 +320,7 @@ namespace PrototypeOne
             }
             return null;
         }
+
 
     }
 }

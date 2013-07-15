@@ -6,6 +6,7 @@ using System.Collections;
 using System.Windows.Shapes;
 using System.Windows.Input;
 
+
 namespace PrototypeOne
 {
     public class SquareList : IEnumerable
@@ -123,6 +124,7 @@ namespace PrototypeOne
                 if (sqr.Path != null && target != null)
                 {
                     sqr.Path.PreviewTouchUp += target;
+                    sqr.Path.GotTouchCapture += target;
                 }
             }
         }
@@ -134,6 +136,7 @@ namespace PrototypeOne
                 if (sqr.Path != null && target != null)
                 {
                     sqr.Path.PreviewTouchDown += target;
+                
                 }
             }
         }
@@ -159,7 +162,7 @@ namespace PrototypeOne
                 }
             }
         }
-
+       
         IEnumerator IEnumerable.GetEnumerator() {
             return list.GetEnumerator();
         }
