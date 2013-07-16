@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using System.Windows.Shapes;
 using System.Windows.Input;
-
+using Microsoft.Surface.Presentation.Controls;
 
 namespace PrototypeOne
 {
@@ -25,11 +25,11 @@ namespace PrototypeOne
         /**
          * returns the square that was drawn using path p
          */
-        public Square Get(Path p)
+        public Square Get(SurfaceButton p)
         {
             foreach (Square s in list)
             {
-                if (s.Path!=null && s.Path.Equals(p))
+                if (s.Button!=null && s.Button.Equals(p))
                 {
                     return s;
                 }
@@ -56,12 +56,12 @@ namespace PrototypeOne
         public void SetSameWidth(int start,int count, double totalHeight)
         {
             double width=0;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 width += list[start+i].Area;
             }
             width = width / totalHeight;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 list[start+i].Width = width;
             }
@@ -71,12 +71,12 @@ namespace PrototypeOne
         public void SetSameHeight(int start, int count, double totalWidth)
         {
             double height = 0;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i+start<list.Count(); i++)
             {
                 height += list[start+i].Area;
             }
             height = height / totalWidth;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 list[start+i].Height = height;
             }
@@ -86,7 +86,7 @@ namespace PrototypeOne
         private double AverageNewAR(int start,int count) {
             double AR=0;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 AR += list[start+i].newAR();
             }
@@ -96,7 +96,7 @@ namespace PrototypeOne
         {
             double AR = 0;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 AR += list[start+i].lastAR();
             }
@@ -106,11 +106,17 @@ namespace PrototypeOne
             if (count == 1) return true;
             return AverageLastAR(start,count-1) > AverageNewAR(start,count);
         }
+        public void ResizeAreas(double area) {
+            foreach (Square sqr in list)
+            {
+                sqr.Area =area*sqr.ratio;
+            }
+        }
 
         public SquareList sublist(int start, int count)
         {
             SquareList sublist = new SquareList();
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && i + start < list.Count(); i++)
             {
                 sublist.Add(list[start + i]);
             }
@@ -121,10 +127,10 @@ namespace PrototypeOne
 
             foreach (Square sqr in list)
             {
-                if (sqr.Path != null && target != null)
+                if (sqr.Button != null && target != null)
                 {
-                    sqr.Path.PreviewTouchUp += target;
-                    sqr.Path.GotTouchCapture += target;
+                    sqr.Button.PreviewTouchUp += target;
+  
                 }
             }
         }
@@ -133,9 +139,9 @@ namespace PrototypeOne
 
             foreach (Square sqr in list)
             {
-                if (sqr.Path != null && target != null)
+                if (sqr.Button != null && target != null)
                 {
-                    sqr.Path.PreviewTouchDown += target;
+                    sqr.Button.PreviewTouchDown += target;
                 
                 }
             }
@@ -145,9 +151,9 @@ namespace PrototypeOne
 
             foreach (Square sqr in list)
             {
-                if (sqr.Path != null && target != null)
+                if (sqr.Button != null && target != null)
                 {
-                    sqr.Path.TouchEnter += target;
+                    sqr.Button.TouchEnter += target;
                 }
             }
         }
@@ -156,9 +162,9 @@ namespace PrototypeOne
 
             foreach (Square sqr in list)
             {
-                if (sqr.Path != null && target != null)
+                if (sqr.Button != null && target != null)
                 {
-                    sqr.Path.TouchLeave += target;
+                    sqr.Button.TouchLeave += target;
                 }
             }
         }

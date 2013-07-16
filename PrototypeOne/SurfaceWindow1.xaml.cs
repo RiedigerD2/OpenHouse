@@ -33,7 +33,7 @@ namespace PrototypeOne
         public static double treeHeight = 325;
         public static double treeWidth = 450;
         public static double treeArea = treeWidth * treeHeight;
-        public static double MenuTileSize = 80;
+        public static double MenuTileSize = 85;
         //private Menu.Menu constMenu;
         private List<Menu.Menu> MenuList;
         /// <summary>
@@ -155,8 +155,7 @@ namespace PrototypeOne
             item.Content = centerMenu.DrawMenu();
             scatter.Items.Add(item);
 
-            centerMenu.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
-            centerMenu.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
+            
             centerMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
             MenuList.Add(centerMenu);
         }
@@ -172,14 +171,13 @@ namespace PrototypeOne
             item.CanRotate = false;
             Canvas canvas = sideMenu.DrawMenu();
             item.Orientation = angle;
-          
+            canvas.VerticalAlignment = VerticalAlignment.Top;
            
             item.Content = canvas;
             scatter.Items.Add(item);
-            sideMenu.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
-            sideMenu.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
+            
             sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
-            sideMenu.AddDownListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
+           
            
         }
 
@@ -195,17 +193,20 @@ namespace PrototypeOne
             BuildMenu(new Point(this.Width / 2, this.Height * 0.85), 0);
         }
 
-        public void PlaceTreeMap(String fileName)
+        public void PlaceTreeMap(String fileName,Square caller)
         {
-            Console.Out.WriteLine("\n\ncalled with name: Information/" + fileName + "\n\n");
-            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName));
+
+            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName),caller);
 
 
             map.AddUpListenerToButtons(TouchUpMenu);
-            map.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
-            map.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
             ScatterViewItem item = new ScatterViewItem();
-            item.CanScale = false;
+
+          
+            item.ContainerManipulationDelta +=new ContainerManipulationDeltaEventHandler(OnManipulation);
+            //item.ContainerManipulationCompleted+=new ContainerManipulationCompletedEventHandler(ManipulationOver);
+
+          
             item.Width = treeWidth;
             item.Height = treeHeight;
             item.Content = map.DrawMenu();
@@ -232,62 +233,42 @@ namespace PrototypeOne
 
             }
         }*/
-        public void TouchEnterMenu(object sender, System.Windows.Input.TouchEventArgs e)
-        {
-            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
-            {
-                Path path = (Path)sender;
-                if (path.Fill is GradientBrush)
-                {
-                    GradientBrush brush = (GradientBrush)path.Fill;
-                    brush.GradientStops[1].Color = brush.GradientStops[0].Color;
-                }
-
-            }
-        }
-        public void TouchLeaveMenu(object sender, System.Windows.Input.TouchEventArgs e)
-        {
-            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
-            {
-                Path path = (Path)sender;
-                if (path.Fill is GradientBrush)
-                {
-                    GradientBrush brush = (GradientBrush)path.Fill;
-                    brush.GradientStops[1].Color =Colors.Black;
-                }
-
-            }
-        }
+       
+        
         public void TouchUpMenu(object sender, System.Windows.Input.TouchEventArgs e)
         {
             
-            if (sender is Path)
+            if (sender is SurfaceButton)
             {
-                Path path = (Path)sender;
-                Menu.Menu menu = FindTheMenu(path);
-                string file = menu.FileToOpen(path);
+                SurfaceButton button = (SurfaceButton)sender;
+                Menu.Menu menu = FindTheMenu(button);
+                if (menu == null)
+                {
+                    ScatterViewItem item = new ScatterViewItem();
+                    item.Content = "NULL";
+                    scatter.Items.Add(item);
+                    return;
+                }
+                string file = menu.FileToOpen(button);
                 if (menu is TreeMenu)
                 {
                     TreeMenu map = (TreeMenu)menu;
                     if (file != null && !file.Equals(""))
                     {
                         Console.Out.WriteLine("\n\nfile Exists as:\n" + file);
-                        TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file));
-                        childAdded.AddUpListenerToButtons(TouchUpMenu);
-                        childAdded.AddEnterListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
-                        childAdded.AddDownListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchEnterMenu));
-                        childAdded.AddLeaveListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchLeaveMenu));
+                        TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file),map.Get(button));
+                        childAdded.AddUpListenerToButtons(TouchUpMenu);   
                     }
                     else
                     {
-                        if (map.HasExplanation(path))
+                        if (map.HasExplanation(button))
                         {
                             if (map.Explaning)
                             {
-                                map.RemoveExplanation(path);
+                                map.RemoveExplanation(button);
                             }
                             else
-                                map.Explane(path);
+                                map.Explane(button);
 
                         }
 
@@ -296,20 +277,19 @@ namespace PrototypeOne
                 }
                 else//non tree menu
                 {
-                    if (path.Fill is GradientBrush)
+                    if (button.Background is GradientBrush)
                     {
-                        GradientBrush brush = (GradientBrush)path.Fill;
+                        GradientBrush brush = (GradientBrush)button.Background;
                         brush.GradientStops[1].Color = Colors.Black;
                     }
                     if (MenuList.Count < 15)//maybe remove the first ones opened
                     {
-
-                        PlaceTreeMap(menu.FileToOpen(path));
+                        PlaceTreeMap(menu.FileToOpen(button),menu.Get(button));
                     }
                 }
             }
         }
-        public Menu.Menu FindTheMenu(Path path)
+        public Menu.Menu FindTheMenu(SurfaceButton path)
         {
             foreach (Menu.Menu menu in MenuList)
             {
@@ -320,7 +300,51 @@ namespace PrototypeOne
             }
             return null;
         }
+        public Menu.Menu FindTheMenu(Canvas canvas)
+        {
+            foreach (Menu.Menu menu in MenuList)
+            {
+                if (menu is TreeMenu && ((TreeMenu)menu).CanvasIs(canvas))
+                {
+                    return menu;
+                }
+            }
+            return null;
+        }
+        /*private void ManipulationOver(object sender, ContainerManipulationCompletedEventArgs e) {
+           
+            if (e.ScaleFactor != 1)
+            {
+                ScatterViewItem item = (ScatterViewItem)sender;
+                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+                ((TreeMenu)menu).ReDraw(item.Width, item.Height-50);
+            }
+        
+        }*/
 
+        
+      
+
+        private void OnManipulation(object sender, ContainerManipulationDeltaEventArgs e)
+        {
+            ScatterViewItem item = (ScatterViewItem)sender;
+           
+            if (item.Center.X <= -item.Width * 0.20 || item.Center.Y <= -item.Height * 0.20 || item.Center.Y >= this.Height + item.Height * 0.20 || item.Center.X >= this.Width + item.Width * 0.20)
+            {
+                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+                scatter.Items.Remove(item);
+                MenuList.Remove(menu);
+            }
+            if (e.ScaleFactor != 1)
+            {
+                //ScatterViewItem item = (ScatterViewItem)sender;
+                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+                ((TreeMenu)menu).ReDraw(item.Width, item.Height);
+                ((TreeMenu)menu).SizeCrumbs();
+            }
+            
+        }
+       
 
     }
 }

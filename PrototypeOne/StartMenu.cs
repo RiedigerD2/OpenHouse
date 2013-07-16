@@ -36,7 +36,7 @@ namespace PrototypeOne
           circle.Fill = children.Get(0).Fill.Brush;
           circle.Stroke = Brushes.Black;
           canvas.Children.Add(circle);
-          children.Get(0).Path = circle;
+          children.Get(0).Button.Content = circle;
           TextBlock MiddleText = children.Get(0).GetTextBlockNoTransform();
           MiddleText.Width = smlrad * 2;
           MiddleText.RenderTransform = new TranslateTransform(-smlrad, 0);
@@ -58,7 +58,7 @@ namespace PrototypeOne
                 path.Data = geometry;
                 
 
-                block.Path = path;
+                block.Button.Content = path;
 
                 path.Fill = block.Fill.Brush;
                 path.Stroke = Brushes.Black;

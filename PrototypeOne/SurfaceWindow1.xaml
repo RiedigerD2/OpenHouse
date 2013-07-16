@@ -43,14 +43,13 @@
         </Border>
     
    
-        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter"  >
+        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter"
+               >
 
 
-            <s:ScatterViewItem>
-                <s:SurfaceButton Background="DarkOliveGreen">
-                    button
-                </s:SurfaceButton>
-            </s:ScatterViewItem>
+          
+
+
 
         </s:ScatterView>
        

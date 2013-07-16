@@ -38,17 +38,19 @@ namespace PrototypeOne.Menu
                 System.Windows.Rect rect = new System.Windows.Rect(X,0,SurfaceWindow1.MenuTileSize,SurfaceWindow1.MenuTileSize);
                 RectangleGeometry rectangle = new RectangleGeometry(rect);
 
-                Path path = new Path();
-                path.Data = rectangle;
+                SurfaceButton button = new SurfaceButton();
+                button.Height = SurfaceWindow1.MenuTileSize;
+                button.Width = SurfaceWindow1.MenuTileSize;
+                button.RenderTransform = new TranslateTransform(X, 0);
+                button.BorderBrush = Brushes.Black;
+                button.BorderThickness = new Thickness(0.2); 
+                sqr.Button = button;
+
+                button.Background = sqr.Fill.Brush;
+               
 
 
-                sqr.Path = path;
-
-                path.Fill = sqr.Fill.Brush;
-                path.Stroke = Brushes.Black;
-
-
-                canvas.Children.Add(path);
+                canvas.Children.Add(button);
                 TextBlock block = sqr.GetTextBlockNoTransform();
                 block.RenderTransform = new TranslateTransform(X, 0);
                 block.Height = SurfaceWindow1.MenuTileSize;

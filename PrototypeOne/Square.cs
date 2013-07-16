@@ -6,15 +6,16 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Shapes;
-
+using Microsoft.Surface.Presentation.Controls;
 namespace PrototypeOne
 {
     public class Square: IComparable<Square>
     {
         private double curWidth, curHeight, newWidth, newHeight, x,y;//x,y bottom left hand corner of square
         private double area;
-        Path path;
+        public double ratio;
         FillInfo fill;
+        private TextBlock textBlock;
         //new class later with display info string,background color, text color
         //once placed need to set a their location x,y
         public double Width {
@@ -37,15 +38,15 @@ namespace PrototypeOne
                 newWidth = area / newHeight;
             }
         }
-        public Path Path
+        public SurfaceButton Button
         {
-            get { return path; }
-            set { path = value; }
+            get;
+            set;
         }
         public double Area
         {
             get { return area; }
-            private set { area = value; }
+             set { area = value; }
         }
         public string Name {
             get { return fill.Name; }
@@ -79,7 +80,10 @@ namespace PrototypeOne
             }
             return 0;
         }
-      
+        /*override bool equals(object obj)
+        {
+            return Button.Equals(obj);
+        }*/
 
         public double lastAR()
         {
@@ -93,18 +97,19 @@ namespace PrototypeOne
 
         public TextBlock GetTextBlock()
         {
-            TextBlock text = new TextBlock();
-           
-            text.Text = fill.Name;
-            text.RenderTransform = new TranslateTransform(X, Y + 0.5 * curHeight);
-            text.Height = curHeight;
-            text.Width = curWidth;
-            text.Focusable = false;
-            text.IsHitTestVisible = false;
-            text.Foreground = fill.TextColor;
-            text.TextAlignment = TextAlignment.Center;
+            if(textBlock==null){
+             textBlock = new TextBlock();
+            }
+            textBlock.Text = fill.Name;
+            textBlock.RenderTransform = new TranslateTransform(X, Y + 0.5 * curHeight);
+            textBlock.Height = curHeight*0.5;
+            textBlock.Width = curWidth;
+            textBlock.Focusable = false;
+            textBlock.IsHitTestVisible = false;
+            textBlock.Foreground = fill.TextColor;
+            textBlock.TextAlignment = TextAlignment.Center;
 
-            return text;
+            return textBlock;
         }
         
         public TextBlock GetTextBlockNoTransform()
@@ -115,6 +120,8 @@ namespace PrototypeOne
             text.Focusable = false;
             text.IsHitTestVisible = false;
             text.Foreground = fill.TextColor;
+            text.VerticalAlignment = VerticalAlignment.Center;
+            text.HorizontalAlignment = HorizontalAlignment.Center;
             text.TextAlignment = TextAlignment.Center;
 
             return text;

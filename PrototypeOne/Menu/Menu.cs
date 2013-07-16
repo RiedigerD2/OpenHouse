@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
-
+using Microsoft.Surface.Presentation.Controls;
 namespace PrototypeOne.Menu
 {
     public abstract class Menu
@@ -41,14 +41,18 @@ namespace PrototypeOne.Menu
         {
             children.addTouchLeaveHandler(target);
         }
-        public virtual string FileToOpen(Path sender)
+        public virtual string FileToOpen(SurfaceButton sender)
         {
             return children.Get(sender).SubFile;
         }
         
-        public virtual bool ContainsPath(Path sender)
+        public virtual bool ContainsPath(SurfaceButton sender)
         {
             return children.Get(sender) !=null ;
+        }
+        public virtual Square Get(SurfaceButton sqr)
+        {
+            return children.Get(sqr);
         }
        
     }

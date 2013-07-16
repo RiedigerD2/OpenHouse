@@ -65,7 +65,7 @@ namespace PrototypeOne
                 }
                 else
                 {
-                    error.Title = "error while parsing";
+                    error.Title = e.Message;
                 }
 
                 
@@ -103,6 +103,7 @@ namespace PrototypeOne
                 Catagory cat = simpleList[i];
                 FillInfo info = new FillInfo(cat.BackGroundColor, cat.Title, cat.TextColor);
                 Square square = new Square(SurfaceWindow1.treeArea * cat.Ratio, info);
+                square.ratio = cat.Ratio;
                 if (cat.SubCatagoryFile!=null && !cat.SubCatagoryFile.Equals(""))
                 {
                     square.SubFile = cat.SubCatagoryFile;
