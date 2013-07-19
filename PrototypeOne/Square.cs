@@ -111,6 +111,23 @@ namespace PrototypeOne
 
             return textBlock;
         }
+        public TextBlock GetTextBlockTop()
+        {
+            if (textBlock == null)
+            {
+                textBlock = new TextBlock();
+            }
+            textBlock.Text = fill.Name;
+            textBlock.RenderTransform = new TranslateTransform(X, Y);
+            textBlock.Height = curHeight * 0.5;
+            textBlock.Width = curWidth;
+            textBlock.Focusable = false;
+            textBlock.IsHitTestVisible = false;
+            textBlock.Foreground = fill.TextColor;
+            textBlock.TextAlignment = TextAlignment.Center;
+
+            return textBlock;
+        }
         
         public TextBlock GetTextBlockNoTransform()
         {

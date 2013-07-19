@@ -4,9 +4,8 @@
     xmlns:s="http://schemas.microsoft.com/surface/2008"
     xmlns:local="clr-namespace:PrototypeOne"  
     Title="PrototypeOne"
-                 Name="Window"
+    Name="screen"
     >
-  
     <Grid Style="{StaticResource MainGrid}">
 
         <Grid.RowDefinitions>

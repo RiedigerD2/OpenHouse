@@ -8,12 +8,14 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Surface.Presentation.Controls;
+using System.Windows.Forms;
 namespace PrototypeOne.Menu
 {
     public abstract class Menu
     {
         protected SquareList children;
-
+        public bool interactive = false;
+        protected Timer myTimer;
 
         public Menu(SquareList list)
         {
@@ -46,7 +48,7 @@ namespace PrototypeOne.Menu
             return children.Get(sender).SubFile;
         }
         
-        public virtual bool ContainsPath(SurfaceButton sender)
+        public virtual bool ContainsButton(SurfaceButton sender)
         {
             return children.Get(sender) !=null ;
         }

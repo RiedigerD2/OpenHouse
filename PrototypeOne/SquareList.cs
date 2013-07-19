@@ -92,6 +92,13 @@ namespace PrototypeOne
             }
             return AR/count;
         }
+        /// <summary>
+        /// returns the previous average aspect ratio 
+        /// for the count squares from list  starting at start position
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         private double AverageLastAR(int start, int count)
         {
             double AR = 0;
@@ -122,6 +129,11 @@ namespace PrototypeOne
             }
             return sublist;
         }
+
+        /// <summary>
+        /// adds target to PreviewTouchUp Event to the button fields for all squares in list
+        /// </summary>
+        /// <param name="target"></param>
         public void addTouchUpHandler( EventHandler<TouchEventArgs> target)
         {
 
@@ -134,6 +146,10 @@ namespace PrototypeOne
                 }
             }
         }
+        /// <summary>
+        /// adds target to PreviewDownUp Event to the button fields for all squares in list
+        /// </summary>
+        /// <param name="target"></param>
         public void addTouchDownHandler(EventHandler<TouchEventArgs> target)
         {
 
@@ -146,6 +162,10 @@ namespace PrototypeOne
                 }
             }
         }
+        /// <summary>
+        /// adds target to TouchEnter Event to the button fields for all squares in list
+        /// </summary>
+        /// <param name="target"></param>
         public void addTouchEnterHandler(EventHandler<TouchEventArgs> target)
         {
 
@@ -157,6 +177,10 @@ namespace PrototypeOne
                 }
             }
         }
+        /// <summary>
+        /// adds target to TouchLeave Event to the button fields for all squares in list
+        /// </summary>
+        /// <param name="target"></param>
         public void addTouchLeaveHandler(EventHandler<TouchEventArgs> target)
         {
 
@@ -169,6 +193,7 @@ namespace PrototypeOne
             }
         }
        
+
         IEnumerator IEnumerable.GetEnumerator() {
             return list.GetEnumerator();
         }

@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PrototypeOne.Menu;
-
+using System.Windows.Forms;
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
@@ -21,7 +21,7 @@ using Microsoft.Surface.Presentation.Input;
 
 using Microsoft.Xna.Framework.Input.Touch;
 
-
+using System.Windows.Media.Animation;
 namespace PrototypeOne
 {
     /// <summary>
@@ -35,7 +35,9 @@ namespace PrototypeOne
         public static double treeArea = treeWidth * treeHeight;
         public static double MenuTileSize = 85;
         //private Menu.Menu constMenu;
-        private List<Menu.Menu> MenuList;
+        public List<Menu.Menu> MenuList;
+        
+      
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -52,8 +54,11 @@ namespace PrototypeOne
             Console.Out.WriteLine();
            // MakeCenterMenu();
             MakeIndividualMenus();
+
+           
         }
 
+        
         /// <summary>
         /// Occurs when the window is about to close. 
         /// </summary>
@@ -120,6 +125,10 @@ namespace PrototypeOne
             //TODO: disable audio, animations here
         }
 
+
+        /// <summary>
+        /// Creates XML Document So A user can see what the document should/can look like
+        /// </summary>
         public void CreateXAML()
         {
 
@@ -142,7 +151,10 @@ namespace PrototypeOne
             Catagory.WriteFile(saveList, "Information/XMLFile4.xml");
 
         }
-
+        /// <summary>
+        /// Implemented for circular menu will no work Easily with surface buttons
+        /// Keeping incase of another menu change
+        /// </summary>
         public void MakeCenterMenu()
         {
             SquareList thislist = Catagory.ReadFile("Information/Top.xml");
@@ -160,11 +172,42 @@ namespace PrototypeOne
             MenuList.Add(centerMenu);
         }
 
+        /// <summary>
+        /// Creates one instance of the top most menu 
+        /// </summary>
+        /// <param name="center">The Menus center</param>
+        /// <param name="angle">The angle of the menu</param>
         public void BuildMenu(Point center,double angle) {
-           
-            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"));
-            MenuList.Add(sideMenu);
             ScatterViewItem item = new ScatterViewItem();
+            DoubleAnimation myDoubleAnimation3 = new DoubleAnimation();
+            myDoubleAnimation3.From = 1.0;
+            myDoubleAnimation3.To = -0.3;
+            myDoubleAnimation3.Duration = new Duration(TimeSpan.FromSeconds(5));
+            myDoubleAnimation3.AutoReverse = true;
+            myDoubleAnimation3.RepeatBehavior = RepeatBehavior.Forever;
+            
+            Storyboard myStoryboard3 = new Storyboard();
+            myStoryboard3.Children.Add(myDoubleAnimation3);
+            Storyboard.SetTarget(myDoubleAnimation3, item);
+            Storyboard.SetTargetProperty(myDoubleAnimation3, new PropertyPath(ScatterViewItem.OpacityProperty));
+            //myStoryboard3.Begin();
+
+            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), myStoryboard3);
+            MenuList.Add(sideMenu);
+
+
+            ScatterViewItem touchme = new ScatterViewItem();
+            touchme.Content = "Touch Here To begin";
+            touchme.Background = Brushes.Transparent;
+            touchme.Center = center;
+            touchme.Orientation = angle;
+            touchme.CanMove = false;
+            touchme.CanScale = false;
+            touchme.Focusable = false;
+            touchme.CanRotate = false;
+            scatter.Items.Add(touchme);
+
+
             item.Center = center;
             item.CanMove = false;
             item.CanScale = false;
@@ -172,15 +215,15 @@ namespace PrototypeOne
             Canvas canvas = sideMenu.DrawMenu();
             item.Orientation = angle;
             canvas.VerticalAlignment = VerticalAlignment.Top;
-           
             item.Content = canvas;
             scatter.Items.Add(item);
-            
             sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
-           
+
            
         }
-
+        /// <summary>
+        /// Calls build menu for times createing a menu for each side of the surface
+        /// </summary>
         public void MakeIndividualMenus()
         {
             //top
@@ -193,15 +236,25 @@ namespace PrototypeOne
             BuildMenu(new Point(this.Width / 2, this.Height * 0.85), 0);
         }
 
-        public void PlaceTreeMap(String fileName,Square caller)
+        /// <summary>
+        /// Creates a treeMap and places it in a scatterview item in the scatterview scatter
+        /// the treemap will be facing the user
+        /// </summary>
+        /// <param name="fileName">the path to follow to the xml document to read</param>
+        /// <param name="caller">the square linked with the button that made the event</param>
+        /// <param name="angle">angle of the finger that raised the event</param>
+        /// <param name="parent">the location of the button that raised the event</param>
+        public void PlaceTreeMap(String fileName,Square caller,double angle,Point parent)
         {
 
-            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName),caller);
+            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName),caller,MenuList);
 
 
             map.AddUpListenerToButtons(TouchUpMenu);
+            
             ScatterViewItem item = new ScatterViewItem();
-
+            item.Center = findPosition( parent,  angle);
+            item.Orientation = angle + 90;
           
             item.ContainerManipulationDelta +=new ContainerManipulationDeltaEventHandler(OnManipulation);
             //item.ContainerManipulationCompleted+=new ContainerManipulationCompletedEventHandler(ManipulationOver);
@@ -214,28 +267,14 @@ namespace PrototypeOne
             MenuList.Add(map);
 
         }
-
-     /*   public void TouchUpMenu(object sender, TouchEventArgs e)
-        {
-            if (e.TouchDevice.GetIsFingerRecognized() && sender is Path)
-            {
-                Path path = (Path)sender;
-                if (path.Fill is GradientBrush)
-                {
-                    GradientBrush brush = (GradientBrush)path.Fill;
-                    brush.GradientStops[1].Color = Colors.Black;
-                }
-                if (MenuList.Count < 15)//maybe remove the first ones opened
-                {
-
-                    PlaceTreeMap(constMenu.FileToOpen(path));
-                }
-
-            }
-        }*/
-       
         
-        public void TouchUpMenu(object sender, System.Windows.Input.TouchEventArgs e)
+        /// <summary>
+        /// Event Handler finds and executes the correct response to menu Surfacebutton that 
+        /// raised an event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void TouchUpMenu(object sender, TouchEventArgs e)
         {
             
             if (sender is SurfaceButton)
@@ -249,6 +288,7 @@ namespace PrototypeOne
                     scatter.Items.Add(item);
                     return;
                 }
+                menu.interactive = true;
                 string file = menu.FileToOpen(button);
                 if (menu is TreeMenu)
                 {
@@ -263,12 +303,11 @@ namespace PrototypeOne
                     {
                         if (map.HasExplanation(button))
                         {
-                            if (map.Explaning)
-                            {
-                                map.RemoveExplanation(button);
-                            }
-                            else
-                                map.Explane(button);
+                            SquareList list = new SquareList();
+                            Square sqr = new Square(1, new FillInfo(((GradientBrush)map.Get(button).Fill.Brush).GradientStops[0].Color, map.Get(button).Explanation, ((SolidColorBrush)map.Get(button).Fill.TextColor).Color));
+                            sqr.ratio = 1;
+                            list.Add(sqr);
+                            map.addChild(list,map.Get(button));
 
                         }
 
@@ -277,29 +316,39 @@ namespace PrototypeOne
                 }
                 else//non tree menu
                 {
-                    if (button.Background is GradientBrush)
-                    {
-                        GradientBrush brush = (GradientBrush)button.Background;
-                        brush.GradientStops[1].Color = Colors.Black;
-                    }
+                    ((IndividualMenu)menu).board.Stop();
                     if (MenuList.Count < 15)//maybe remove the first ones opened
                     {
-                        PlaceTreeMap(menu.FileToOpen(button),menu.Get(button));
+                        TouchDevice c = (TouchDevice)e.TouchDevice;
+                        PlaceTreeMap(menu.FileToOpen(button), menu.Get(button), c.GetOrientation(this), c.GetPosition(this));
+                        
                     }
                 }
             }
         }
-        public Menu.Menu FindTheMenu(SurfaceButton path)
+        /// <summary>
+        /// returns the Menu that contains the surfaceButton
+        /// if the menu is a treemenu returns the top most TreeMenu
+        /// </summary>
+        /// <param name="path">button in a menu</param>
+        /// <returns></returns>
+        public Menu.Menu FindTheMenu(SurfaceButton button)
         {
             foreach (Menu.Menu menu in MenuList)
             {
-                if (menu.ContainsPath(path))
+                if (menu.ContainsButton(button))
                 {
                     return menu;
                 }
             }
             return null;
         }
+        /// <summary>
+        /// returns the menus that contains the canvas
+        /// if the menu is a TreeMenu returns the highest possible parent of the TreeMenu
+        /// </summary>
+        /// <param name="canvas">Canvas beloning to a menu</param>
+        /// <returns></returns>
         public Menu.Menu FindTheMenu(Canvas canvas)
         {
             foreach (Menu.Menu menu in MenuList)
@@ -311,40 +360,143 @@ namespace PrototypeOne
             }
             return null;
         }
-        /*private void ManipulationOver(object sender, ContainerManipulationCompletedEventArgs e) {
-           
-            if (e.ScaleFactor != 1)
-            {
-                ScatterViewItem item = (ScatterViewItem)sender;
-                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
-                ((TreeMenu)menu).ReDraw(item.Width, item.Height-50);
-            }
-        
-        }*/
-
-        
-      
-
+        /// <summary>
+        /// Called when a ScatterViewItem is resized or moved
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnManipulation(object sender, ContainerManipulationDeltaEventArgs e)
         {
             ScatterViewItem item = (ScatterViewItem)sender;
-           
-            if (item.Center.X <= -item.Width * 0.20 || item.Center.Y <= -item.Height * 0.20 || item.Center.Y >= this.Height + item.Height * 0.20 || item.Center.X >= this.Width + item.Width * 0.20)
+            
+            if (item.Center.X <= -item.Width * 0.10 || item.Center.Y <= -item.Height * 0.10 || item.Center.Y >= this.Height + item.Height * 0.10 || item.Center.X >= this.Width + item.Width * 0.10)
             {
                 Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
-                scatter.Items.Remove(item);
-                MenuList.Remove(menu);
+                if (menu != null)
+                {
+                    ((TreeMenu)menu).StopTimer();
+                    MenuList.Remove(menu);
+                    scatter.Items.Remove(item);
+                }
             }
             if (e.ScaleFactor != 1)
             {
-                //ScatterViewItem item = (ScatterViewItem)sender;
+                
                 Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
                 ((TreeMenu)menu).ReDraw(item.Width, item.Height);
                 ((TreeMenu)menu).SizeCrumbs();
+              
             }
             
         }
-       
 
+       /// <summary>
+       /// Finds a good position to open a new tree menu
+       /// based on the position and angle of a finger
+       /// that requested a treemenu be created
+       /// </summary>
+       /// <param name="parent">location of finger in scatterview</param>
+       /// <param name="angle">angle of finger in scatterview</param>
+       /// <returns></returns>
+        private Point findPosition(Point parent, double angle)
+        {
+            Point center = new Point();
+            bool left, top, right, bottom;
+            double smallAngle = 0.0, distance, slope, crossingX, crossingY, placement;
+            double ratioBetween = 0.45;
+            center.X = 300;
+            center.Y = 300;
+            slope = Math.Tan(angle * 3.14 / 180);
+
+            //True if the y line is within the window
+            //at left of screen
+            placement = (slope * (0 - parent.X) + parent.Y);
+            left = placement > 0 && placement < this.Height;
+
+            //at right of screen
+            placement = slope * (this.Width - parent.X) + parent.Y;
+            right = placement > 0 && placement < this.Height;
+
+            //true if the x value line is within the window
+            //at top of screen
+            placement = (0 - parent.Y) / slope + parent.X;
+            top = placement > 0 && placement < this.Width;
+
+            //at bottom of screen
+            placement = (this.Height - parent.Y) / slope + parent.X;
+            bottom = placement > 0 && placement < this.Width;
+
+
+
+
+            if (top && angle > 0 && angle < 180)
+            {
+
+                crossingX = (0 - parent.Y) / slope + parent.X;
+                crossingY = 0;
+                distance = Math.Sqrt(Math.Pow(parent.Y - crossingY, 2) + Math.Pow(parent.X - crossingX, 2));
+                smallAngle = 90 - angle;
+                center.X = parent.X - Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
+                center.Y = parent.Y - Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
+
+            }
+            else if (right && angle > 90 && angle < 270)
+            {
+                crossingX = this.Width;
+                crossingY = slope * (this.Width - parent.X) + parent.Y;
+                distance = Math.Sqrt(Math.Pow(parent.Y - crossingY, 2) + Math.Pow(parent.X - crossingX, 2));
+                smallAngle = 180 - angle;
+                center.Y = parent.Y - Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
+                center.X = parent.X + Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
+
+            }
+            else if (bottom && angle > 180 && angle < 360)
+            {
+                crossingX = (this.Height - parent.Y) / slope + parent.X;
+                crossingY = this.Height;
+                distance = Math.Sqrt(Math.Pow(parent.Y - crossingY, 2) + Math.Pow(parent.X - crossingX, 2));
+                smallAngle = 270 - angle;
+                center.X = parent.X + Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
+                center.Y = parent.Y + Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
+
+            }
+            else if (left && (angle < 90 || angle > 270))
+            {
+                crossingX = 0;
+                crossingY = slope * (0 - parent.X) + parent.Y;
+                distance = Math.Sqrt(Math.Pow(parent.Y - crossingY, 2) + Math.Pow(parent.X - crossingX, 2));
+
+                if (angle > 270)
+                {
+                    smallAngle = angle - 360;
+                }
+                else
+                {
+                    smallAngle = angle;
+                }
+                center.Y = parent.Y - Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
+                center.X = parent.X - Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
+
+            }
+
+            if (center.X < treeHeight*0.5)
+            {
+                center.X = treeHeight*0.5;
+            }
+            else if (center.X > this.Width-treeHeight*0.5)
+            {
+                center.X = this.Width - treeHeight*0.5;
+            }
+
+            if (center.Y < treeWidth*0.45)
+            {
+                center.Y = treeWidth*0.45;
+            }
+            else if (center.Y > this.Height-treeWidth*0.45)
+            {
+                center.Y = this.Height - treeWidth*0.45;
+            }
+            return center;
+        }
     }
 }

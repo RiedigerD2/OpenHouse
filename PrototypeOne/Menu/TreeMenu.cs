@@ -4,36 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Collections;
 using System.Windows.Input;
 using System.Windows.Controls;
-
+using System.Windows.Data;
 using Microsoft.Xna.Framework.Input.Touch;
-
+using System.Windows.Forms;
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-
+using PrototypeOne;
 
 namespace PrototypeOne
 {
     public class TreeMenu : Menu.Menu
     {
-        
         private double height, width;
         private Canvas canvas;
         TreeMenu child;
-        public bool Explaning {  get;  set; }
-
+        private SurfaceButton Exit;
+        List<Menu.Menu> ParentList;
         private List<SurfaceButton> breadCrumbs;
+
+        /// <summary>
+        /// returns the canvas that the menu is drawn on
+        /// </summary>
+        /// <returns></returns>
         public override Canvas DrawMenu()
         {
             return canvas;
         }
-
-        public TreeMenu(SquareList children,Square creator):base(children)
+        /// <summary>
+        /// Creates new treeMenu
+        /// </summary>
+        /// <param name="children">list used to populate the menu</param>
+        /// <param name="creator">the square that is linked with the button that created the treemenu</param>
+        /// <param name="ParentList">the list the treemenu is placed in</param>
+        public TreeMenu(SquareList children, Square creator, List<Menu.Menu> ParentList)
+            : base(children)
         {
             breadCrumbs = new List<SurfaceButton>();
             this.children = children;
@@ -43,18 +54,45 @@ namespace PrototypeOne
             children.ResizeAreas((height-0.2*height) * width);
             MakeTree(0, width, height-0.2*height);
 
+            this.ParentList = ParentList;
+
             SurfaceButton crumb = new SurfaceButton();
             crumb.Height = 0.2 * height;
             crumb.Background = creator.Button.Background;
             crumb.Content = creator.GetTextBlockNoTransform();
             crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
             breadCrumbs.Add(crumb);
-            SizeCrumbs();
-            
             canvas.Children.Add(crumb);
+
+            Exit = new SurfaceButton();
+            //Exit.Background = Brushes.Red;
+            //Exit.Foreground = Brushes.White;
+
+            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
+
+            canvas.Children.Add(Exit);
+            SizeCrumbs();
+            myTimer = new Timer();
+            myTimer.Tick += new EventHandler(myTimer_Tick);
+            myTimer.Interval = 20000;
+            myTimer.Enabled = true;
+            try
+            {//this file is in bin/ debug or release directories
+                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));   
+                Exit.Background = buttonBrush;
+            }
+            catch (Exception e)
+            {
+                Exit.Content = e.Message;
+            }
             FillDrawing();
         }
-        public TreeMenu(SquareList children)
+        /// <summary>
+        /// Only to be used in the public addchild
+        /// this is to ensure the breadcrumbs and parentlist is presevered
+        /// </summary>
+        /// <param name="children">list used to fill the menu</param>
+        private TreeMenu(SquareList children)
             : base(children)
         {
             breadCrumbs = new List<SurfaceButton>();
@@ -67,7 +105,78 @@ namespace PrototypeOne
 
             FillDrawing();
         }
-        void MakeTree(int used, double widthLeft, double heightLeft)
+
+        /// <summary>
+        /// Adds a child to the menu if the menu has a child a
+        /// recursively trys to add the child until a leaf menu is found
+        /// </summary>
+        /// <param name="grandChildren">list used to populate the menu</param>
+        /// <param name="creator">square that wants to create a treemenu</param>
+        /// <returns></returns>
+        public TreeMenu addChild(SquareList grandChildren, Square creator)
+        {
+            if (child == null)
+            {
+                child = new TreeMenu(grandChildren);
+                canvas.Children.Add(child.DrawMenu());
+                child.ReDraw(width, height);
+
+                SurfaceButton crumb = new SurfaceButton();
+                crumb.Background = creator.Button.Background;
+
+                crumb.Content = creator.GetTextBlockNoTransform();
+                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
+                breadCrumbs.Add(crumb);
+                canvas.Children.Add(crumb);
+                SizeCrumbs();
+
+                return child;
+            }
+            else
+            {
+                SurfaceButton crumb = new SurfaceButton();
+                crumb.Background = creator.Button.Background;
+
+                crumb.Content = creator.GetTextBlockNoTransform();
+                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
+                breadCrumbs.Add(crumb);
+                canvas.Children.Add(crumb);
+                SizeCrumbs();
+                return child.addChild(grandChildren);
+            }
+
+        }
+        
+        /// <summary>
+        /// Only to be used in the public addchild
+        /// this is to ensure the breadcrumbs and parentlist is presevered
+        /// </summary>
+        /// <param name="grandChildren"></param>
+        /// <returns></returns>
+        private TreeMenu addChild(SquareList grandChildren)
+        {
+
+            if (child == null)
+            {
+                child = new TreeMenu(grandChildren);
+                canvas.Children.Add(child.DrawMenu());
+                child.ReDraw(width, height);
+                return child;
+            }
+            else
+                return child.addChild(grandChildren);
+
+        }
+
+        /// <summary>
+        /// Uses recursion to create a squarified treeMenu
+        /// changes the height width x and y information of the
+        /// squares in the Squarelist "children" appropriatly
+        /// </summary>
+        /// <param name="used">number of children that have been prossed</param>
+        /// <param name="widthLeft">horizontal space left to fill</param>
+        /// <param name="heightLeft">vertical space left to fill</param>
+        private void MakeTree(int used, double widthLeft, double heightLeft)
         {
             if (widthLeft <= 0 || heightLeft <= 0)
             {
@@ -77,8 +186,10 @@ namespace PrototypeOne
             if (used >= children.Count()-1)
             {
                 children.SetSameHeight(used, 1, widthLeft);
+                //need to double set last block to insure the actual width and height are correct
+                //look at implementation of Square setting height and width
                 children.SetSameHeight(used, 1, widthLeft);
-                AddChildrenToDrawSide(widthLeft, heightLeft, used, 1);
+                AddChildrenSide(widthLeft, heightLeft, used, 1);
                 return;
             }
           
@@ -92,9 +203,9 @@ namespace PrototypeOne
                     divisions++;
                     children.SetSameWidth(used, divisions, heightLeft);
                 } while (children.IsAverageARLess(used, divisions));
-                
-                
-                AddChildrenToDrawSide(widthLeft,heightLeft,used,divisions-1);
+
+
+                AddChildrenSide(widthLeft, heightLeft, used, divisions - 1);
                
                 MakeTree(used + divisions - 1, widthLeft - children.Get(used).Width, heightLeft);
             }
@@ -107,12 +218,21 @@ namespace PrototypeOne
                 {
                     divisions++;
                     children.SetSameHeight(used, divisions, widthLeft);
-                } while (children.IsAverageARLess(used, divisions));      
-                AddChildrenToDrawBottom(widthLeft,height-heightLeft,used,divisions-1);
+                } while (children.IsAverageARLess(used, divisions));
+                AddChildrenTop(widthLeft, height - heightLeft, used, divisions - 1);
                 MakeTree(used + divisions - 1, widthLeft, heightLeft - children.Get(used).Height);
             }
         }
-        void AddChildrenToDrawSide(double curWidth, double curHeight, int start, int count)
+
+        /// <summary>
+        /// Positions count number of children from
+        /// the start location to the side of the map
+        /// </summary>
+        /// <param name="curWidth">width of the treeMenu</param>
+        /// <param name="curHeight">Height of the treeMenu</param>
+        /// <param name="start">distance in children to start</param>
+        /// <param name="count">number of children to place on the side</param>
+        private void AddChildrenSide(double curWidth, double curHeight, int start, int count)
         {
             double heightUsed = 0;
             for (int i = 0; i < count; i++)
@@ -123,8 +243,15 @@ namespace PrototypeOne
                
             }
         }
-
-        void AddChildrenToDrawBottom(double curWidth, double curHeight, int start, int count)
+        /// <summary>
+        /// Positions count number of children from
+        /// the start location to the top of the map
+        /// </summary>
+        /// <param name="curWidth">width of the treeMenu</param>
+        /// <param name="curHeight">Height of the treeMenu</param>
+        /// <param name="start">distance in children to start</param>
+        /// <param name="count">number of children to place on the top</param>
+        private void AddChildrenTop(double curWidth, double curHeight, int start, int count)
         {
             {
                 double widthUsed = 0;
@@ -138,8 +265,11 @@ namespace PrototypeOne
             }
         }
 
-
-        public void FillDrawing()
+        /// <summary>
+        /// Once the children have been set up useing makeTree
+        /// fills the Menus canvas with buttons to correspond to the sizes of the Squares
+        /// </summary>
+        private void FillDrawing()
         {
 
             foreach (Square block in children)
@@ -160,7 +290,11 @@ namespace PrototypeOne
                
             }
         }
-        public void RepositionButtons()
+        /// <summary>
+        /// Called after calls MakeTree
+        /// if each square in Children already has a button associated with it
+        /// </summary>
+        private void RepositionButtons()
         {
 
             foreach (Square block in children)
@@ -170,10 +304,22 @@ namespace PrototypeOne
                 block.Button.Width = block.Width;
                 block.Button.RenderTransform = new TranslateTransform(block.X, block.Y);
 
-               
-                canvas.Children.Add(block.GetTextBlock());
+                if (children.Count() == 1)
+                {
+                    canvas.Children.Add(block.GetTextBlockTop());
+                }
+                else
+                {
+                    canvas.Children.Add(block.GetTextBlock());
+                }
             }
         }
+       /// <summary>
+       /// Whenever a TreeMenu is resized used to 
+       /// replace and resize all buttons
+       /// </summary>
+       /// <param name="width">new width to be drawn at</param>
+       /// <param name="height">new height to be drawn at</param>
         public void ReDraw(double width, double height) {
             this.height = height;
             this.width = width;
@@ -188,9 +334,14 @@ namespace PrototypeOne
                 canvas.Children.Remove(child.DrawMenu());
                 canvas.Children.Insert(canvas.Children.Count, child.DrawMenu());
             }
-        
+            
         }
-        public void removeTextBlocksFromCanvas()
+        /// <summary>
+        /// removes anyText block associated with a square
+        /// from the canvas.
+        /// used to layer the canvas properly
+        /// </summary>
+        private void removeTextBlocksFromCanvas()
         {
 
             foreach (Square sqr in children)
@@ -199,59 +350,10 @@ namespace PrototypeOne
             }
         
         }
-        /**
-         * used: Children prosessed 
-         * widthLeft, heightLeft space remaining to fill with children
-         **/
-        
-
-        public TreeMenu addChild(SquareList grandChildren,Square creator){
-
-            if (child == null)
-            {
-                child = new TreeMenu(grandChildren);
-                canvas.Children.Add(child.DrawMenu());
-                child.ReDraw(width, height);
-
-                SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.Button.Background;
-                
-                crumb.Content = creator.GetTextBlockNoTransform();
-                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-                breadCrumbs.Add(crumb);
-                canvas.Children.Add(crumb);
-                SizeCrumbs();
-
-                return child;
-            }
-            else
-            {
-                SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.Button.Background;
-                
-                crumb.Content = creator.GetTextBlockNoTransform();
-                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-                breadCrumbs.Add(crumb);
-                canvas.Children.Add(crumb);
-                SizeCrumbs();
-                return child.addChild(grandChildren);
-            }
-
-        }
-        public TreeMenu addChild(SquareList grandChildren)
-        {
-
-            if (child == null)
-            {
-                child = new TreeMenu(grandChildren);
-                canvas.Children.Add(child.DrawMenu());
-                child.ReDraw(width, height);
-                return child;
-            }
-            else
-                return child.addChild(grandChildren);
-
-        }
+        /// <summary>
+        /// sizes the bread crumbs to the availablity  space at the top of the 
+        /// treeMenu
+        /// </summary>
         public void SizeCrumbs(){
 
             for (int i=0; i < breadCrumbs.Count; i++)
@@ -259,11 +361,19 @@ namespace PrototypeOne
                 SurfaceButton button = breadCrumbs[i];
                 button.Width = (width-0.2*height)/breadCrumbs.Count;
                 button.Height = 0.2 * height;
-                button.RenderTransform = new TranslateTransform((width * 0.8) / breadCrumbs.Count * i, 0);
+                button.RenderTransform = new TranslateTransform((width-0.2*height) / breadCrumbs.Count * i, 0);
             }
-
+            Exit.Width =  0.2 * height;
+            Exit.Height = 0.2 * height;
+            Exit.RenderTransform = new TranslateTransform(width - 0.2 * height, 0);
         }
-        
+        /// <summary>
+        /// returns  the square that exists in children
+        /// or in any of its sub nodes' children
+        /// that contains the button sqr
+        /// </summary>
+        /// <param name="sqr">button used to find a square</param>
+        /// <returns></returns>
         public override Square Get(SurfaceButton sqr)
         {
             if (children.Get(sqr) == null)
@@ -272,36 +382,50 @@ namespace PrototypeOne
             }
             return children.Get(sqr);
         }
-
-        public override bool ContainsPath(SurfaceButton sender)
+        /// <summary>
+        /// checks children and sub menus children
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>true if sender exists anywhere in the menu. false otherwise</returns>
+        public override bool ContainsButton(SurfaceButton sender)
         {
-            return children.Get(sender) !=null || (child!=null && child.ContainsPath(sender));
+            return children.Get(sender) !=null || (child!=null && child.ContainsButton(sender));
         }
+        /// <summary>
+        /// checks if treeMenu ever use
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <returns>if the canvas provided is a canvas used at anylevel in the treeMenu</returns>
         public bool CanvasIs(Canvas canvas)
         {
             return this.canvas.Equals(canvas) || (child != null && child.CanvasIs(canvas));
         }
-
+        /// <summary>
+        /// Finds the Square that contains sender
+        /// then returns the file from that square
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>a string path to a file containing information for another treeMenu</returns>
         public override string FileToOpen(SurfaceButton sender)
         {
-            if (child!=null && child.ContainsPath(sender))
+            if (child!=null && child.ContainsButton(sender))
             {
                 return child.FileToOpen(sender);
-
             }
             else
             {
                 return children.Get(sender).SubFile;
             }
         }
-
-        public void RemoveFromParent() {
-            ((ScatterView)((ScatterViewItem)canvas.Parent).Parent).Items.Remove(canvas.Parent);
-        }
-
+        /// <summary>
+        /// returns if the square related to the button sender
+        /// has the explanation field filled out
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
         public bool HasExplanation(SurfaceButton sender)
         {
-            if (child != null && child.ContainsPath(sender))
+            if (child != null && child.ContainsButton(sender))
             {
                 return child.HasExplanation(sender);
 
@@ -311,122 +435,12 @@ namespace PrototypeOne
                 return children.Get(sender).Explanation!=null;
             }
         }
-
-
-        public void Explane(SurfaceButton sender) {
-            Explaning = true;
-           
-            
-            sender.Width=width;
-            sender.Height=height*0.8;
-            sender.RenderTransform=new TranslateTransform(0,height*0.2);
-
-
-
-            Square sqr = children.Get(sender);
-            if (sqr == null)
-            {
-                sqr = child.Get(sender);
-            }
-            Canvas mom = (Canvas)(sender.Parent);
-
-           
-            mom.Children.Remove(sender);
-            mom.Children.Add(sender);
-
-            TextBlock Title = new TextBlock();
-            Title.TextAlignment = TextAlignment.Center;
-            Title.TextDecorations = TextDecorations.Underline;
-            Title.Text = "\n"+sqr.Name;
-            Title.Width = width;
-            Title.Height = 0.2 * height;
-            Title.RenderTransform = new TranslateTransform(width * 0.05, 0.25 * height);
-            Title.IsHitTestVisible = false;
-
-            mom.Children.Add(Title);
-
-            TextBlock Body = new TextBlock();
-            Body.Text = sqr.Explanation;
-            Body.IsHitTestVisible = false;
-            Body.Width = width*0.9;
-            Body.Height = 0.8 * height;
-            Body.RenderTransform = new TranslateTransform(width*0.05, 0.35 * height);
-            mom.Children.Add(Body);
-            
-        }
-
-        public void RemoveExplanation(SurfaceButton sender)
-        {
-
-
-            Square sqr = children.Get(sender);
-            if (sqr == null)
-            {
-                sqr = child.Get(sender);
-            }
-          
-            sender.Height = sqr.Height;
-            sender.Width = sqr.Width;
-            sender.RenderTransform = new TranslateTransform(sqr.X, sqr.Y);
-
-            Canvas mom = (Canvas)(sender.Parent);
-           
-            int above = mom.Children.IndexOf(sender) + 1;
-           
-            for (int i = 0; i < 2 && (TextBlock)((Canvas)(sender.Parent)).Children[above] is TextBlock;i++ )
-            {
-                TextBlock textBlock = (TextBlock)((Canvas)(sender.Parent)).Children[above];
-                mom.Children.Remove(textBlock);
-            }
-            mom.Children.Remove(sender);
-            mom.Children.Insert(0, sender);
-            Explaning = false;
-        }
-
-        private void PreviewTouchUp(object sender, TouchEventArgs e)
-        {
-
-            TouchDevice finger= e.TouchDevice;
-            if (sender is SurfaceButton) {
-                SurfaceButton path = ((SurfaceButton)sender);
-                Square sqr = children.Get(path);
-                path.Background = children.Get((SurfaceButton)sender).Fill.Brush;
-                //dont think needed: path.Data = new RectangleGeometry(new Rect(sqr.X, sqr.Y, sqr.Width, sqr.Height));
-            }
-            Console.Out.WriteLine("UP "+finger.GetTouchPoint((UIElement)sender).Position.X + " " + finger.GetTouchPoint((UIElement)sender).Position.Y);
-            
-        }
-
-        private void PreviewTouchDown(object sender, TouchEventArgs e)
-        {
-            if (sender is SurfaceButton)
-            {
-                SurfaceButton path = ((SurfaceButton)sender);
-                Square sqr = children.Get(path);
-                TextBlock textBlock = null;
-                //path.Fill = Brushes.Gray;
-                //path.Data = new RectangleGeometry(new Rect(0, 0, width, height));
-
-
-                Canvas mom = (Canvas)(path.Parent);
-                int above = ((Canvas)(path.Parent)).Children.IndexOf(path) + 1;
-                if (above <= ((Canvas)(path.Parent)).Children.Count)
-                {
-                    textBlock = (TextBlock)((Canvas)(path.Parent)).Children[above];
-                    ((Canvas)(path.Parent)).Children.Remove(textBlock);
-                }
-                ((Canvas)(path.Parent)).Children.Remove(path);
-
-                mom.Children.Add(path);
-
-                mom.Children.Add(textBlock);
-
-
-
-            }
-            Console.Out.WriteLine("Down ");
-        }
-
+        /// <summary>
+        /// When a bread crumb is clicked the TreeMenu up to that
+        /// Level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RetraceToBreadCrumb(object sender, TouchEventArgs e)
         {
 
@@ -447,6 +461,11 @@ namespace PrototypeOne
                 }
             }
         }
+        /// <summary>
+        /// removes subtrees after the keeping children has passed
+        /// </summary>
+        /// <param name="keeping">number of children to keep</param>
+        /// <param name="parentCanvas">canvas to remove from</param>
         private void KeepChildren(int keeping, Canvas parentCanvas)
         {
             if (keeping > 0)
@@ -471,6 +490,39 @@ namespace PrototypeOne
                 return;
             }
         }
+        //removes the Map from the window, and from the
+        //parentList
+        private void ExitUp(object sender, TouchEventArgs e)
+        {
+            Delete(sender);
+        }
         
+        private void Delete(object sender) {
+            ParentList.Remove(this);
+            ((ScatterView)((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent).Parent).Items.Remove(((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent));
+            StopTimer();
+        }
+        /// <summary>
+        /// Delete Menu after extended period of no use
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void myTimer_Tick(object sender, EventArgs e)
+        {
+            if (!interactive)
+            {
+                ParentList.Remove(this);
+                ((ScatterView)((ScatterViewItem)(canvas.Parent)).Parent).Items.Remove(canvas.Parent);
+                myTimer.Stop();
+            }
+            interactive = false;
+        }
+        public void StopTimer()
+        {
+            if (myTimer != null)
+            {
+                myTimer.Stop();
+            }
+        }
     }
 }
