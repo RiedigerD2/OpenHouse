@@ -36,7 +36,7 @@ namespace PrototypeOne
             {
                 StreamReader reader = new StreamReader(file);
                 simpleList = (List<Catagory>)serializer.Deserialize(reader);
-                
+                reader.Close();
             }catch(Exception e){
                 Catagory error = new Catagory();
                 error.BackGroundColor = Colors.Yellow;
@@ -107,6 +107,28 @@ namespace PrototypeOne
                 if (cat.SubCatagoryFile!=null && !cat.SubCatagoryFile.Equals(""))
                 {
                     square.SubFile = cat.SubCatagoryFile;
+                }
+                if (cat.Explanation != null && !cat.Explanation.Equals(""))
+                {
+                    square.Explanation = cat.Explanation;
+                }
+                newList.Add(square);
+            }
+            return newList;
+        }
+
+        public static SquareList createSquareList(SquareList simpleList)
+        {
+            SquareList newList = new SquareList();
+            for (int i = simpleList.Count() - 1; i >= 0; i--)
+            {
+                Square cat = simpleList.Get(i);
+                FillInfo info = new FillInfo(cat.BackGround, cat.Name, ((SolidColorBrush)cat.Fill.TextColor).Color);
+                Square square = new Square(SurfaceWindow1.treeArea * cat.ratio, info);
+                square.ratio = cat.ratio;
+                if (cat.SubFile != null && !cat.SubFile.Equals(""))
+                {
+                    square.SubFile = cat.SubFile;
                 }
                 if (cat.Explanation != null && !cat.Explanation.Equals(""))
                 {

@@ -18,8 +18,7 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 
 using Microsoft.Surface.Presentation.Input;
-
-using Microsoft.Xna.Framework.Input.Touch;
+using System.Collections.ObjectModel;
 
 using System.Windows.Media.Animation;
 namespace PrototypeOne
@@ -37,7 +36,6 @@ namespace PrototypeOne
         //private Menu.Menu constMenu;
         public List<Menu.Menu> MenuList;
         
-      
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -49,13 +47,12 @@ namespace PrototypeOne
             AddWindowAvailabilityHandlers();
            
             //CreateXAML();
-           
             MenuList = new List<Menu.Menu>(15);
             Console.Out.WriteLine();
            // MakeCenterMenu();
             MakeIndividualMenus();
 
-           
+            DataContext = this;
         }
 
         
@@ -177,63 +174,168 @@ namespace PrototypeOne
         /// </summary>
         /// <param name="center">The Menus center</param>
         /// <param name="angle">The angle of the menu</param>
-        public void BuildMenu(Point center,double angle) {
-            ScatterViewItem item = new ScatterViewItem();
-            DoubleAnimation myDoubleAnimation3 = new DoubleAnimation();
-            myDoubleAnimation3.From = 1.0;
-            myDoubleAnimation3.To = -0.3;
-            myDoubleAnimation3.Duration = new Duration(TimeSpan.FromSeconds(5));
-            myDoubleAnimation3.AutoReverse = true;
-            myDoubleAnimation3.RepeatBehavior = RepeatBehavior.Forever;
-            
-            Storyboard myStoryboard3 = new Storyboard();
-            myStoryboard3.Children.Add(myDoubleAnimation3);
-            Storyboard.SetTarget(myDoubleAnimation3, item);
-            Storyboard.SetTargetProperty(myDoubleAnimation3, new PropertyPath(ScatterViewItem.OpacityProperty));
-            //myStoryboard3.Begin();
+        public IndividualMenu BuildMenu(Point center,double angle) {
+            ScatterViewItem item = NonMovingItemFactory(center, angle);
 
-            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), myStoryboard3);
+            
+
+            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), AddAnimation(item));
             MenuList.Add(sideMenu);
 
 
-            ScatterViewItem touchme = new ScatterViewItem();
+            ScatterViewItem touchme = NonMovingItemFactory(center, angle);
             touchme.Content = "Touch Here To begin";
-            touchme.Background = Brushes.Transparent;
-            touchme.Center = center;
-            touchme.Orientation = angle;
-            touchme.CanMove = false;
-            touchme.CanScale = false;
+            touchme.Background = Brushes.Transparent;     
             touchme.Focusable = false;
-            touchme.CanRotate = false;
             scatter.Items.Add(touchme);
+            
+            Canvas canvas = sideMenu.DrawMenu();
+            canvas.VerticalAlignment = VerticalAlignment.Top;
+            item.Content = canvas;
+            scatter.Items.Add(item);
 
 
+            sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
+
+            return sideMenu;
+        }
+
+        /// <summary>
+        /// adds a opacity animation to item
+        /// </summary>
+        /// <param name="item"></param>
+        private Storyboard AddAnimation(ScatterViewItem item)
+        {
+
+            DoubleAnimation Animation = new DoubleAnimation();
+            Animation.From = 1.0;
+            Animation.To = -0.3;
+            Animation.Duration = new Duration(TimeSpan.FromSeconds(5));
+            Animation.AutoReverse = true;
+            Animation.RepeatBehavior = RepeatBehavior.Forever;
+
+            Storyboard Storyboard = new Storyboard();
+            Storyboard.Children.Add(Animation);
+            Storyboard.SetTarget(Animation, item);
+            Storyboard.SetTargetProperty(Animation, new PropertyPath(ScatterViewItem.OpacityProperty));
+            Storyboard.Begin();
+            return Storyboard;
+        }
+        /// <summary>
+        /// Items created cannot be moved scaled or rotated
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="angle"></param>
+        /// <returns>returns an Item at center orientation of angle</returns>
+        private ScatterViewItem NonMovingItemFactory(Point center, double angle)
+        {
+            ScatterViewItem item = new ScatterViewItem();
             item.Center = center;
             item.CanMove = false;
             item.CanScale = false;
             item.CanRotate = false;
-            Canvas canvas = sideMenu.DrawMenu();
             item.Orientation = angle;
-            canvas.VerticalAlignment = VerticalAlignment.Top;
-            item.Content = canvas;
-            scatter.Items.Add(item);
-            sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
-
-           
+            return item;
         }
         /// <summary>
         /// Calls build menu for times createing a menu for each side of the surface
         /// </summary>
         public void MakeIndividualMenus()
         {
-            //top
-            BuildMenu(new Point(this.Width / 2, this.Height * 0.1), 180);
-            //right
-            BuildMenu(new Point(this.Width * 0.95, this.Height / 2), -90);
+            IndividualMenu created;
+             SurfaceButton button;
+             ScatterViewItem item;
             //left
-            BuildMenu(new Point(this.Width * 0.05, this.Height / 2), 90);
+            created = BuildMenu(new Point(this.Width * 0.15, this.Height / 2), 90);
+            SetUpHistory(leftHistory, created);
+            MoveHistory(leftHistory, new Point(this.Width * 0.15-0.5*MenuTileSize, this.Height * .5 - 0.5 * (created.Count() * MenuTileSize)), 90);
+            button = new SurfaceButton();
+            item = NonMovingItemFactory(new Point(this.Width * 0.15 -  MenuTileSize, this.Height * .5 + 0.5* (created.Count() * MenuTileSize)), 90);
+            button.Background = Brushes.Transparent;
+            button.Content = "History";
+            item.Content = button;
+            item.Background = Brushes.Transparent;
+            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryLeft);
+            scatter.Items.Add(item);
+            //top
+            created=BuildMenu(new Point(this.Width / 2, this.Height * 0.2), 180);
+            SetUpHistory(topHistory, created);
+            MoveHistory(topHistory, new Point(this.Width * 0.5 + 0.5 * (created.Count() * MenuTileSize), this.Height * 0.2 - 0.5 * MenuTileSize), 180);
+            button = new SurfaceButton();
+            item = NonMovingItemFactory(new Point(this.Width * 0.5 - 0.5 * (created.Count() * MenuTileSize), this.Height * 0.2 -  MenuTileSize), 180);
+            button.Background = Brushes.Transparent;
+            button.Content = "History";
+            item.Content = button;
+            item.Background = Brushes.Transparent;
+            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryTop);
+            scatter.Items.Add(item);
+            //right
+            created = BuildMenu(new Point(this.Width * 0.85, this.Height / 2), -90);
+            SetUpHistory(rightHistory, created);
+            MoveHistory(rightHistory, new Point(this.Width * 0.85 + 0.5 * MenuTileSize, this.Height * 0.5 + 0.5 * (created.Count() * MenuTileSize)), -90);
+            button = new SurfaceButton();
+            item = NonMovingItemFactory(new Point(this.Width * 0.85 + MenuTileSize, this.Height * 0.5 - 0.5 * (created.Count() * MenuTileSize)), -90);
+            button.Background = Brushes.Transparent;
+            button.Content = "History";
+            item.Content = button;
+            item.Background = Brushes.Transparent;
+            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryRight);
+            scatter.Items.Add(item);
             //bottom
-            BuildMenu(new Point(this.Width / 2, this.Height * 0.85), 0);
+            created = BuildMenu(new Point(this.Width *0.5, this.Height * 0.75), 0);
+            SetUpHistory(bottomHistory, created);
+            MoveHistory(bottomHistory, new Point(this.Width * 0.5 - 0.5 * (created.Count() * MenuTileSize), this.Height * 0.75 + 0.5 * MenuTileSize), 0);
+            button = new SurfaceButton();
+            item = NonMovingItemFactory(new Point(this.Width * 0.5 + 0.5 * (created.Count() * MenuTileSize), this.Height * 0.75 + MenuTileSize), 0);
+            button.Background = Brushes.Transparent;
+            button.Content = "History";
+            item.Content=button;
+            item.Background = Brushes.Transparent;
+            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryBottom);
+            scatter.Items.Add(item);
+        }
+
+       
+        void ShowHistoryLeft(object sender, TouchEventArgs e)
+        {
+            if (leftHistory.Visibility == Visibility.Hidden)
+                leftHistory.Visibility = Visibility.Visible;
+            else
+                leftHistory.Visibility = Visibility.Hidden;
+        }
+        void ShowHistoryTop(object sender, TouchEventArgs e)
+        {
+            if (topHistory.Visibility == Visibility.Hidden)
+                topHistory.Visibility = Visibility.Visible;
+            else
+                topHistory.Visibility = Visibility.Hidden;
+        }
+        void ShowHistoryRight(object sender, TouchEventArgs e)
+        {
+            if (rightHistory.Visibility == Visibility.Hidden)
+                rightHistory.Visibility = Visibility.Visible;
+            else
+                rightHistory.Visibility = Visibility.Hidden;
+        }
+        void ShowHistoryBottom(object sender, TouchEventArgs e)
+        {
+            if (bottomHistory.Visibility == Visibility.Hidden)
+                bottomHistory.Visibility = Visibility.Visible;
+            else
+                bottomHistory.Visibility = Visibility.Hidden;
+        }
+        private void MoveHistory(LibraryBar container, Point place, double angle)
+        {
+            TransformGroup transform = new TransformGroup();
+            transform.Children.Add(new ScaleTransform(0.45, 0.35));
+            transform.Children.Add(new RotateTransform(angle)); 
+            transform.Children.Add(new TranslateTransform(place.X,place.Y));
+            container.RenderTransform = transform;
+        }
+        private void SetUpHistory(LibraryBar container,IndividualMenu menu){
+            System.Windows.Data.Binding bind = new System.Windows.Data.Binding("History");
+            bind.Source = menu;
+            container.SetBinding(LibraryBar.ItemsSourceProperty, bind);
         }
 
         /// <summary>
@@ -257,15 +359,14 @@ namespace PrototypeOne
             item.Orientation = angle + 90;
           
             item.ContainerManipulationDelta +=new ContainerManipulationDeltaEventHandler(OnManipulation);
-            //item.ContainerManipulationCompleted+=new ContainerManipulationCompletedEventHandler(ManipulationOver);
 
-          
             item.Width = treeWidth;
             item.Height = treeHeight;
             item.Content = map.DrawMenu();
             scatter.Items.Add(item);
             MenuList.Add(map);
 
+            ((IndividualMenu)FindTheMenu(caller.Button)).AddToHistory(map);
         }
         
         /// <summary>
@@ -281,6 +382,7 @@ namespace PrototypeOne
             {
                 SurfaceButton button = (SurfaceButton)sender;
                 Menu.Menu menu = FindTheMenu(button);
+                Log.Interaction(this,e.TouchDevice, menu.Get((SurfaceButton)sender),menu);
                 if (menu == null)
                 {
                     ScatterViewItem item = new ScatterViewItem();
@@ -308,20 +410,21 @@ namespace PrototypeOne
                             sqr.ratio = 1;
                             list.Add(sqr);
                             map.addChild(list,map.Get(button));
-
                         }
-
                     }
-
                 }
                 else//non tree menu
                 {
-                    ((IndividualMenu)menu).board.Stop();
+                    if (((IndividualMenu)menu).IsAnimating())
+                    {
+                        ((IndividualMenu)menu).StopAnimation();
+                    }
+                    else
                     if (MenuList.Count < 15)//maybe remove the first ones opened
                     {
                         TouchDevice c = (TouchDevice)e.TouchDevice;
                         PlaceTreeMap(menu.FileToOpen(button), menu.Get(button), c.GetOrientation(this), c.GetPosition(this));
-                        
+                       
                     }
                 }
             }
@@ -377,19 +480,18 @@ namespace PrototypeOne
                     ((TreeMenu)menu).StopTimer();
                     MenuList.Remove(menu);
                     scatter.Items.Remove(item);
+                    Log.Deleted(DeletionMethod.Swipe, menu);
                 }
             }
             if (e.ScaleFactor != 1)
             {
-                
+
                 Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
                 ((TreeMenu)menu).ReDraw(item.Width, item.Height);
                 ((TreeMenu)menu).SizeCrumbs();
-              
+                Log.Resized(menu, e.ScaleFactor);
             }
-            
         }
-
        /// <summary>
        /// Finds a good position to open a new tree menu
        /// based on the position and angle of a finger
@@ -497,6 +599,75 @@ namespace PrototypeOne
                 center.Y = this.Height - treeWidth*0.45;
             }
             return center;
+        }
+        
+        private void DragCompletedLeft(object sender, SurfaceDragCompletedEventArgs e)
+        {
+            if (e.Cursor.CurrentTarget != leftHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
+            {
+                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
+                ((IndividualMenu)MenuList[0]).History.Move(((IndividualMenu)MenuList[0]).History.IndexOf(removed), 0);
+                e.Handled = true;
+            }
+        }
+        private void DragCanceledLeft(object sender, SurfaceDragCompletedEventArgs e)
+        { }
+
+        private void DragCompletedTop(object sender, SurfaceDragCompletedEventArgs e)
+        {
+            if (e.Cursor.CurrentTarget != topHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
+            {
+                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
+                ((IndividualMenu)MenuList[1]).History.Move(((IndividualMenu)MenuList[1]).History.IndexOf(removed), 0);
+                e.Handled = true;
+            }
+        }
+        private void DragCanceledTop(object sender, SurfaceDragCompletedEventArgs e)
+        { }
+
+        private void DragCompletedRight(object sender, SurfaceDragCompletedEventArgs e)
+        {
+            if (e.Cursor.CurrentTarget != rightHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
+            {
+                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
+                ((IndividualMenu)MenuList[2]).History.Move(((IndividualMenu)MenuList[2]).History.IndexOf(removed), 0);
+                e.Handled = true;
+            }
+        }
+        private void DragCanceledRight(object sender, SurfaceDragCompletedEventArgs e)
+        { }
+
+        private void DragCompletedBottom(object sender, SurfaceDragCompletedEventArgs e)
+        {
+            if (e.Cursor.CurrentTarget != bottomHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
+            {
+                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
+                ((IndividualMenu)MenuList[3]).History.Move(((IndividualMenu)MenuList[3]).History.IndexOf(removed), 0);
+                e.Handled = true;
+            }
+        }
+        private void DragCanceledBottom(object sender, SurfaceDragCompletedEventArgs e)
+        { }
+
+        private void Scatter_Drop(object sender, SurfaceDragDropEventArgs e)
+        {
+            
+                TreeMenu old = e.Cursor.Data as TreeMenu;
+                TreeMenu map = old.Clone();
+                map.AddUpListenerToButtons(TouchUpMenu);
+
+                ScatterViewItem item = new ScatterViewItem();
+                item.Center = e.Cursor.GetPosition(scatter);
+                item.Orientation = e.Cursor.GetOrientation(scatter);
+
+                item.ContainerManipulationDelta += new ContainerManipulationDeltaEventHandler(OnManipulation);
+
+                item.Width = treeWidth;
+                item.Height = treeHeight;
+                item.Content = map.DrawMenu();
+                map.ReDraw(item.Width, item.Height);
+                scatter.Items.Add(item);
+                MenuList.Add(map);
         }
     }
 }

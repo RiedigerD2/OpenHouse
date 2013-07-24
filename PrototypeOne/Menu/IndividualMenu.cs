@@ -14,20 +14,22 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-//using System.Threading;
+using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
 namespace PrototypeOne.Menu
 {
-    //enum Location {Top,Right,Bottom,Left}
+    
     public class IndividualMenu:Menu
     {
-        public Canvas canvas;
-        public Storyboard board;
+        private Canvas canvas;
+        private Storyboard board;
+        ObservableCollection<Menu> history = new ObservableCollection<Menu>();
+        public ObservableCollection<Menu> History
+        {
+            get { return history; }
+        }
         
-        
-        //public Point Center{get; set;}
-        //public Location location{get; set;}
 
         public IndividualMenu(SquareList children,Storyboard board)
             : base(children)
@@ -38,45 +40,15 @@ namespace PrototypeOne.Menu
             myTimer.Interval = 20000;
             myTimer.Enabled=true;
         }
-
-        void myTimer_Tick(object sender, EventArgs e)
-        {
-            if (!interactive)
-            {
-
-                try
-                {
-                    Console.Out.WriteLine("\nThis\nState:" + board);
-                    board.Begin();
-                }
-                catch (Exception el)
-                {
-                    Console.Out.WriteLine("\nThis\nException:" + el.Message);
-                }
-            }
-            interactive = false;
-        }
-        public void CallBack(object state)
-        {
-           // if (!interactive)
-            try
-            {
-                Console.Out.WriteLine("\nThis\nState:" + state);
-                ((Storyboard)state).Begin();
-            }
-            catch (Exception e)
-            {
-                Console.Out.WriteLine("\nThis\nException:" + e.Message);
-            }
-        }
-
+        
         public override Canvas DrawMenu()
         {
             if (canvas == null)
             {
                 canvas = new Canvas();
             }
-            double X=-(SurfaceWindow1.MenuTileSize*(double)children.Count())/2+0.5*SurfaceWindow1.MenuTileSize;
+            ScatterViewItem sizeItem=new ScatterViewItem();
+            double X = -(SurfaceWindow1.MenuTileSize * (double)children.Count() / 2) + 0.5 * SurfaceWindow1.MenuTileSize;
             for (int i = 0 ; i < children.Count();i++ ,X+=SurfaceWindow1.MenuTileSize)
             {
                 Square sqr = children.Get(i);
@@ -103,8 +75,50 @@ namespace PrototypeOne.Menu
                 block.Width = SurfaceWindow1.MenuTileSize;
                 canvas.Children.Add(block);
             }
-
             return canvas;
+        }
+
+        void myTimer_Tick(object sender, EventArgs e)
+        {
+            if (!interactive)
+            {
+
+                try
+                {
+                    Console.Out.WriteLine("\nThis\nState:" + board);
+                    board.Begin();
+                }
+                catch (Exception el)
+                {
+                    Console.Out.WriteLine("\nThis\nException:" + el.Message);
+                }
+            }
+            interactive = false;
+        }
+        public void StopAnimation() {
+            board.Stop();
+        }
+        public bool IsAnimating() {
+            return board.GetCurrentGlobalSpeed() != 0;
+        }
+
+        public void AddToHistory(Menu opened)
+        {
+            history.Insert(0,opened);
+
+            if (history.Count > 9)
+            {
+                history.RemoveAt(history.Count-1);
+            }
+        }
+        
+        public override string ToString()
+        {
+            if (board.GetCurrentGlobalSpeed() == 0)
+            {
+                return base.ToString() + "SideMenu Active";
+            }
+            return base.ToString() + "SideMenu: Animating";
         }
     }
 }

@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Catagory.cs" />
     <Compile Include="FillInfo.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Menu\IndividualMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="StartMenu.cs" />

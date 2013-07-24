@@ -146,8 +146,7 @@ namespace PrototypeOne
 
         public override string ToString()
         {
-            return "current Height " + curHeight + "\ncurrent Width " + curWidth + "\nnew height " + newHeight + "\nnew Width" + newWidth +
-                "\nArea " + area+ "\nX:"+x+"\nY"+y;
+            return "Square: " + Name + ", Color: " + BackGround;
         }
     }
 }

@@ -6,6 +6,26 @@
     Title="PrototypeOne"
     Name="screen"
     >
+    <s:SurfaceWindow.Resources>
+        <DataTemplate x:Key="MapImage">
+            <Grid Background="Black">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25">
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Image  Source="{Binding Source}" Grid.Row="0"/>
+                <Label  Content="{Binding Name}" Grid.Row="1" FontSize="10"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HistoryView" >
+            <Grid Width="100" Height="100">
+               
+            </Grid>
+        </DataTemplate>
+
+    </s:SurfaceWindow.Resources>
     <Grid Style="{StaticResource MainGrid}">
 
         <Grid.RowDefinitions>
@@ -43,14 +63,43 @@
     
    
         <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter"
-               >
-
+               AllowDrop="True" s:SurfaceDragDrop.Drop="Scatter_Drop" Background="Transparent"
+                       >
+            
 
           
 
 
 
         </s:ScatterView>
-       
+
+        <Canvas Grid.Column="0" Grid.Row="0" >
+            <Canvas.Children>
+
+                <s:LibraryBar  Name="leftHistory" Visibility="Hidden"
+                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                   ItemTemplate="{StaticResource MapImage}" >
+                </s:LibraryBar>
+
+                <s:LibraryBar  Name="topHistory"  Visibility="Hidden"
+                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                   ItemTemplate="{StaticResource MapImage}" >
+                </s:LibraryBar>
+
+                <s:LibraryBar  Name="rightHistory" Visibility="Hidden"
+                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                   ItemTemplate="{StaticResource MapImage}" >
+                </s:LibraryBar>
+
+                <s:LibraryBar  Name="bottomHistory"  Visibility="Hidden"
+                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                   ItemTemplate="{StaticResource MapImage}" >
+                </s:LibraryBar>
+
+            </Canvas.Children>
+        </Canvas>
+
+
     </Grid>
+    
 </s:SurfaceWindow>

@@ -56,6 +56,9 @@ namespace PrototypeOne.Menu
         {
             return children.Get(sqr);
         }
-       
+        public override string ToString()
+        {
+            return "";
+        }
     }
 }
