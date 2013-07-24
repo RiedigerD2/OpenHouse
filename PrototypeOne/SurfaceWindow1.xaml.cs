@@ -46,7 +46,7 @@ namespace PrototypeOne
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
            
-            //CreateXAML();
+            CreateXAML();
             MenuList = new List<Menu.Menu>(15);
             Console.Out.WriteLine();
            // MakeCenterMenu();
@@ -137,6 +137,10 @@ namespace PrototypeOne
             first.Ratio = 0.45;
             first.Title = "firstTitle";
 
+            first.Video = "C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv";
+            first.Image = "Resources/X.jpg";
+            first.Explanation = "long string with\n to make sence i should say newline\nLol";
+            first.SubCatagoryFile = "Top";
             second.BackGroundColor = Colors.AntiqueWhite;
             second.TextColor = Colors.Black;
             second.Ratio = 0.55;
@@ -245,6 +249,7 @@ namespace PrototypeOne
             IndividualMenu created;
              SurfaceButton button;
              ScatterViewItem item;
+
             //left
             created = BuildMenu(new Point(this.Width * 0.15, this.Height / 2), 90);
             SetUpHistory(leftHistory, created);
@@ -257,6 +262,7 @@ namespace PrototypeOne
             item.Background = Brushes.Transparent;
             item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryLeft);
             scatter.Items.Add(item);
+
             //top
             created=BuildMenu(new Point(this.Width / 2, this.Height * 0.2), 180);
             SetUpHistory(topHistory, created);
@@ -269,6 +275,7 @@ namespace PrototypeOne
             item.Background = Brushes.Transparent;
             item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryTop);
             scatter.Items.Add(item);
+
             //right
             created = BuildMenu(new Point(this.Width * 0.85, this.Height / 2), -90);
             SetUpHistory(rightHistory, created);
@@ -281,6 +288,7 @@ namespace PrototypeOne
             item.Background = Brushes.Transparent;
             item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryRight);
             scatter.Items.Add(item);
+
             //bottom
             created = BuildMenu(new Point(this.Width *0.5, this.Height * 0.75), 0);
             SetUpHistory(bottomHistory, created);
@@ -610,9 +618,7 @@ namespace PrototypeOne
                 e.Handled = true;
             }
         }
-        private void DragCanceledLeft(object sender, SurfaceDragCompletedEventArgs e)
-        { }
-
+       
         private void DragCompletedTop(object sender, SurfaceDragCompletedEventArgs e)
         {
             if (e.Cursor.CurrentTarget != topHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
@@ -622,9 +628,7 @@ namespace PrototypeOne
                 e.Handled = true;
             }
         }
-        private void DragCanceledTop(object sender, SurfaceDragCompletedEventArgs e)
-        { }
-
+      
         private void DragCompletedRight(object sender, SurfaceDragCompletedEventArgs e)
         {
             if (e.Cursor.CurrentTarget != rightHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
@@ -634,8 +638,7 @@ namespace PrototypeOne
                 e.Handled = true;
             }
         }
-        private void DragCanceledRight(object sender, SurfaceDragCompletedEventArgs e)
-        { }
+     
 
         private void DragCompletedBottom(object sender, SurfaceDragCompletedEventArgs e)
         {
@@ -646,9 +649,7 @@ namespace PrototypeOne
                 e.Handled = true;
             }
         }
-        private void DragCanceledBottom(object sender, SurfaceDragCompletedEventArgs e)
-        { }
-
+        
         private void Scatter_Drop(object sender, SurfaceDragDropEventArgs e)
         {
             

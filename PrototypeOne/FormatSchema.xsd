@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xsd:element name="ArrayOfCatagory">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" name="Catagory">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="TextColor" type="Color" minOccurs="0"/>
+              <xsd:element name="BackGroundColor" type="Color" />
+              <xsd:element name="Ratio"  type="smallFraction" />
+              <xsd:element name="Title" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Explanation" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SubCatagoryFile" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Image" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Video" type="xsd:string" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="Color">
+    <xsd:sequence>
+      <xsd:group ref="byteColor" minOccurs="0"/>
+      <xsd:group ref="fractionColor" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:group name="byteColor">
+    <xsd:sequence>
+      <xsd:element name="A" type="byte"  />
+      <xsd:element name="R" type="byte" />
+      <xsd:element name="G" type="byte" />
+      <xsd:element name="B" type="byte" />
+    </xsd:sequence>
+  </xsd:group>
+
+  <xsd:group name="fractionColor">
+    <xsd:sequence>
+      <xsd:element name="ScA" type="smallFraction" />
+      <xsd:element name="ScR" type="smallFraction" />
+      <xsd:element name="ScG" type="smallFraction" />
+      <xsd:element name="ScB" type="smallFraction" />
+    </xsd:sequence>
+  </xsd:group>
+
+  
+
+  
+    <xsd:simpleType name="smallFraction">
+      <xsd:restriction base="xs:decimal">
+        <xsd:maxInclusive value="1"/>
+        <xsd:minInclusive value="0"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+  <xsd:simpleType name="byte">
+    <xsd:restriction base="xs:decimal">
+      <xsd:maxInclusive value="255"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xs:schema>

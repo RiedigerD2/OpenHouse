@@ -20,6 +20,10 @@ namespace PrototypeOne
         public String Title { get; set; }
         public string Explanation { get; set; }
         public string SubCatagoryFile { get; set; }
+   
+        public string Image { get; set; }
+        public string Video { get; set; }
+   
         public Catagory() { }
         public Catagory(Color BackGroundColor, double Ratio) {
             this.BackGroundColor = BackGroundColor;

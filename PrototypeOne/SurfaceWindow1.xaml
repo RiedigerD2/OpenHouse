@@ -9,13 +9,16 @@
     <s:SurfaceWindow.Resources>
         <DataTemplate x:Key="MapImage">
             <Grid Background="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="25">
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*">
                     </RowDefinition>
                 </Grid.RowDefinitions>
                 <Image  Source="{Binding Source}" Grid.Row="0"/>
-                <Label  Content="{Binding Name}" Grid.Row="1" FontSize="10"/>
+                <TextBlock  Text="{Binding Name}" Grid.Row="1" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" FontSize="10"/>
             </Grid>
         </DataTemplate>
 
