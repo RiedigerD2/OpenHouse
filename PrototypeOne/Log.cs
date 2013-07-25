@@ -14,6 +14,13 @@ namespace PrototypeOne
     public enum DeletionMethod{Swipe,TimeOut,X};
     public static class Log
     {
+        /// <summary>
+        /// logs an interactions
+        /// </summary>
+        /// <param name="mutex">use SurfaceWindow1</param>
+        /// <param name="Td"></param>
+        /// <param name="touched">button that was touched with</param>
+        /// <param name="Container">container of the button touched</param>
         public static void Interaction(Object mutex,TouchDevice Td,Object touched,Object Container){
 
             lock (mutex)
@@ -38,6 +45,11 @@ namespace PrototypeOne
             }    
         }
 
+        /// <summary>
+        /// logs for tree menu deletion
+        /// </summary>
+        /// <param name="method">Enum of deletion method</param>
+        /// <param name="menu"> menu that was deleted</param>
         public static void Deleted(DeletionMethod method, Menu.Menu menu)
         {
             StreamWriter writer = new StreamWriter("LogFile.txt", true);
@@ -45,6 +57,11 @@ namespace PrototypeOne
             writer.Close();
         }
 
+        /// <summary>
+        /// logs when menus are resized
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <param name="factor"></param>
         public static void Resized( Menu.Menu menu,double factor)
         {
             StreamWriter writer = new StreamWriter("LogFile.txt", true);

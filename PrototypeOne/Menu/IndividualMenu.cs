@@ -31,16 +31,26 @@ namespace PrototypeOne.Menu
         }
         
 
+        /// <summary>
+        /// Creates Individual menu
+        /// </summary>
+        /// <param name="children">the list used to populate the menu</param>
+        /// <param name="board">board will begin after a set time of no interactions</param>
         public IndividualMenu(SquareList children,Storyboard board)
             : base(children)
         {
             this.board=board;
-            myTimer=new Timer();
+            myTimer=new Timer();// at end of timer if no interaction has ahappened starts animation
             myTimer.Tick += new EventHandler(myTimer_Tick);
             myTimer.Interval = 20000;
             myTimer.Enabled=true;
         }
         
+        /// <summary>
+        /// adds buttons to a canvas based on 
+        /// the information from the children list
+        /// </summary>
+        /// <returns>Ca</returns>
         public override Canvas DrawMenu()
         {
             if (canvas == null)
@@ -64,7 +74,7 @@ namespace PrototypeOne.Menu
                 button.BorderThickness = new Thickness(0.2); 
                 sqr.Button = button;
 
-                button.Background = sqr.Fill.Brush;
+                button.Background = sqr.BackGroundBrush;
                
 
 
@@ -78,6 +88,11 @@ namespace PrototypeOne.Menu
             return canvas;
         }
 
+        /// <summary>
+        /// Executed at end of the timer interval
+        /// </summary>
+        /// <param name="sender">timer that finished an interval</param>
+        /// <param name="e"></param>
         void myTimer_Tick(object sender, EventArgs e)
         {
             if (!interactive)
@@ -95,13 +110,23 @@ namespace PrototypeOne.Menu
             }
             interactive = false;
         }
+        /// <summary>
+        /// stops story board associated with the menu
+        /// </summary>
         public void StopAnimation() {
             board.Stop();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>returns true if the board is active</returns>
         public bool IsAnimating() {
             return board.GetCurrentGlobalSpeed() != 0;
         }
-
+        /// <summary>
+        /// adds the menu opoened to the observable collection history
+        /// </summary>
+        /// <param name="opened"></param>
         public void AddToHistory(Menu opened)
         {
             history.Insert(0,opened);
@@ -116,7 +141,7 @@ namespace PrototypeOne.Menu
         {
             if (board.GetCurrentGlobalSpeed() == 0)
             {
-                return base.ToString() + "SideMenu Active";
+                return base.ToString() + "SideMenu: Active";
             }
             return base.ToString() + "SideMenu: Animating";
         }

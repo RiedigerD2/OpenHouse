@@ -80,22 +80,22 @@
             <Canvas.Children>
 
                 <s:LibraryBar  Name="leftHistory" Visibility="Hidden"
-                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                      s:SurfaceDragDrop.DragCompleted="DragCompleted"                   
                    ItemTemplate="{StaticResource MapImage}" >
                 </s:LibraryBar>
 
                 <s:LibraryBar  Name="topHistory"  Visibility="Hidden"
-                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                      s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
                    ItemTemplate="{StaticResource MapImage}" >
                 </s:LibraryBar>
 
                 <s:LibraryBar  Name="rightHistory" Visibility="Hidden"
-                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                      s:SurfaceDragDrop.PreviewDragCompleted ="DragCompleted"                   
                    ItemTemplate="{StaticResource MapImage}" >
                 </s:LibraryBar>
 
                 <s:LibraryBar  Name="bottomHistory"  Visibility="Hidden"
-                      s:SurfaceDragDrop.DragCompleted="DragCompletedLeft"                   
+                      s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
                    ItemTemplate="{StaticResource MapImage}" >
                 </s:LibraryBar>
 

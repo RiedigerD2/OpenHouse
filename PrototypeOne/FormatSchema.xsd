@@ -14,6 +14,7 @@
               <xsd:element minOccurs="0" name="SubCatagoryFile" type="xsd:string" />
               <xsd:element minOccurs="0" name="Image" type="xsd:string" />
               <xsd:element minOccurs="0" name="Video" type="xsd:string" />
+              <xsd:element minOccurs="0" name="BackGroundImage" type="xsd:string"/>
             </xsd:all>
           </xsd:complexType>
         </xsd:element>

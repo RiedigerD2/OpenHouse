@@ -32,6 +32,9 @@ namespace PrototypeOne
         DrawingImage image;
          public event PropertyChangedEventHandler PropertyChanged;
     
+        /// <summary>
+        /// gives image to use for the histroy
+        /// </summary>
         public ImageSource Source
         {
             get
@@ -49,8 +52,8 @@ namespace PrototypeOne
                         RectangleGeometry rectangle = new RectangleGeometry(rect);
                         GeometryDrawing drawing = new GeometryDrawing();
 
-                        drawing.Brush = block.Fill.Brush;
-                        Pen mypen = new Pen(block.Fill.Brush, 0.1);
+                        drawing.Brush = block.BackGroundBrush;
+                        Pen mypen = new Pen(block.BackGroundBrush, 0.1);
                         drawing.Pen = mypen;
                         drawing.Geometry = rectangle;
 
@@ -87,6 +90,7 @@ namespace PrototypeOne
         }
         /// <summary>
         /// returns a new canvas that the menu is drawn on
+        /// because the same canvas cannot be added to the window twice
         /// </summary>
         /// <returns></returns>
         public  Canvas DrawNewMenu()
@@ -100,12 +104,11 @@ namespace PrototypeOne
         /// </summary>
         /// <param name="children">list used to populate the menu</param>
         /// <param name="creator">the square that is linked with the button that created the treemenu</param>
-        /// <param name="ParentList">the list the treemenu is placed in</param>
+        /// <param name="ParentList">the list of menus this treemenu will be placed in</param>
         public TreeMenu(SquareList children, Square creator, List<Menu.Menu> ParentList)
             : base(children)
         {
             breadCrumbs = new List<SurfaceButton>();
-            this.children = children;
             this.height = SurfaceWindow1.treeHeight;
             this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
@@ -116,17 +119,23 @@ namespace PrototypeOne
 
             SurfaceButton crumb = new SurfaceButton();
             crumb.Height = 0.2 * height;
-            crumb.Background = creator.Button.Background;
-            crumb.Foreground = creator.GetTextBlockTop().Foreground;
-            crumb.Content = creator.GetTextBlockNoTransform().Text;
+            crumb.Background = creator.BackGroundBrush;
+            crumb.Foreground = creator.TextBrush;
+            crumb.Content = creator.Name;
             crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
             breadCrumbs.Add(crumb);
             canvas.Children.Add(crumb);
 
             Exit = new SurfaceButton();
-            //Exit.Background = Brushes.Red;
-            //Exit.Foreground = Brushes.White;
-
+            try
+            {//this file is in bin/ debug or release directories
+                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
+                Exit.Background = buttonBrush;
+            }
+            catch (Exception e)
+            {
+                Exit.Content = e.Message;
+            }
             Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
 
             canvas.Children.Add(Exit);
@@ -135,22 +144,20 @@ namespace PrototypeOne
             myTimer.Tick += new EventHandler(myTimer_Tick);
             myTimer.Interval = 20000;
             myTimer.Enabled = true;
-            try
-            {//this file is in bin/ debug or release directories
-                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));   
-                Exit.Background = buttonBrush;
-            }
-            catch (Exception e)
-            {
-                Exit.Content = e.Message;
-            }
+            
             FillDrawing();
         }
-        public TreeMenu(SquareList children, List<SurfaceButton> oldCrumbs, List<Menu.Menu> ParentList)
+        /// <summary>
+        /// used in the cloning process
+        /// </summary>
+        /// <param name="children">children that are to be cloned</param>
+        /// <param name="oldCrumbs">crumbs in the other treemenu</param>
+        /// <param name="ParentList">the list of menus that this new menu will be added to</param>
+        private TreeMenu(SquareList children, List<SurfaceButton> oldCrumbs, List<Menu.Menu> ParentList)
             : base(children)
         {
             breadCrumbs = new List<SurfaceButton>();
-            this.children = Catagory.createSquareList(children);
+            this.children = SquareList.createSquareList(children);
             this.height = SurfaceWindow1.treeHeight;
             this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
@@ -171,16 +178,6 @@ namespace PrototypeOne
                 canvas.Children.Add(crumb);
             }
             Exit = new SurfaceButton();
-            
-
-            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
-
-            canvas.Children.Add(Exit);
-            SizeCrumbs();
-            myTimer = new Timer();
-            myTimer.Tick += new EventHandler(myTimer_Tick);
-            myTimer.Interval = 20000;
-            myTimer.Enabled = true;
             try
             {//this file is in bin/ debug or release directories
                 ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
@@ -190,6 +187,16 @@ namespace PrototypeOne
             {
                 Exit.Content = e.Message;
             }
+
+            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
+
+            canvas.Children.Add(Exit);
+            SizeCrumbs();
+            myTimer = new Timer();
+            myTimer.Tick += new EventHandler(myTimer_Tick);
+            myTimer.Interval = 20000;
+            myTimer.Enabled = true;
+            
             FillDrawing();
         }
         /// <summary>
@@ -226,9 +233,9 @@ namespace PrototypeOne
                 child.ReDraw(width, height);
 
                 SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.Button.Background;
-                crumb.Foreground = creator.GetTextBlockTop().Foreground;
-                crumb.Content = creator.GetTextBlockNoTransform().Text;
+                crumb.Background = creator.BackGroundBrush;
+                crumb.Foreground = creator.TextBrush;
+                crumb.Content = creator.Name;
                 crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
                 breadCrumbs.Add(crumb);
                 canvas.Children.Add(crumb);
@@ -240,9 +247,9 @@ namespace PrototypeOne
             else
             {
                 SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.Button.Background;
-                crumb.Foreground = creator.GetTextBlockTop().Foreground;
-                crumb.Content = creator.GetTextBlockNoTransform().Text;
+                crumb.Background = creator.BackGroundBrush;
+                crumb.Foreground = creator.TextBrush;
+                crumb.Content = creator.Name;
                 crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
                 breadCrumbs.Add(crumb);
                 canvas.Children.Add(crumb);
@@ -383,18 +390,25 @@ namespace PrototypeOne
             foreach (Square block in children)
             {
                SurfaceButton button = new SurfaceButton();
-                button.Background = block.Fill.Brush;
+                button.Background = block.BackGroundBrush;
                 button.Height = block.Height;
                 button.Width = block.Width;
                 button.RenderTransform = new TranslateTransform(block.X, block.Y);
-                //button.Content = block.GetTextBlockNoTransform();
-                button.Foreground = block.Fill.TextColor;
+                button.Foreground = block.TextBrush;
                 button.BorderBrush = Brushes.Black;
                 button.BorderThickness = new Thickness(20);
                 block.Button = button;
 
                 canvas.Children.Add(button);
-                canvas.Children.Add(block.GetTextBlock());
+                
+                if (children.Count() == 1)
+                {
+                    canvas.Children.Add(block.GetTextBlockTop());
+                }
+                else
+                {
+                    canvas.Children.Add(block.GetTextBlock());
+                }
                
             }
         }
@@ -628,6 +642,10 @@ namespace PrototypeOne
             }
             interactive = false;
         }
+        /// <summary>
+        /// stoping the time prevents the menu from being redeleted
+        /// before the garbage collector properly removes it
+        /// </summary>
         public void StopTimer()
         {
             if (myTimer != null)
@@ -647,6 +665,11 @@ namespace PrototypeOne
             }
             return base.ToString()+" TreeMenu: "+list;
         }         
+
+        /// <summary>
+        /// allows for updating the history
+        /// </summary>
+        /// <param name="property"></param>
          public void NotifyChange(string property)
         {
             if (PropertyChanged != null)
@@ -655,6 +678,11 @@ namespace PrototypeOne
             }
         }
 
+        /// <summary>
+        /// create a new tree menu based on 
+        /// this treeMenu
+        /// </summary>
+        /// <returns></returns>
          public TreeMenu Clone()
          {
              TreeMenu newmenu = new TreeMenu(children, breadCrumbs, ParentList);
@@ -662,13 +690,17 @@ namespace PrototypeOne
 
              return newmenu;
          }
-         public void addChildOf(TreeMenu menu)
+        /// <summary>
+        /// adds children to newly created clones
+        /// </summary>
+        /// <param name="menu">menu that has children to be coppied from</param>
+         private void addChildOf(TreeMenu menu)
          {
              if (menu.child == null)
              {
                  return;
              }
-             child = new TreeMenu(Catagory.createSquareList(menu.child.children));
+             child = new TreeMenu(SquareList.createSquareList(menu.child.children));
              child.addChildOf(menu.child);
          }
     }

@@ -33,7 +33,7 @@ namespace PrototypeOne
 
           Path circle = new Path();
           circle.Data = center;
-          circle.Fill = children.Get(0).Fill.Brush;
+          circle.Fill = children.Get(0).BackGroundBrush;
           circle.Stroke = Brushes.Black;
           canvas.Children.Add(circle);
           children.Get(0).Button.Content = circle;
@@ -60,7 +60,7 @@ namespace PrototypeOne
 
                 block.Button.Content = path;
 
-                path.Fill = block.Fill.Brush;
+                path.Fill = block.BackGroundBrush;
                 path.Stroke = Brushes.Black;
                
                

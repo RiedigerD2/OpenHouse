@@ -12,6 +12,10 @@ using System.IO;
 using System.Windows.Markup;
 namespace PrototypeOne
 {
+    /// <summary>
+    /// This class is used to read from the 
+    /// xml config files
+    /// </summary>
     public class Catagory
     {
         public Color TextColor { get; set; }
@@ -22,6 +26,7 @@ namespace PrototypeOne
         public string SubCatagoryFile { get; set; }
    
         public string Image { get; set; }
+        public string BackGroundImage { get; set; }
         public string Video { get; set; }
    
         public Catagory() { }
@@ -88,9 +93,8 @@ namespace PrototypeOne
             XmlSerializer serializer = new XmlSerializer(typeof(List<Catagory>));
             FileStream reader = new FileStream(file, FileMode.OpenOrCreate);
             try
-            {//simpleList=(List<Catagory>)
+            {
                 serializer.Serialize(reader, saveList);
-
             }
             catch (Exception e)
             {
@@ -98,49 +102,76 @@ namespace PrototypeOne
             }
 
         }
-
+        /// <summary>
+        /// creates a SqruarList based on simpleList
+        /// </summary>
+        /// <param name="simpleList">list of catagories typically popullated by a xml reader</param>
+        /// <returns></returns>
         public static SquareList createSquareList(List<Catagory> simpleList)
         {
             SquareList newList=new SquareList();
             for(int i=simpleList.Count()-1;i>=0;i--)
             {
                 Catagory cat = simpleList[i];
-                FillInfo info = new FillInfo(cat.BackGroundColor, cat.Title, cat.TextColor);
-                Square square = new Square(SurfaceWindow1.treeArea * cat.Ratio, info);
-                square.ratio = cat.Ratio;
+                 Square square = new Square(SurfaceWindow1.treeArea * cat.Ratio, cat.Title);
+
+                // stated in the xsd that all catagories must have at least name ratio and backGroundColor
+                square.setBackGround(cat.BackGroundColor);
+                square.Ratio = cat.Ratio;
+               
+                //set file to open if this square is followed
                 if (cat.SubCatagoryFile!=null && !cat.SubCatagoryFile.Equals(""))
                 {
                     square.SubFile = cat.SubCatagoryFile;
                 }
+
+                //provide text explanation if no file is provided to follow
                 if (cat.Explanation != null && !cat.Explanation.Equals(""))
                 {
                     square.Explanation = cat.Explanation;
                 }
+                
+                //if the text color is not set
+                //set the text color to the inverse of the background color
+                //so the text is at least visible
+                if (cat.TextColor==null || cat.TextColor.A == 0)
+                {
+                    Color textColor = new Color();
+                    textColor.ScA = 1;
+                    textColor.ScR = 1 - cat.BackGroundColor.ScR;
+                    textColor.ScG = 1 - cat.BackGroundColor.ScG;
+                    textColor.ScB = 1 - cat.BackGroundColor.ScB;
+                    square.setTextColor(textColor);
+                }
+                else
+                {
+                    square.setTextColor(cat.TextColor);
+                }
+                
+                //Images for explanation
+                if (cat.Image!=null && !cat.Image.Equals(""))
+                {
+                    square.setImage(cat.Image);
+                }
+                //video for explanation
+                if (cat.Video!=null && !cat.Video.Equals(""))
+                {
+                    square.setVideo(cat.Video);
+                }
+                //background image to use instead of backgroundcolor
+                if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))
+                {
+                    square.setBackGround(cat.BackGroundImage);
+                }
+               
+
+
+
                 newList.Add(square);
             }
             return newList;
         }
 
-        public static SquareList createSquareList(SquareList simpleList)
-        {
-            SquareList newList = new SquareList();
-            for (int i = simpleList.Count() - 1; i >= 0; i--)
-            {
-                Square cat = simpleList.Get(i);
-                FillInfo info = new FillInfo(cat.BackGround, cat.Name, ((SolidColorBrush)cat.Fill.TextColor).Color);
-                Square square = new Square(SurfaceWindow1.treeArea * cat.ratio, info);
-                square.ratio = cat.ratio;
-                if (cat.SubFile != null && !cat.SubFile.Equals(""))
-                {
-                    square.SubFile = cat.SubFile;
-                }
-                if (cat.Explanation != null && !cat.Explanation.Equals(""))
-                {
-                    square.Explanation = cat.Explanation;
-                }
-                newList.Add(square);
-            }
-            return newList;
-        }
+        
     }
 }

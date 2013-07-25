@@ -33,6 +33,7 @@ namespace PrototypeOne
         public static double treeWidth = 450;
         public static double treeArea = treeWidth * treeHeight;
         public static double MenuTileSize = 85;
+        public static int MaxMenus = 15;
         //private Menu.Menu constMenu;
         public List<Menu.Menu> MenuList;
         
@@ -47,9 +48,8 @@ namespace PrototypeOne
             AddWindowAvailabilityHandlers();
            
             CreateXAML();
-            MenuList = new List<Menu.Menu>(15);
-            Console.Out.WriteLine();
-           // MakeCenterMenu();
+            MenuList = new List<Menu.Menu>(MaxMenus);
+          
             MakeIndividualMenus();
 
             DataContext = this;
@@ -137,10 +137,11 @@ namespace PrototypeOne
             first.Ratio = 0.45;
             first.Title = "firstTitle";
 
-            first.Video = "C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv";
+            first.Video = @"C:\Users\Public\Videos\Sample Videos\Wildlife.wmv";
             first.Image = "Resources/X.jpg";
-            first.Explanation = "long string with\n to make sence i should say newline\nLol";
+            first.Explanation = "long string with\n to make sence i should say newline\nLol\n";
             first.SubCatagoryFile = "Top";
+            first.BackGroundImage = @"Resources/bond.jpg";
             second.BackGroundColor = Colors.AntiqueWhite;
             second.TextColor = Colors.Black;
             second.Ratio = 0.55;
@@ -149,14 +150,14 @@ namespace PrototypeOne
             saveList.Add(first);
             saveList.Add(second);
 
-            Catagory.WriteFile(saveList, "Information/XMLFile4.xml");
+            Catagory.WriteFile(saveList, "Information/Example.xml");
 
         }
         /// <summary>
-        /// Implemented for circular menu will no work Easily with surface buttons
+        /// Implemented for circular menu will not work Easily with surface buttons
         /// Keeping incase of another menu change
         /// </summary>
-        public void MakeCenterMenu()
+       /* public void MakeCenterMenu()
         {
             SquareList thislist = Catagory.ReadFile("Information/Top.xml");
 
@@ -172,7 +173,7 @@ namespace PrototypeOne
             centerMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
             MenuList.Add(centerMenu);
         }
-
+        */
         /// <summary>
         /// Creates one instance of the top most menu 
         /// </summary>
@@ -191,6 +192,7 @@ namespace PrototypeOne
             touchme.Content = "Touch Here To begin";
             touchme.Background = Brushes.Transparent;     
             touchme.Focusable = false;
+            touchme.Width = MenuTileSize;
             scatter.Items.Add(touchme);
             
             Canvas canvas = sideMenu.DrawMenu();
@@ -248,6 +250,7 @@ namespace PrototypeOne
         {
             IndividualMenu created;
              SurfaceButton button;
+           
              ScatterViewItem item;
 
             //left
@@ -340,6 +343,11 @@ namespace PrototypeOne
             transform.Children.Add(new TranslateTransform(place.X,place.Y));
             container.RenderTransform = transform;
         }
+        /// <summary>
+        /// binds the history information to the appropriate menu
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="menu"></param>
         private void SetUpHistory(LibraryBar container,IndividualMenu menu){
             System.Windows.Data.Binding bind = new System.Windows.Data.Binding("History");
             bind.Source = menu;
@@ -414,8 +422,11 @@ namespace PrototypeOne
                         if (map.HasExplanation(button))
                         {
                             SquareList list = new SquareList();
-                            Square sqr = new Square(1, new FillInfo(((GradientBrush)map.Get(button).Fill.Brush).GradientStops[0].Color, map.Get(button).Explanation, ((SolidColorBrush)map.Get(button).Fill.TextColor).Color));
-                            sqr.ratio = 1;
+                            Square sqr = new Square(1, map.Get(button).Explanation);
+                            Console.WriteLine("\n\n"+map.Get(button).Explanation);
+                            sqr.setBackGround(map.Get(button).BackGroundColor);
+                            sqr.setTextColor((map.Get(button).TextColor));
+                            sqr.Ratio = 1;
                             list.Add(sqr);
                             map.addChild(list,map.Get(button));
                         }
@@ -428,7 +439,7 @@ namespace PrototypeOne
                         ((IndividualMenu)menu).StopAnimation();
                     }
                     else
-                    if (MenuList.Count < 15)//maybe remove the first ones opened
+                    if (MenuList.Count < MaxMenus)//maybe remove the first ones opened
                     {
                         TouchDevice c = (TouchDevice)e.TouchDevice;
                         PlaceTreeMap(menu.FileToOpen(button), menu.Get(button), c.GetOrientation(this), c.GetPosition(this));
@@ -608,52 +619,30 @@ namespace PrototypeOne
             }
             return center;
         }
-        
-        private void DragCompletedLeft(object sender, SurfaceDragCompletedEventArgs e)
-        {
-            if (e.Cursor.CurrentTarget != leftHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
-            {
-                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
-                ((IndividualMenu)MenuList[0]).History.Move(((IndividualMenu)MenuList[0]).History.IndexOf(removed), 0);
-                e.Handled = true;
-            }
-        }
-       
-        private void DragCompletedTop(object sender, SurfaceDragCompletedEventArgs e)
-        {
-            if (e.Cursor.CurrentTarget != topHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
-            {
-                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
-                ((IndividualMenu)MenuList[1]).History.Move(((IndividualMenu)MenuList[1]).History.IndexOf(removed), 0);
-                e.Handled = true;
-            }
-        }
-      
-        private void DragCompletedRight(object sender, SurfaceDragCompletedEventArgs e)
-        {
-            if (e.Cursor.CurrentTarget != rightHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
-            {
-                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
-                ((IndividualMenu)MenuList[2]).History.Move(((IndividualMenu)MenuList[2]).History.IndexOf(removed), 0);
-                e.Handled = true;
-            }
-        }
-     
 
-        private void DragCompletedBottom(object sender, SurfaceDragCompletedEventArgs e)
+
+
+        private void DragCompleted(object sender, SurfaceDragCompletedEventArgs e)
         {
-            if (e.Cursor.CurrentTarget != bottomHistory && e.Cursor.Effects == System.Windows.DragDropEffects.Move)
+            Menu.Menu removed = e.Cursor.Data as Menu.Menu;
+            LibraryBar bar = e.Cursor.DragSource as LibraryBar;
+            ObservableCollection<Menu.Menu> collection = bar.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
+            int index = collection.IndexOf(removed);
+            collection.Remove(removed);
+            if (MenuList.Count >= MaxMenus)
             {
-                Menu.Menu removed = e.Cursor.Data as Menu.Menu;
-                ((IndividualMenu)MenuList[3]).History.Move(((IndividualMenu)MenuList[3]).History.IndexOf(removed), 0);
-                e.Handled = true;
+                collection.Insert(index,removed);   
             }
+            e.Handled = true;
         }
         
         private void Scatter_Drop(object sender, SurfaceDragDropEventArgs e)
         {
-            
+            if (MenuList.Count < MaxMenus)
+            {
                 TreeMenu old = e.Cursor.Data as TreeMenu;
+
+
                 TreeMenu map = old.Clone();
                 map.AddUpListenerToButtons(TouchUpMenu);
 
@@ -669,6 +658,15 @@ namespace PrototypeOne
                 map.ReDraw(item.Width, item.Height);
                 scatter.Items.Add(item);
                 MenuList.Add(map);
+
+                LibraryBar origin = e.Cursor.DragSource as LibraryBar;
+                ObservableCollection<Menu.Menu> collection = origin.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
+                collection.Insert(0, map);
+                if (collection.Count > 9)
+                {
+                    collection.RemoveAt(collection.Count - 1);
+                }
+            }
         }
     }
 }
