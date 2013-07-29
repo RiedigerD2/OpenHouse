@@ -53,8 +53,10 @@ namespace PrototypeOne
         public string SubFile;
         public string Explanation;
 
-        public Image Image { get; private set; }
-        public MediaElement Video { get; private set; }
+        //public Image Image { get; private set; }
+        public string ImageString;
+        //public MediaElement Video { get; private set; }
+        public string VideoString;
 
         private Brush backGroundColorBrush;
         private Brush backGroundImageBrush;
@@ -75,14 +77,7 @@ namespace PrototypeOne
 
 
 
-        public void setImage(string imageSource)
-        {
-            Image.Source = new BitmapImage(new Uri(imageSource, UriKind.Relative));
-        }
-        public void setVideo(string videoSource)
-        {
-            Video.Source = new Uri(videoSource);
-        }
+        
         public void setBackGround(Color backGroundColor){
             
             Brush brush = new LinearGradientBrush(); 
@@ -195,7 +190,7 @@ namespace PrototypeOne
             
             textBlock.Text = Name;
             textBlock.RenderTransform = new TranslateTransform(X, Y);
-            textBlock.Height = curHeight * 0.5;
+            textBlock.Height = curHeight;
             textBlock.Width = curWidth;
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;

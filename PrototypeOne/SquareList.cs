@@ -251,21 +251,14 @@ namespace PrototypeOne
                 {
                     square.Explanation = cat.Explanation;
                 }
-                //Images for explanation
-                /* if (cat.Image!=null && !cat.Image.Equals(""))
-                 {
-                     square.Image=cat.Image;
-                 }*/
-                //video for explanation
-                if (cat.Video != null && !cat.Video.Equals(""))
+                
+                if (cat.VideoString != null && !cat.VideoString.Equals(""))
                 {
-                    square.setVideo(cat.Video.Source.AbsolutePath);
+                    square.VideoString = cat.VideoString;
                 }
-                //background image to use instead of backgroundcolor
-                /*if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))
-                {
-                    square.BackGroundBrush=cat.BackGroundBrush;
-                }*/
+                if(cat.ImageString !=null && !cat.ImageString.Equals("")){
+                    square.ImageString = cat.ImageString;
+                }
                 newList.Add(square);
             }
             return newList;

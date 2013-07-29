@@ -10,7 +10,7 @@ using System.Collections;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Microsoft.Xna.Framework.Input.Touch;
+
 using System.Windows.Forms;
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
@@ -18,6 +18,7 @@ using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using PrototypeOne;
 using System.ComponentModel;
+using VideoButton;
 
 namespace PrototypeOne
 {
@@ -389,28 +390,64 @@ namespace PrototypeOne
             }
             foreach (Square block in children)
             {
-               SurfaceButton button = new SurfaceButton();
-                button.Background = block.BackGroundBrush;
-                button.Height = block.Height;
-                button.Width = block.Width;
-                button.RenderTransform = new TranslateTransform(block.X, block.Y);
-                button.Foreground = block.TextBrush;
-                button.BorderBrush = Brushes.Black;
-                button.BorderThickness = new Thickness(20);
-                block.Button = button;
 
-                canvas.Children.Add(button);
-                
                 if (children.Count() == 1)
                 {
-                    canvas.Children.Add(block.GetTextBlockTop());
+                    if (block.VideoString != null && !block.VideoString.Equals(""))
+                    {
+                       // canvas.Children.Add(block.GetTextBlockTop());
+                        VideoPlayer player = new VideoPlayer(block.VideoString);
+                        SetButton(player, block);
+                        
+                        canvas.Children.Add(player);
+                    }
+                    else if (block.ImageString != null && !block.ImageString.Equals(""))
+                    {
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+
+                        Image img = new Image();
+                        img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                        img.Stretch = Stretch.UniformToFill;
+                        img.Source = new BitmapImage(new Uri(block.ImageString, UriKind.Relative));
+                        button.Content = img;
+                        canvas.Children.Add(button);
+                        canvas.Children.Add(block.GetTextBlockTop());
+                        Console.WriteLine("button "+((Image)button.Content).Source.ToString());
+                    }
+                    else
+                    {
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+                        canvas.Children.Add(button);
+                        canvas.Children.Add(block.GetTextBlockTop());
+                    }
                 }
                 else
                 {
-                    canvas.Children.Add(block.GetTextBlock());
+                    SurfaceButton button = new SurfaceButton();
+                    SetButton(button, block);
+
+                    canvas.Children.Add(button);
+                    
+                    
+                  
+                        canvas.Children.Add(block.GetTextBlock());
+                    
+
                 }
-               
             }
+        }
+
+        private void SetButton(SurfaceButton button, Square block)
+        {
+            button.Background = block.BackGroundBrush;
+            button.Height = block.Height;
+            button.Width = block.Width;
+            button.RenderTransform = new TranslateTransform(block.X, block.Y);
+            button.Foreground = block.TextBrush;
+            button.BorderBrush = Brushes.Black;
+            block.Button = button;
         }
         /// <summary>
         /// Called after calls MakeTree
@@ -554,7 +591,7 @@ namespace PrototypeOne
             }
             else
             {
-                return children.Get(sender).Explanation!=null;
+                return children.Get(sender).Explanation != null || children.Get(sender).ImageString != null || children.Get(sender).VideoString != null;
             }
         }
         /// <summary>
@@ -568,7 +605,6 @@ namespace PrototypeOne
 
             if (sender is SurfaceButton)
             {
-                Console.Out.WriteLine("Don't You know it\n\n\n");
                 SurfaceButton button = (SurfaceButton)sender;
                 if (breadCrumbs.IndexOf(button) < breadCrumbs.Count - 1)
                 {
@@ -661,7 +697,7 @@ namespace PrototypeOne
                 if (i == breadCrumbs.Count-1)
                     list += (breadCrumbs[i].Content) + " ";
                 else
-                list += (breadCrumbs[i].Content)+", ";
+                list += (breadCrumbs[i].Content)+"/";
             }
             return base.ToString()+" TreeMenu: "+list;
         }         
@@ -702,6 +738,15 @@ namespace PrototypeOne
              }
              child = new TreeMenu(SquareList.createSquareList(menu.child.children));
              child.addChildOf(menu.child);
+         }
+
+         public override void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
+         {
+             children.addTouchUpHandler(target);
+             if (child != null)
+             {
+                 child.AddUpListenerToButtons(target);
+             }
          }
     }
 }

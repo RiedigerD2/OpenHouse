@@ -151,12 +151,12 @@ namespace PrototypeOne
                 //Images for explanation
                 if (cat.Image!=null && !cat.Image.Equals(""))
                 {
-                    square.setImage(cat.Image);
+                    square.ImageString = @"Resources/Images/" + cat.Image;
                 }
                 //video for explanation
                 if (cat.Video!=null && !cat.Video.Equals(""))
                 {
-                    square.setVideo(cat.Video);
+                    square.VideoString = cat.Video;
                 }
                 //background image to use instead of backgroundcolor
                 if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))

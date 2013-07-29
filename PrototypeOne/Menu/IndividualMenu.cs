@@ -53,10 +53,11 @@ namespace PrototypeOne.Menu
         /// <returns>Ca</returns>
         public override Canvas DrawMenu()
         {
-            if (canvas == null)
+            if (canvas != null)
             {
-                canvas = new Canvas();
+                return canvas;
             }
+            canvas = new Canvas();
             ScatterViewItem sizeItem=new ScatterViewItem();
             double X = -(SurfaceWindow1.MenuTileSize * (double)children.Count() / 2) + 0.5 * SurfaceWindow1.MenuTileSize;
             for (int i = 0 ; i < children.Count();i++ ,X+=SurfaceWindow1.MenuTileSize)
@@ -100,7 +101,6 @@ namespace PrototypeOne.Menu
 
                 try
                 {
-                    Console.Out.WriteLine("\nThis\nState:" + board);
                     board.Begin();
                 }
                 catch (Exception el)

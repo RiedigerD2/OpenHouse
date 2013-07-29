@@ -56,7 +56,7 @@ namespace PrototypeOne.Menu
         /// adds event handler to all children
         /// </summary>
         /// <param name="target"></param>
-        public void AddDownListenerToButtons(EventHandler<TouchEventArgs> target)
+        public virtual void AddDownListenerToButtons(EventHandler<TouchEventArgs> target)
         {
             children.addTouchDownHandler(target);
         }
@@ -64,7 +64,7 @@ namespace PrototypeOne.Menu
         /// adds event handler to all children
         /// </summary>
         /// <param name="target"></param>
-        public void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
+        public virtual void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
         {
             children.addTouchUpHandler(target);
         }
@@ -72,7 +72,7 @@ namespace PrototypeOne.Menu
         /// adds event handler to all children
         /// </summary>
         /// <param name="target"></param>
-        public void AddEnterListenerToButtons(EventHandler<TouchEventArgs> target)
+        public virtual void AddEnterListenerToButtons(EventHandler<TouchEventArgs> target)
         {
             children.addTouchEnterHandler(target);
         }
@@ -80,7 +80,7 @@ namespace PrototypeOne.Menu
         /// adds event handler to all children
         /// </summary>
         /// <param name="target"></param>
-        public void AddLeaveListenerToButtons(EventHandler<TouchEventArgs> target)
+        public virtual void AddLeaveListenerToButtons(EventHandler<TouchEventArgs> target)
         {
             children.addTouchLeaveHandler(target);
         }

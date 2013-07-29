@@ -34,6 +34,15 @@ namespace PrototypeOne
         public static double treeArea = treeWidth * treeHeight;
         public static double MenuTileSize = 85;
         public static int MaxMenus = 15;
+
+       
+        // menu sizes
+       
+        public static double MaxHeightItem=400;
+        public static double MaxWidthItem = 560;
+        public static double MinHeightItem = 200;
+        public static double MinWidthItem = 270;
+
         //private Menu.Menu constMenu;
         public List<Menu.Menu> MenuList;
         
@@ -51,7 +60,8 @@ namespace PrototypeOne
             MenuList = new List<Menu.Menu>(MaxMenus);
           
             MakeIndividualMenus();
-
+          
+         
             DataContext = this;
         }
 
@@ -200,8 +210,19 @@ namespace PrototypeOne
             item.Content = canvas;
             scatter.Items.Add(item);
 
-
+            ElementMenu historyMenu = new ElementMenu();
+            TransformGroup transform = new TransformGroup();
+            transform.Children.Add(new ScaleTransform(-1, -1));
+            transform.Children.Add(new TranslateTransform(sideMenu.Count()*MenuTileSize*0.5+1.7*MenuTileSize,2.2*MenuTileSize));
+            historyMenu.RenderTransform = transform;
+            historyMenu.ActivationMode = ElementMenuActivationMode.AlwaysActive;
             sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
+            canvas.Children.Insert(0,historyMenu);
+            
+           
+            
+
+           
 
             return sideMenu;
         }
@@ -249,61 +270,35 @@ namespace PrototypeOne
         public void MakeIndividualMenus()
         {
             IndividualMenu created;
-             SurfaceButton button;
-           
-             ScatterViewItem item;
+            
 
             //left
             created = BuildMenu(new Point(this.Width * 0.15, this.Height / 2), 90);
             SetUpHistory(leftHistory, created);
             MoveHistory(leftHistory, new Point(this.Width * 0.15-0.5*MenuTileSize, this.Height * .5 - 0.5 * (created.Count() * MenuTileSize)), 90);
-            button = new SurfaceButton();
-            item = NonMovingItemFactory(new Point(this.Width * 0.15 -  MenuTileSize, this.Height * .5 + 0.5* (created.Count() * MenuTileSize)), 90);
-            button.Background = Brushes.Transparent;
-            button.Content = "History";
-            item.Content = button;
-            item.Background = Brushes.Transparent;
-            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryLeft);
-            scatter.Items.Add(item);
+            created.DrawMenu().Children[0].PreviewTouchDown+=new EventHandler<TouchEventArgs>(ShowHistoryLeft);
 
             //top
             created=BuildMenu(new Point(this.Width / 2, this.Height * 0.2), 180);
             SetUpHistory(topHistory, created);
             MoveHistory(topHistory, new Point(this.Width * 0.5 + 0.5 * (created.Count() * MenuTileSize), this.Height * 0.2 - 0.5 * MenuTileSize), 180);
-            button = new SurfaceButton();
-            item = NonMovingItemFactory(new Point(this.Width * 0.5 - 0.5 * (created.Count() * MenuTileSize), this.Height * 0.2 -  MenuTileSize), 180);
-            button.Background = Brushes.Transparent;
-            button.Content = "History";
-            item.Content = button;
-            item.Background = Brushes.Transparent;
-            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryTop);
-            scatter.Items.Add(item);
+            created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryTop);
 
             //right
             created = BuildMenu(new Point(this.Width * 0.85, this.Height / 2), -90);
             SetUpHistory(rightHistory, created);
             MoveHistory(rightHistory, new Point(this.Width * 0.85 + 0.5 * MenuTileSize, this.Height * 0.5 + 0.5 * (created.Count() * MenuTileSize)), -90);
-            button = new SurfaceButton();
-            item = NonMovingItemFactory(new Point(this.Width * 0.85 + MenuTileSize, this.Height * 0.5 - 0.5 * (created.Count() * MenuTileSize)), -90);
-            button.Background = Brushes.Transparent;
-            button.Content = "History";
-            item.Content = button;
-            item.Background = Brushes.Transparent;
-            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryRight);
-            scatter.Items.Add(item);
+            created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryRight);
+              
 
             //bottom
             created = BuildMenu(new Point(this.Width *0.5, this.Height * 0.75), 0);
             SetUpHistory(bottomHistory, created);
             MoveHistory(bottomHistory, new Point(this.Width * 0.5 - 0.5 * (created.Count() * MenuTileSize), this.Height * 0.75 + 0.5 * MenuTileSize), 0);
-            button = new SurfaceButton();
-            item = NonMovingItemFactory(new Point(this.Width * 0.5 + 0.5 * (created.Count() * MenuTileSize), this.Height * 0.75 + MenuTileSize), 0);
-            button.Background = Brushes.Transparent;
-            button.Content = "History";
-            item.Content=button;
-            item.Background = Brushes.Transparent;
-            item.PreviewTouchUp += new EventHandler<TouchEventArgs>(ShowHistoryBottom);
-            scatter.Items.Add(item);
+            created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryBottom);
+            
+            
+            
         }
 
        
@@ -341,6 +336,8 @@ namespace PrototypeOne
             transform.Children.Add(new ScaleTransform(0.45, 0.35));
             transform.Children.Add(new RotateTransform(angle)); 
             transform.Children.Add(new TranslateTransform(place.X,place.Y));
+
+            container.ToolTip = "History";
             container.RenderTransform = transform;
         }
         /// <summary>
@@ -373,7 +370,10 @@ namespace PrototypeOne
             ScatterViewItem item = new ScatterViewItem();
             item.Center = findPosition( parent,  angle);
             item.Orientation = angle + 90;
-          
+            item.MinHeight = MinHeightItem;
+            item.MinWidth = MinWidthItem;
+            item.MaxHeight = MaxHeightItem;
+            item.MaxWidth = MaxWidthItem;
             item.ContainerManipulationDelta +=new ContainerManipulationDeltaEventHandler(OnManipulation);
 
             item.Width = treeWidth;
@@ -413,7 +413,7 @@ namespace PrototypeOne
                     TreeMenu map = (TreeMenu)menu;
                     if (file != null && !file.Equals(""))
                     {
-                        Console.Out.WriteLine("\n\nfile Exists as:\n" + file);
+                       
                         TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file),map.Get(button));
                         childAdded.AddUpListenerToButtons(TouchUpMenu);   
                     }
@@ -423,12 +423,23 @@ namespace PrototypeOne
                         {
                             SquareList list = new SquareList();
                             Square sqr = new Square(1, map.Get(button).Explanation);
-                            Console.WriteLine("\n\n"+map.Get(button).Explanation);
+                            if (map.Get(button).VideoString != null)
+                            {
+                                sqr.VideoString = map.Get(button).VideoString;
+                            }
+                            if (map.Get(button).ImageString != null)
+                            {
+                                Console.WriteLine(map.Get(button).ImageString);
+                                sqr.ImageString = map.Get(button).ImageString;
+                            }
                             sqr.setBackGround(map.Get(button).BackGroundColor);
                             sqr.setTextColor((map.Get(button).TextColor));
+                         
                             sqr.Ratio = 1;
                             list.Add(sqr);
-                            map.addChild(list,map.Get(button));
+                            TreeMenu child=map.addChild(list,map.Get(button));
+                            
+                            
                         }
                     }
                 }
@@ -490,10 +501,10 @@ namespace PrototypeOne
         private void OnManipulation(object sender, ContainerManipulationDeltaEventArgs e)
         {
             ScatterViewItem item = (ScatterViewItem)sender;
-            
+            Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
             if (item.Center.X <= -item.Width * 0.10 || item.Center.Y <= -item.Height * 0.10 || item.Center.Y >= this.Height + item.Height * 0.10 || item.Center.X >= this.Width + item.Width * 0.10)
             {
-                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+
                 if (menu != null)
                 {
                     ((TreeMenu)menu).StopTimer();
@@ -502,13 +513,16 @@ namespace PrototypeOne
                     Log.Deleted(DeletionMethod.Swipe, menu);
                 }
             }
-            if (e.ScaleFactor != 1)
+            else
             {
-
-                Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
-                ((TreeMenu)menu).ReDraw(item.Width, item.Height);
-                ((TreeMenu)menu).SizeCrumbs();
-                Log.Resized(menu, e.ScaleFactor);
+                if (e.ScaleFactor != 1)
+                {
+                    ((TreeMenu)menu).ReDraw(item.Width, item.Height);
+                    ((TreeMenu)menu).SizeCrumbs();
+                    Log.Resized(menu, item.Width, item.Height);
+                    menu.interactive = true;
+                } 
+                Log.Moved(item.Center,item.Orientation,menu);
             }
         }
        /// <summary>
@@ -626,14 +640,17 @@ namespace PrototypeOne
         {
             Menu.Menu removed = e.Cursor.Data as Menu.Menu;
             LibraryBar bar = e.Cursor.DragSource as LibraryBar;
-            ObservableCollection<Menu.Menu> collection = bar.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
-            int index = collection.IndexOf(removed);
-            collection.Remove(removed);
-            if (MenuList.Count >= MaxMenus)
+            if (e.Cursor.CurrentTarget != bar)
             {
-                collection.Insert(index,removed);   
+                ObservableCollection<Menu.Menu> collection = bar.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
+                int index = collection.IndexOf(removed);
+                collection.Remove(removed);
+                if (MenuList.Count >= MaxMenus)
+                {
+                    collection.Insert(index, removed);
+                }
+                e.Handled = true;
             }
-            e.Handled = true;
         }
         
         private void Scatter_Drop(object sender, SurfaceDragDropEventArgs e)
@@ -649,7 +666,10 @@ namespace PrototypeOne
                 ScatterViewItem item = new ScatterViewItem();
                 item.Center = e.Cursor.GetPosition(scatter);
                 item.Orientation = e.Cursor.GetOrientation(scatter);
-
+                item.MinHeight = MinHeightItem;
+                item.MinWidth = MinWidthItem;
+                item.MaxHeight = MaxHeightItem;
+                item.MaxWidth = MaxWidthItem;
                 item.ContainerManipulationDelta += new ContainerManipulationDeltaEventHandler(OnManipulation);
 
                 item.Width = treeWidth;
@@ -666,6 +686,7 @@ namespace PrototypeOne
                 {
                     collection.RemoveAt(collection.Count - 1);
                 }
+                Log.FromHistory(map);
             }
         }
     }

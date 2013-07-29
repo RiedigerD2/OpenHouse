@@ -8,7 +8,8 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-
+using System.Windows.Media;
+using System.Windows;
 namespace PrototypeOne
 {
     public enum DeletionMethod{Swipe,TimeOut,X};
@@ -26,7 +27,7 @@ namespace PrototypeOne
             lock (mutex)
             {
                 StreamWriter writer = new StreamWriter("LogFile.txt", true);
-                string TimeDevice=DateTime.Now.TimeOfDay.ToString()+"; ";
+                string TimeDevice=DateTime.Now.TimeOfDay.ToString()+"; Interacted with : ";
                 if (Td.GetIsFingerRecognized())
                 {
                     TimeDevice+= "TypeOfDevice: Finger";
@@ -40,11 +41,16 @@ namespace PrototypeOne
                     {
                         TimeDevice+="TypeOfDevice: Blob";
                     }
-                    writer.WriteLine(TimeDevice+" X={0}, Y={1} Angle={2} ; Interacted With: " + touched.ToString()+"; Container:" + Container.ToString() , Td.GetPosition((SurfaceWindow1)mutex).X, Td.GetPosition((SurfaceWindow1)mutex).Y,Td.GetOrientation((SurfaceWindow1)mutex));
+                    writer.WriteLine(TimeDevice+" X={0}, Y={1} Angle={2} ; " + Container.ToString()+"; " + touched.ToString() , Td.GetPosition((SurfaceWindow1)mutex).X, Td.GetPosition((SurfaceWindow1)mutex).Y,Td.GetOrientation((SurfaceWindow1)mutex));
                     writer.Close();
             }    
         }
-
+        public static void Moved(Point center, double angle,Menu.Menu menu)
+        {
+            StreamWriter writer = new StreamWriter("LogFile.txt", true);
+            writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; Moved: X={0}, Y={1} Angle={2} ; "+menu.ToString() , center.X,center.Y,angle);
+            writer.Close();
+        }
         /// <summary>
         /// logs for tree menu deletion
         /// </summary>
@@ -53,21 +59,25 @@ namespace PrototypeOne
         public static void Deleted(DeletionMethod method, Menu.Menu menu)
         {
             StreamWriter writer = new StreamWriter("LogFile.txt", true);
-            writer.WriteLine(DateTime.Now.TimeOfDay.ToString()+"; "+menu.ToString()+"; Deleted: "+method.ToString());
+            writer.WriteLine(DateTime.Now.TimeOfDay.ToString()+"; Deleted: "+method.ToString()+"; "+menu.ToString());
             writer.Close();
         }
 
         /// <summary>
         /// logs when menus are resized
         /// </summary>
-        /// <param name="menu"></param>
-        /// <param name="factor"></param>
-        public static void Resized( Menu.Menu menu,double factor)
+        /// <param name="menu">new width</param>
+        /// <param name="factor">new height</param>
+        public static void Resized( Menu.Menu menu,double width,double height)
         {
             StreamWriter writer = new StreamWriter("LogFile.txt", true);
-            writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; Resized:" + menu.ToString()+" Factor:"+ factor);
+            writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; Resized: " + " Width:"+ width +" Height: "+ height+"; "+menu.ToString());
             writer.Close();
         }
-
+        public static void FromHistory(Menu.Menu menu){
+            StreamWriter writer = new StreamWriter("LogFile.txt", true);
+            writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; From History: " + menu.ToString());
+            writer.Close();
+        }
     }
 }

@@ -34,12 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.Surface.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -52,18 +47,12 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Windows7.Multitouch">
-      <HintPath>..\..\Win7RC_MT\Mutitouch\Windows7.Multitouch\bin\Release\Windows7.Multitouch.dll</HintPath>
-    </Reference>
-    <Reference Include="Windows7.Multitouch.WPF">
-      <HintPath>..\..\Win7RC_MT\Mutitouch\Windows7.Multitouch.WPF\bin\Release\Windows7.Multitouch.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Microsoft.Surface" />
     <Reference Include="Microsoft.Surface.Presentation" />
     <Reference Include="Microsoft.Surface.Presentation.Generic" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -75,6 +64,9 @@
     <Compile Include="Menu\IndividualMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\TreeMenu.cs" />
+    <Compile Include="VideoPlayer.xaml.cs">
+      <DependentUpon>VideoPlayer.xaml</DependentUpon>
+    </Compile>
     <Page Include="Resources\Themes\Macewan.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,6 +86,10 @@
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VideoPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -129,6 +125,11 @@
     <Content Include="PrototypeOne.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\antiHero.jpg" />
+    <Resource Include="Resources\Images\sharp.jpg" />
+    <Resource Include="Resources\Images\shrek.jpg" />
+    <Resource Include="Resources\Images\spider.jpg" />
+    <Resource Include="Resources\Images\colorRandom.jpg" />
     <Resource Include="README.txt" />
     <Resource Include="Resources\Images\X.jpg" />
     <Resource Include="Resources\Information\XMLFile1.xml" />

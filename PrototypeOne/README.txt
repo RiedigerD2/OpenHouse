@@ -36,7 +36,7 @@ Optional Fields
 
 	SubCatagoryFile: File name of an xml file in either \bin\Debug\Information or \bin\Release\Information
 			depending on the run the extension must be included in the name
-	Image: string relative path from \bin\Debug or \bin\Release to an image to be displayed 
+	Image: string relative path from PrototypeOne/Resources/Images to an image to be displayed 
 	
 	Video: string relative path from \bin\Debug or \bin\Release to an video to be displayed
 

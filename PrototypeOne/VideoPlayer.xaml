@@ -1,0 +1,48 @@
+﻿<s:SurfaceButton x:Class="VideoButton.VideoPlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:s="http://schemas.microsoft.com/surface/2008"
+        Width="500" Height="307.5">
+    
+    <s:SurfaceButton.Resources>
+        <Storyboard x:Key="Pause">
+            <DoubleAnimationUsingKeyFrames
+                    BeginTime="00:00:00"
+                    Storyboard.TargetName="PlayPath"
+                    Storyboard.TargetProperty="Opacity">
+                <SplineDoubleKeyFrame KeyTime="00:00:00.300" Value="1.0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Play">
+            <DoubleAnimationUsingKeyFrames
+                    BeginTime="00:00:00.100" 
+                    Storyboard.TargetName="PausePath"
+                    Storyboard.TargetProperty="Opacity">
+                <SplineDoubleKeyFrame KeyTime="00:00:00.500" Value="0.5" />
+                <SplineDoubleKeyFrame KeyTime="00:00:01.000" Value="0.0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames
+                    BeginTime="00:00:00" 
+                    Storyboard.TargetName="PlayPath"
+                    Storyboard.TargetProperty="Opacity">
+                <SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="0.0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </s:SurfaceButton.Resources>
+    
+    <Grid Background="Transparent">
+        <MediaElement x:Name="Media" Margin="30" Stretch="UniformToFill"  HorizontalAlignment="Center"
+                      Source="{Binding Video}" LoadedBehavior="Manual" Volume="0" />
+        <Path x:Name="PlayPath" Stroke="White" StrokeThickness="2" 
+              Fill="#33FFFFFF" Data="M 0,0 L 40,30 0,60 Z" 
+              HorizontalAlignment="Center" VerticalAlignment="Center"
+              IsHitTestVisible="False" />
+        <Path x:Name="PausePath" Stroke="White" StrokeThickness="2"
+              Fill="#33FFFFFF" Opacity="0" 
+              Data="M 0,0 L 15,0 15,60 0,60 Z M 25,0 L 40,0 40,60 25,60 Z"
+              HorizontalAlignment="Center" VerticalAlignment="Center" 
+              IsHitTestVisible="False" />
+    </Grid>
+</s:SurfaceButton>
