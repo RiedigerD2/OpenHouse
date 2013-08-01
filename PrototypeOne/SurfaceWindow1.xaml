@@ -10,24 +10,40 @@
         <DataTemplate x:Key="MapImage">
             <Grid Background="Black">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="175"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*">
-                    </RowDefinition>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Image  Source="{Binding Source}" Grid.Row="0"/>
-                <TextBlock  Text="{Binding Name}" Grid.Row="1" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" FontSize="10"/>
+                <TextBlock  Text="{Binding Name}" Grid.Row="1" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" FontSize="19"/>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="Map">
+            <Grid Background="Transparent">
+                <Image  Source="{Binding Source}" Grid.Row="0"/>
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="HistoryView" >
-            <Grid Width="100" Height="100">
-               
-            </Grid>
-        </DataTemplate>
+        
 
+        <Style x:Key="CursorStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="ContentTemplate"
+                Value="{StaticResource Map}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}">
+                        </ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </s:SurfaceWindow.Resources>
     <Grid Style="{StaticResource MainGrid}">
 
@@ -53,11 +69,11 @@
         </Border>
 
         <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Logo}">
-            <Image Source="Resources/Images/Logo/macewanlogo.png" ></Image>
+            <Image Source="Resources/Images/Logo/LogoOnlyb.png" ></Image>
         </Border>
 
         <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource Logo}">
-            <Image Source="Resources/Images/Logo/macewanlogo.png" RenderTransformOrigin="0.5,0.5">
+            <Image Source="Resources/Images/Logo/LogoOnlyb.png" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <ScaleTransform ScaleX="-1" ScaleY="-1" />
                 </Image.RenderTransform>
@@ -79,25 +95,53 @@
         <Canvas Grid.Column="0" Grid.Row="0" >
             <Canvas.Children>
 
-                <s:LibraryBar  Name="leftHistory" Visibility="Hidden"
+                <s:SurfaceListBox  Name="leftHistory" Visibility="Hidden"
                       s:SurfaceDragDrop.DragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" >
-                </s:LibraryBar>
+                   ItemTemplate="{StaticResource MapImage}" 
+                                AllowDrop="False" Background="Black"
+                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                    <s:SurfaceListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </s:SurfaceListBox.ItemsPanel>
+                </s:SurfaceListBox>
 
-                <s:LibraryBar  Name="topHistory"  Visibility="Hidden"
+                <s:SurfaceListBox  Name="topHistory"  Visibility="Hidden"
                       s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" >
-                </s:LibraryBar>
+                   ItemTemplate="{StaticResource MapImage}" 
+                                AllowDrop="False" Background="Black"
+                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                    <s:SurfaceListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </s:SurfaceListBox.ItemsPanel>
+                </s:SurfaceListBox>
 
-                <s:LibraryBar  Name="rightHistory" Visibility="Hidden"
+                <s:SurfaceListBox  Name="rightHistory" Visibility="Hidden"
                       s:SurfaceDragDrop.PreviewDragCompleted ="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" >
-                </s:LibraryBar>
+                   ItemTemplate="{StaticResource MapImage}" 
+                               AllowDrop="False" Background="Black"
+                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                    <s:SurfaceListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </s:SurfaceListBox.ItemsPanel>
+                </s:SurfaceListBox>
 
-                <s:LibraryBar  Name="bottomHistory"  Visibility="Hidden"
+                <s:SurfaceListBox  Name="bottomHistory"  Visibility="Hidden"
                       s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" >
-                </s:LibraryBar>
+                   ItemTemplate="{StaticResource MapImage}" 
+                         AllowDrop="False" Background="Black"
+                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                    <s:SurfaceListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </s:SurfaceListBox.ItemsPanel>
+                </s:SurfaceListBox>
 
             </Canvas.Children>
         </Canvas>

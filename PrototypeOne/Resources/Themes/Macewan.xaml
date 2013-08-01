@@ -10,10 +10,10 @@
                          StartPoint="0,0"
                          EndPoint="1,1" >
                 <!-- gradient stop colors from macewan website -->
-                <!--light blue -->
-                <GradientStop Color="#1262AB" Offset="1" />
-                <!-- navy blue -->
-                <GradientStop Color="#11163E" Offset="0" />
+                <!--light blue 1262AB-->
+                <GradientStop Color="#7ac755" Offset="1" />
+                <!-- navy blue --> 
+                <GradientStop Color="#458f21" Offset="0" />
 
             </LinearGradientBrush>
         </Style.Resources>
@@ -23,7 +23,7 @@
 
     <!-- defined style for the Grid Outer Borders -->
     <Style  x:Key="OuterRow" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#0055A0" />
+        <Setter Property="BorderBrush" Value="#426b2e" />
         <Setter Property="BorderThickness" Value="0,10,0,10" />
         <Setter Property="Grid.RowSpan" Value="1" />
         <Setter Property="Grid.ColumnSpan" Value="5" />
@@ -52,7 +52,7 @@
 
     <!-- defined style for the logo border-->
     <Style x:Key="Logo" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#0055A0" />
+        <Setter Property="BorderBrush" Value="#255d0b" />
         <Setter Property="BorderThickness" Value="0,10,0,10" />
         <Setter Property="Grid.RowSpan" Value="1" />
         <Setter Property="Grid.ColumnSpan" Value="1" />

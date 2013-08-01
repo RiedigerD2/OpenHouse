@@ -80,7 +80,7 @@ namespace VideoButton
                 Media.Pause();
                 paused = true;
             }
-            e.Handled = true;
+            
         }
     }
 }

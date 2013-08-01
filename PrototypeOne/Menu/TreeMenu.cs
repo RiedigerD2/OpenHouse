@@ -83,22 +83,12 @@ namespace PrototypeOne
         }
         /// <summary>
         /// returns the canvas that the menu is drawn on
+        /// this should always be the same Canvas
         /// </summary>
         /// <returns></returns>
         public override Canvas DrawMenu()
         {
             return canvas;
-        }
-        /// <summary>
-        /// returns a new canvas that the menu is drawn on
-        /// because the same canvas cannot be added to the window twice
-        /// </summary>
-        /// <returns></returns>
-        public  Canvas DrawNewMenu()
-        {
-            canvas = null;
-            FillDrawing();
-            return DrawMenu();
         }
         /// <summary>
         /// Creates new treeMenu
@@ -117,35 +107,11 @@ namespace PrototypeOne
             MakeTree(0, width, height-0.2*height);
 
             this.ParentList = ParentList;
-
-            SurfaceButton crumb = new SurfaceButton();
-            crumb.Height = 0.2 * height;
-            crumb.Background = creator.BackGroundBrush;
-            crumb.Foreground = creator.TextBrush;
-            crumb.Content = creator.Name;
-            crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-            breadCrumbs.Add(crumb);
-            canvas.Children.Add(crumb);
-
-            Exit = new SurfaceButton();
-            try
-            {//this file is in bin/ debug or release directories
-                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
-                Exit.Background = buttonBrush;
-            }
-            catch (Exception e)
-            {
-                Exit.Content = e.Message;
-            }
-            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
-
-            canvas.Children.Add(Exit);
+          
+            CreateExit();
+            CreateCrumb(creator); 
             SizeCrumbs();
-            myTimer = new Timer();
             myTimer.Tick += new EventHandler(myTimer_Tick);
-            myTimer.Interval = 20000;
-            myTimer.Enabled = true;
-            
             FillDrawing();
         }
         /// <summary>
@@ -178,26 +144,9 @@ namespace PrototypeOne
                 breadCrumbs.Add(crumb);
                 canvas.Children.Add(crumb);
             }
-            Exit = new SurfaceButton();
-            try
-            {//this file is in bin/ debug or release directories
-                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
-                Exit.Background = buttonBrush;
-            }
-            catch (Exception e)
-            {
-                Exit.Content = e.Message;
-            }
-
-            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
-
-            canvas.Children.Add(Exit);
-            SizeCrumbs();
-            myTimer = new Timer();
-            myTimer.Tick += new EventHandler(myTimer_Tick);
-            myTimer.Interval = 20000;
-            myTimer.Enabled = true;
-            
+            CreateExit();
+            SizeCrumbs();           
+            myTimer.Tick += new EventHandler(myTimer_Tick); 
             FillDrawing();
         }
         /// <summary>
@@ -227,42 +176,24 @@ namespace PrototypeOne
         /// <returns></returns>
         public TreeMenu addChild(SquareList grandChildren, Square creator)
         {
+            CreateCrumb(creator);
+            TreeMenu NewChild;
             if (child == null)
             {
-                child = new TreeMenu(grandChildren);
+                child = NewChild = new TreeMenu(grandChildren);
                 canvas.Children.Add(child.DrawMenu());
                 child.ReDraw(width, height);
-
-                SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.BackGroundBrush;
-                crumb.Foreground = creator.TextBrush;
-                crumb.Content = creator.Name;
-                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-                breadCrumbs.Add(crumb);
-                canvas.Children.Add(crumb);
-                SizeCrumbs();
-                NotifyChange("Source");
-                NotifyChange("Name");
-                return child;
             }
             else
             {
-                SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.BackGroundBrush;
-                crumb.Foreground = creator.TextBrush;
-                crumb.Content = creator.Name;
-                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-                breadCrumbs.Add(crumb);
-                canvas.Children.Add(crumb);
-                SizeCrumbs();
-                
-                TreeMenu grandchild= child.addChild(grandChildren);
-                NotifyChange("Source");
-                NotifyChange("Name");
-                return grandchild;
+
+                NewChild= child.addChild(grandChildren);
             }
-            
+            NotifyChange("Source");
+            NotifyChange("Name");
+            return NewChild;
         } 
+
         /// <summary>
         /// Only to be used in the public addchild
         /// this is to ensure the breadcrumbs and parentlist is presevered
@@ -282,6 +213,36 @@ namespace PrototypeOne
             else
                 return child.addChild(grandChildren);
 
+        }
+        /// <summary>
+        /// Adds A new crumb based on creator
+        /// </summary>
+        /// <param name="creator">created the new menu</param>
+        private void CreateCrumb(Square creator){
+                
+                SurfaceButton crumb = new SurfaceButton();
+                crumb.Background = creator.BackGroundBrush;
+                crumb.Foreground = creator.TextBrush;
+                crumb.Content = creator.Name;
+                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
+                breadCrumbs.Add(crumb);
+                canvas.Children.Add(crumb);
+                SizeCrumbs();
+        }
+        private void CreateExit()
+        {
+            Exit = new SurfaceButton();
+            try
+            {//this file is in bin/ debug or release directories
+                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
+                Exit.Background = buttonBrush;
+            }
+            catch (Exception e)
+            {
+                Exit.Content = e.Message;
+            }
+            Exit.PreviewTouchUp += new EventHandler<TouchEventArgs>(ExitUp);
+            canvas.Children.Add(Exit);
         }
         /// <summary>
         /// Uses recursion to create a squarified treeMenu
@@ -318,17 +279,13 @@ namespace PrototypeOne
                     divisions++;
                     children.SetSameWidth(used, divisions, heightLeft);
                 } while (children.IsAverageARLess(used, divisions));
-
-
                 AddChildrenSide(widthLeft, heightLeft, used, divisions - 1);
-               
                 MakeTree(used + divisions - 1, widthLeft - children.Get(used).Width, heightLeft);
             }
             else
             {
                 int divisions = 1;
                 children.SetSameHeight(used, divisions,widthLeft);
-             
                 do
                 {
                     divisions++;
@@ -502,7 +459,6 @@ namespace PrototypeOne
         /// </summary>
         private void removeTextBlocksFromCanvas()
         {
-
             foreach (Square sqr in children)
             {
                 canvas.Children.Remove(sqr.GetTextBlock());
@@ -602,8 +558,8 @@ namespace PrototypeOne
         /// <param name="e"></param>
         private void RetraceToBreadCrumb(object sender, TouchEventArgs e)
         {
-
-            if (sender is SurfaceButton)
+            interactive = true;
+            if (sender is SurfaceButton && e.TouchDevice.GetIsFingerRecognized())
             {
                 SurfaceButton button = (SurfaceButton)sender;
                 if (breadCrumbs.IndexOf(button) < breadCrumbs.Count - 1)
@@ -655,10 +611,13 @@ namespace PrototypeOne
         //parentList
         private void ExitUp(object sender, TouchEventArgs e)
         {
-            ParentList.Remove(this);
-            ((ScatterView)((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent).Parent).Items.Remove(((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent));
-            Log.Deleted(DeletionMethod.X, this);
-            StopTimer();
+            if (e.TouchDevice.GetIsFingerRecognized())
+            {
+                ParentList.Remove(this);
+                ((ScatterView)((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent).Parent).Items.Remove(((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent));
+                Log.Deleted(DeletionMethod.X, this);
+                StopTimer();
+            }
         }
         /// <summary>
         /// Delete Menu after extended period of no use
@@ -742,6 +701,7 @@ namespace PrototypeOne
 
          public override void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
          {
+             if(children.Count()!=1)
              children.addTouchUpHandler(target);
              if (child != null)
              {

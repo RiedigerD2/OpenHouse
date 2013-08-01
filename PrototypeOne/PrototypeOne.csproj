@@ -125,6 +125,10 @@
     <Content Include="PrototypeOne.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Logo\LogoOnlyb.png" />
+    <Resource Include="Resources\Images\Logo\LogoOnlyc.jpg" />
+    <Resource Include="Resources\Images\Logo\TextLog.jpg" />
+    <Resource Include="Resources\Images\Logo\TextLogo.png" />
     <Resource Include="Resources\Images\antiHero.jpg" />
     <Resource Include="Resources\Images\sharp.jpg" />
     <Resource Include="Resources\Images\shrek.jpg" />

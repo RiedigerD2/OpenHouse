@@ -36,6 +36,9 @@ namespace PrototypeOne.Menu
         public Menu(SquareList list)
         {
             children = list;
+            myTimer = new Timer();
+            myTimer.Interval = 60000;
+            myTimer.Enabled = true;
         }
         /// <summary>
         /// 
@@ -44,6 +47,7 @@ namespace PrototypeOne.Menu
         public int Count()
         {
             return children.Count();
+
         }
         /// <summary>
         /// provide a canvas populated based on the information

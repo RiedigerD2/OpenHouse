@@ -203,8 +203,8 @@ namespace PrototypeOne
             touchme.Background = Brushes.Transparent;     
             touchme.Focusable = false;
             touchme.Width = MenuTileSize;
+            touchme.Height = MenuTileSize;
             scatter.Items.Add(touchme);
-            
             Canvas canvas = sideMenu.DrawMenu();
             canvas.VerticalAlignment = VerticalAlignment.Top;
             item.Content = canvas;
@@ -273,28 +273,28 @@ namespace PrototypeOne
             
 
             //left
-            created = BuildMenu(new Point(this.Width * 0.15, this.Height / 2), 90);
+            created = BuildMenu(new Point(this.Width * 0.125, this.Height / 2), 90);
             SetUpHistory(leftHistory, created);
-            MoveHistory(leftHistory, new Point(this.Width * 0.15-0.5*MenuTileSize, this.Height * .5 - 0.5 * (created.Count() * MenuTileSize)), 90);
+            MoveHistory(leftHistory, new Point(this.Width * 0.125-0.5*MenuTileSize, this.Height * .5 - 0.495 * (created.Count() * MenuTileSize)), 90);
             created.DrawMenu().Children[0].PreviewTouchDown+=new EventHandler<TouchEventArgs>(ShowHistoryLeft);
 
             //top
-            created=BuildMenu(new Point(this.Width / 2, this.Height * 0.2), 180);
+            created=BuildMenu(new Point(this.Width / 2, this.Height * 0.175), 180);
             SetUpHistory(topHistory, created);
-            MoveHistory(topHistory, new Point(this.Width * 0.5 + 0.5 * (created.Count() * MenuTileSize), this.Height * 0.2 - 0.5 * MenuTileSize), 180);
+            MoveHistory(topHistory, new Point(this.Width * 0.5 + 0.495 * (created.Count() * MenuTileSize), this.Height * 0.175 - 0.5 * MenuTileSize), 180);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryTop);
 
             //right
-            created = BuildMenu(new Point(this.Width * 0.85, this.Height / 2), -90);
+            created = BuildMenu(new Point(this.Width * 0.875, this.Height / 2), -90);
             SetUpHistory(rightHistory, created);
-            MoveHistory(rightHistory, new Point(this.Width * 0.85 + 0.5 * MenuTileSize, this.Height * 0.5 + 0.5 * (created.Count() * MenuTileSize)), -90);
+            MoveHistory(rightHistory, new Point(this.Width * 0.875 + 0.5 * MenuTileSize, this.Height * 0.5 + 0.495 * (created.Count() * MenuTileSize)), -90);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryRight);
               
 
             //bottom
-            created = BuildMenu(new Point(this.Width *0.5, this.Height * 0.75), 0);
+            created = BuildMenu(new Point(this.Width *0.5, this.Height * 0.798), 0);
             SetUpHistory(bottomHistory, created);
-            MoveHistory(bottomHistory, new Point(this.Width * 0.5 - 0.5 * (created.Count() * MenuTileSize), this.Height * 0.75 + 0.5 * MenuTileSize), 0);
+            MoveHistory(bottomHistory, new Point(this.Width * 0.5 - 0.495 * (created.Count() * MenuTileSize), this.Height * 0.798 + 0.5 * MenuTileSize), 0);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryBottom);
             
             
@@ -330,13 +330,12 @@ namespace PrototypeOne
             else
                 bottomHistory.Visibility = Visibility.Hidden;
         }
-        private void MoveHistory(LibraryBar container, Point place, double angle)
+        private void MoveHistory(SurfaceListBox container, Point place, double angle)
         {
             TransformGroup transform = new TransformGroup();
             transform.Children.Add(new ScaleTransform(0.45, 0.35));
             transform.Children.Add(new RotateTransform(angle)); 
             transform.Children.Add(new TranslateTransform(place.X,place.Y));
-
             container.ToolTip = "History";
             container.RenderTransform = transform;
         }
@@ -345,7 +344,9 @@ namespace PrototypeOne
         /// </summary>
         /// <param name="container"></param>
         /// <param name="menu"></param>
-        private void SetUpHistory(LibraryBar container,IndividualMenu menu){
+        private void SetUpHistory(SurfaceListBox container,IndividualMenu menu){
+            container.MaxWidth= menu.Count() * MenuTileSize* 2.2222;//2.22222 is the inverse of the scaling factor used in moveHistory
+            Console.Out.WriteLine(menu.Count());
             System.Windows.Data.Binding bind = new System.Windows.Data.Binding("History");
             bind.Source = menu;
             container.SetBinding(LibraryBar.ItemsSourceProperty, bind);
@@ -394,7 +395,7 @@ namespace PrototypeOne
         public void TouchUpMenu(object sender, TouchEventArgs e)
         {
             
-            if (sender is SurfaceButton)
+            if (sender is SurfaceButton && e.TouchDevice.GetIsFingerRecognized())
             {
                 SurfaceButton button = (SurfaceButton)sender;
                 Menu.Menu menu = FindTheMenu(button);
@@ -502,6 +503,10 @@ namespace PrototypeOne
         {
             ScatterViewItem item = (ScatterViewItem)sender;
             Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+            if (menu == null)
+            {
+                return;
+            }
             if (item.Center.X <= -item.Width * 0.10 || item.Center.Y <= -item.Height * 0.10 || item.Center.Y >= this.Height + item.Height * 0.10 || item.Center.X >= this.Width + item.Width * 0.10)
             {
 
@@ -520,9 +525,10 @@ namespace PrototypeOne
                     ((TreeMenu)menu).ReDraw(item.Width, item.Height);
                     ((TreeMenu)menu).SizeCrumbs();
                     Log.Resized(menu, item.Width, item.Height);
-                    menu.interactive = true;
+                    
                 } 
                 Log.Moved(item.Center,item.Orientation,menu);
+                menu.interactive = true;
             }
         }
        /// <summary>
@@ -639,10 +645,10 @@ namespace PrototypeOne
         private void DragCompleted(object sender, SurfaceDragCompletedEventArgs e)
         {
             Menu.Menu removed = e.Cursor.Data as Menu.Menu;
-            LibraryBar bar = e.Cursor.DragSource as LibraryBar;
+            SurfaceListBox bar = e.Cursor.DragSource as SurfaceListBox;
             if (e.Cursor.CurrentTarget != bar)
             {
-                ObservableCollection<Menu.Menu> collection = bar.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
+                ObservableCollection<Menu.Menu> collection = bar.GetValue(SurfaceListBox.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
                 int index = collection.IndexOf(removed);
                 collection.Remove(removed);
                 if (MenuList.Count >= MaxMenus)
@@ -679,8 +685,8 @@ namespace PrototypeOne
                 scatter.Items.Add(item);
                 MenuList.Add(map);
 
-                LibraryBar origin = e.Cursor.DragSource as LibraryBar;
-                ObservableCollection<Menu.Menu> collection = origin.GetValue(LibraryBar.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
+                SurfaceListBox origin = e.Cursor.DragSource as SurfaceListBox;
+                ObservableCollection<Menu.Menu> collection = origin.GetValue(SurfaceListBox.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
                 collection.Insert(0, map);
                 if (collection.Count > 9)
                 {
@@ -688,6 +694,65 @@ namespace PrototypeOne
                 }
                 Log.FromHistory(map);
             }
+        }
+
+        private void ListBox_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            FrameworkElement findSource = e.OriginalSource as FrameworkElement;
+            SurfaceListBoxItem draggedElement = null;
+
+            // Find the SurfaceListBoxItem object that is being touched.
+            while (draggedElement == null && findSource != null)
+            {
+                if ((draggedElement = findSource as SurfaceListBoxItem) == null)
+                {
+                    findSource = VisualTreeHelper.GetParent(findSource) as FrameworkElement;
+                }
+            }
+
+            if (draggedElement == null)
+            {
+                return;
+            }
+
+            //PhotoData data = draggedElement.Content as PhotoData;
+
+            // Create the cursor visual
+            ContentControl cursorVisual = new ContentControl()
+            {
+                Content = draggedElement.DataContext,
+                Style = FindResource("CursorStyle") as Style
+            };
+
+            // Create a list of input devices. Add the touches that
+            // are currently captured within the dragged element and
+            // the current touch (if it isn't already in the list).
+            List<InputDevice> devices = new List<InputDevice>();
+            devices.Add(e.TouchDevice);
+            foreach (TouchDevice touch in draggedElement.TouchesCapturedWithin)
+            {
+                if (touch != e.TouchDevice)
+                {
+                    devices.Add(touch);
+                }
+            }
+
+            // Get the drag source object
+            ItemsControl dragSource = ItemsControl.ItemsControlFromItemContainer(draggedElement);
+
+            SurfaceDragDrop.BeginDragDrop(
+                dragSource,
+                draggedElement,
+                cursorVisual,
+                draggedElement.DataContext,
+                devices,
+                System.Windows.DragDropEffects.Move);
+
+            // Prevents the default touch behavior from happening and disrupting our code.
+            e.Handled = true;
+
+            // Gray out the SurfaceListBoxItem for now. We will remove it if the DragDrop is successful.
+            draggedElement.Opacity = 0.5;
         }
     }
 }

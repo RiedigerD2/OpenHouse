@@ -40,10 +40,7 @@ namespace PrototypeOne.Menu
             : base(children)
         {
             this.board=board;
-            myTimer=new Timer();// at end of timer if no interaction has ahappened starts animation
             myTimer.Tick += new EventHandler(myTimer_Tick);
-            myTimer.Interval = 20000;
-            myTimer.Enabled=true;
         }
         
         /// <summary>
@@ -70,7 +67,7 @@ namespace PrototypeOne.Menu
                 SurfaceButton button = new SurfaceButton();
                 button.Height = SurfaceWindow1.MenuTileSize;
                 button.Width = SurfaceWindow1.MenuTileSize;
-                button.RenderTransform = new TranslateTransform(X, 0);
+                button.RenderTransform = new TranslateTransform(X, -4);//-4 hides the button bellow the menu
                 button.BorderBrush = Brushes.Black;
                 button.BorderThickness = new Thickness(0.2); 
                 sqr.Button = button;
