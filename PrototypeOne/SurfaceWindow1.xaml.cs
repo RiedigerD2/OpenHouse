@@ -40,8 +40,8 @@ namespace PrototypeOne
        
         public static double MaxHeightItem=400;
         public static double MaxWidthItem = 560;
-        public static double MinHeightItem = 200;
-        public static double MinWidthItem = 270;
+        public static double MinHeightItem = 260;
+        public static double MinWidthItem = 360;
 
         //private Menu.Menu constMenu;
         public List<Menu.Menu> MenuList;

@@ -77,7 +77,7 @@ namespace PrototypeOne.Menu
 
 
                 canvas.Children.Add(button);
-                TextBlock block = sqr.GetTextBlockNoTransform();
+                TextBlock block = sqr.GetTextBlockTop();/*********/
                 block.RenderTransform = new TranslateTransform(X, 0);
                 block.Height = SurfaceWindow1.MenuTileSize;
                 block.Width = SurfaceWindow1.MenuTileSize;

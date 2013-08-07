@@ -162,14 +162,27 @@ namespace PrototypeOne
         {
             if(textBlock==null){
              textBlock = new TextBlock();
+             textBlock.Text = Name;
+             textBlock.Measure(new Size(0, 0));
+             textBlock.Arrange(new Rect(0, 0, 0, 0));
             }
-            textBlock.Text = Name;
-            textBlock.RenderTransform = new TranslateTransform(X, Y + 0.5 * curHeight);
-            textBlock.Height = curHeight*0.5;
+
+            if (textBlock.ActualHeight < curHeight)
+            {
+
+                textBlock.RenderTransform = new TranslateTransform(X, Y + 0.5 * curHeight - 0.5 * textBlock.ActualHeight);
+                textBlock.MaxHeight = 0.5 * curHeight + 0.5 * textBlock.ActualHeight;
+            }
+            else
+            {
+                textBlock.RenderTransform = new TranslateTransform(X, Y);
+                textBlock.MaxHeight =  curHeight;
+            }
             textBlock.Width = curWidth;
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;
             textBlock.Foreground = TextBrush;
+            textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
             textBlock.TextAlignment = TextAlignment.Center;
 
             return textBlock;
@@ -203,17 +216,18 @@ namespace PrototypeOne
         /// returns a text block with no transformations
         /// </summary>
         /// <returns></returns>
-        public TextBlock GetTextBlockNoTransform()
+        public TextBlock GetTextBlockLeft()
         {
-            TextBlock text = new TextBlock();
-
+            
+            TextBlock   text = new TextBlock();
+            
             text.Text = Name;
             text.Focusable = false;
             text.IsHitTestVisible = false;
             text.Foreground = TextBrush;
-            text.VerticalAlignment = VerticalAlignment.Center;
-            text.HorizontalAlignment = HorizontalAlignment.Center;
-            text.TextAlignment = TextAlignment.Center;
+            text.TextAlignment = TextAlignment.Left;
+            text.TextWrapping = TextWrapping.WrapWithOverflow;
+            text.Width = Width;
 
             return text;
         }

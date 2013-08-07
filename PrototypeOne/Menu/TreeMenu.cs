@@ -103,8 +103,8 @@ namespace PrototypeOne
             this.height = SurfaceWindow1.treeHeight;
             this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
-            children.ResizeAreas((height-0.2*height) * width);
-            MakeTree(0, width, height-0.2*height);
+            children.ResizeAreas((height-0.15*height) * width);
+            MakeTree(0, width, height-0.15*height);
 
             this.ParentList = ParentList;
           
@@ -128,15 +128,15 @@ namespace PrototypeOne
             this.height = SurfaceWindow1.treeHeight;
             this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
-            children.ResizeAreas((height - 0.2 * height) * width);
-            MakeTree(0, width, height - 0.2 * height);
+            children.ResizeAreas((height - 0.15 * height) * width);
+            MakeTree(0, width, height - 0.15 * height);
 
             this.ParentList = ParentList;
 
             foreach (SurfaceButton oldc in oldCrumbs)
             {
                 SurfaceButton crumb = new SurfaceButton();
-                crumb.Height = 0.2 * height;
+                crumb.Height = 0.15 * height;
                 crumb.Background = oldc.Background;
                 crumb.Content = oldc.Content.ToString();
                 crumb.Foreground = oldc.Foreground;
@@ -162,8 +162,8 @@ namespace PrototypeOne
             this.height = SurfaceWindow1.treeHeight;
             this.width = SurfaceWindow1.treeWidth;
             this.canvas = new Canvas();
-            children.ResizeAreas((height - 0.2 * height) * width);
-            MakeTree(0, width, height - 0.2 * height);
+            children.ResizeAreas((height - 0.15 * height) * width);
+            MakeTree(0, width, height - 0.15 * height);
 
             FillDrawing();
         }
@@ -352,46 +352,73 @@ namespace PrototypeOne
                 {
                     if (block.VideoString != null && !block.VideoString.Equals(""))
                     {
-                       // canvas.Children.Add(block.GetTextBlockTop());
-                        VideoPlayer player = new VideoPlayer(block.VideoString);
-                        SetButton(player, block);
+                        TextBlock txt = block.GetTextBlockLeft();
+                        txt.FontSize = 12;
+
+                        StackPanel panel = new StackPanel();
+                        panel.Children.Add(txt);
                         
-                        canvas.Children.Add(player);
+                        
+                        
+
+                        VideoPlayer player = new VideoPlayer(block.VideoString);
+                        Viewbox vb = new Viewbox();
+                        vb.Child = player;
+                        panel.Children.Add(vb);
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+                        button.Content = panel;
+                        canvas.Children.Add(button);
+
+
                     }
                     else if (block.ImageString != null && !block.ImageString.Equals(""))
                     {
-                        SurfaceButton button = new SurfaceButton();
-                        SetButton(button, block);
-
+                       
+                        
                         Image img = new Image();
                         img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
                         img.Stretch = Stretch.UniformToFill;
                         img.Source = new BitmapImage(new Uri(block.ImageString, UriKind.Relative));
-                        button.Content = img;
+                        Viewbox vb = new Viewbox();
+                        vb.Child = img;
+
+                        StackPanel panel = new StackPanel();
+                        TextBlock txt = block.GetTextBlockLeft();
+                        txt.FontSize = 12;
+
+                        panel.Children.Add(txt);
+                        panel.Children.Add(vb);
+                       
+
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+                        button.Content = panel;
+                        
                         canvas.Children.Add(button);
-                        canvas.Children.Add(block.GetTextBlockTop());
-                        Console.WriteLine("button "+((Image)button.Content).Source.ToString());
+                       
+                        
                     }
                     else
                     {
                         SurfaceButton button = new SurfaceButton();
                         SetButton(button, block);
+                        TextBlock txt= block.GetTextBlockLeft();
+                        button.Content = txt;
                         canvas.Children.Add(button);
-                        canvas.Children.Add(block.GetTextBlockTop());
+                       
                     }
                 }
                 else
-                {
+                {//regular menu
                     SurfaceButton button = new SurfaceButton();
                     SetButton(button, block);
-
+                    TextBlock txt= block.GetTextBlock();
                     canvas.Children.Add(button);
-                    
-                    
-                  
-                        canvas.Children.Add(block.GetTextBlock());
-                    
-
+                    txt.HorizontalAlignment=System.Windows.HorizontalAlignment.Center;
+                    txt.VerticalAlignment=VerticalAlignment.Center;
+                   
+                    canvas.Children.Add(txt);
                 }
             }
         }
@@ -420,14 +447,12 @@ namespace PrototypeOne
                 block.Button.Width = block.Width;
                 block.Button.RenderTransform = new TranslateTransform(block.X, block.Y);
 
-                if (children.Count() == 1)
-                {
-                    canvas.Children.Add(block.GetTextBlockTop());
-                }
-                else
+                if (children.Count() != 1)
+                
                 {
                     canvas.Children.Add(block.GetTextBlock());
                 }
+                
             }
         }
        /// <summary>
@@ -440,8 +465,8 @@ namespace PrototypeOne
             this.height = height;
             this.width = width;
             removeTextBlocksFromCanvas();
-            children.ResizeAreas(width * (height - 0.2 * height));
-            MakeTree(0, width, height - 0.2 * height);
+            children.ResizeAreas(width * (height - 0.15 * height));
+            MakeTree(0, width, height - 0.15 * height);
             RepositionButtons();
             if (child != null)
             {
@@ -474,13 +499,13 @@ namespace PrototypeOne
             for (int i=0; i < breadCrumbs.Count; i++)
             {
                 SurfaceButton button = breadCrumbs[i];
-                button.Width = (width-0.2*height)/breadCrumbs.Count;
-                button.Height = 0.2 * height;
-                button.RenderTransform = new TranslateTransform((width-0.2*height) / breadCrumbs.Count * i, 0);
+                button.Width = (width-0.15*height)/breadCrumbs.Count;
+                button.Height = 0.15 * height;
+                button.RenderTransform = new TranslateTransform((width-0.15*height) / breadCrumbs.Count * i, 0);
             }
-            Exit.Width =  0.2 * height;
-            Exit.Height = 0.2 * height;
-            Exit.RenderTransform = new TranslateTransform(width - 0.2 * height, 0);
+            Exit.Width =  0.15 * height;
+            Exit.Height = 0.15 * height;
+            Exit.RenderTransform = new TranslateTransform(width - 0.15 * height, 0);
         }
         /// <summary>
         /// returns  the square that exists in children
