@@ -41,14 +41,7 @@ namespace VideoButton
 
             Media.TouchDown += new EventHandler<TouchEventArgs>(Media_TouchDown);
             Media.MediaEnded += new RoutedEventHandler(Media_MediaEnded);
-            //Media.MouseDown += new MouseButtonEventHandler(Media_TouchDown);
-
-            if (!SurfaceEnvironment.IsSurfaceEnvironmentAvailable ||
-                InteractiveSurface.PrimarySurfaceDevice.Tilt != Tilt.Horizontal)
-            {
-               // this.CanRotate = false;
-               // this.Orientation = 0;
-            }
+           
         }
 
         /// <summary>

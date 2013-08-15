@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>37</R>
+      <G>93</G>
+      <B>11</B>
+    </BackGroundColor>
+    <Ratio>0.5</Ratio>
+    <SubCatagoryFile>Students.xml</SubCatagoryFile>
+    <Title>Students</Title>
+  </Catagory>
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>164</R>
+      <G>85</G>
+      <B>39</B>
+    </BackGroundColor>
+    <Ratio>0.5</Ratio>
+    <Title>Professors</Title>
+    <SubCatagoryFile>Professors.xml</SubCatagoryFile>
+  </Catagory>
+  
+</ArrayOfCatagory>

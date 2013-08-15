@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Shapes;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Imaging;
+
 namespace PrototypeOne
 {
     public class Square: IComparable<Square>
@@ -17,7 +18,7 @@ namespace PrototypeOne
         /// cur aspect ratio is better or worse than the potential new asspect ratio
         /// </summary>
         private double curWidth, curHeight, newWidth, newHeight;
-  
+       
         private TextBlock textBlock;
         
         public double Width {
@@ -26,6 +27,7 @@ namespace PrototypeOne
                   curHeight = newHeight;
                   newWidth = value;
                   newHeight = Area / newWidth;
+                  
             }
         }      
         public double Height
@@ -60,7 +62,16 @@ namespace PrototypeOne
 
         private Brush backGroundColorBrush;
         private Brush backGroundImageBrush;
-        public Color BackGroundColor { get { return ((GradientBrush)backGroundColorBrush).GradientStops[0].Color; } private set { BackGroundColor = value; } }
+        public Color BackGroundColor {
+            get
+            {
+                if(backGroundColorBrush!=null)
+                return ((SolidColorBrush)backGroundColorBrush).Color;
+                else return Colors.Black;
+            }
+            
+            
+            private set { setBackGround(value); } }
         public Brush BackGroundBrush {
             get
             {
@@ -72,7 +83,15 @@ namespace PrototypeOne
             }
             private set { BackGroundBrush = value; }
         }
-        public Color TextColor { get { return ((SolidColorBrush)TextBrush).Color; } set { TextColor = value; } }
+        public Color TextColor {
+            get
+            {
+                if (TextBrush != null)
+                    return ((SolidColorBrush)TextBrush).Color;
+                else return Colors.Blue;//if I see black and blue there is a problem
+            }
+            set { TextColor = value; }
+        }
         public Brush TextBrush { get; private set; }
 
 
@@ -80,20 +99,12 @@ namespace PrototypeOne
         
         public void setBackGround(Color backGroundColor){
             
-            Brush brush = new LinearGradientBrush(); 
+            Brush brush = new SolidColorBrush();
 
-            GradientStop start = new GradientStop();
-            start.Color = backGroundColor;
-            start.Offset = 0;
-            GradientStop end = new GradientStop();
-            end.Color = Colors.Black;
-            end.Offset = 2.5;
+            ((SolidColorBrush)brush).Color = backGroundColor;
 
 
-            ((LinearGradientBrush)brush).GradientStops.Add(start);
-            ((LinearGradientBrush)brush).GradientStops.Add(end);
-            ((LinearGradientBrush)brush).StartPoint = new Point(0, 0);
-            ((LinearGradientBrush)brush).EndPoint = new Point(0, 1);
+            
             backGroundColorBrush = brush;
         
         }
@@ -105,7 +116,7 @@ namespace PrototypeOne
         public void setBackGround(string imagePath)
         {
 
-             backGroundImageBrush = new ImageBrush(new BitmapImage(new Uri(imagePath, UriKind.Relative)));
+             backGroundImageBrush = new ImageBrush(new BitmapImage(new Uri(@"Images/"+imagePath, UriKind.Relative)));
         }
         public void setTextColor(Color textColor)
         {
@@ -208,7 +219,8 @@ namespace PrototypeOne
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;
             textBlock.Foreground = TextBrush;
-            textBlock.TextAlignment = TextAlignment.Center;
+            textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
+            textBlock.TextAlignment = TextAlignment.Left;
 
             return textBlock;
         }     
@@ -216,11 +228,28 @@ namespace PrototypeOne
         /// returns a text block with no transformations
         /// </summary>
         /// <returns></returns>
+        public TextBlock GetTextBlockCenter()
+        {
+            if (textBlock == null)
+            {
+                textBlock = new TextBlock();
+            }
+
+            textBlock.Text = Name;
+            textBlock.Focusable = false;
+            textBlock.IsHitTestVisible = false;
+            textBlock.Foreground = TextBrush;
+            textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
+            textBlock.TextAlignment = TextAlignment.Center;
+
+            return textBlock;
+        }
+
         public TextBlock GetTextBlockLeft()
         {
-            
-            TextBlock   text = new TextBlock();
-            
+
+            TextBlock text = new TextBlock();
+
             text.Text = Name;
             text.Focusable = false;
             text.IsHitTestVisible = false;
@@ -234,6 +263,15 @@ namespace PrototypeOne
         public override string ToString()
         {
             return "Square: " + Name + ", Color: " + BackGroundColor;
+        }
+
+        public void Delete()
+        {
+            Button = null;
+            textBlock = null;
+            TextBrush = null;
+            backGroundColorBrush = null;
+            backGroundImageBrush = null;
         }
     }
 

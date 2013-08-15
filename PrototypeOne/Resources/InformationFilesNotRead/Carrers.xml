@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <Catagory>
+    
+    <BackGroundColor>
+      <A>255</A>
+      <R>00</R>
+      <G>166</G>
+      <B>124</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.258</Ratio>
+    <Title>Software Developer</Title>
+    <Explanation>
+      Software developers (or computer programmers) are the brains behind the design, installation, testing and maintenance of software systems.
+      Much more than just playing around with codes, if you work with software you'll play an important part in making a business more efficient and helping to provide a better IT service.(TotalJobs.com)
+      
+    </Explanation>
+  </Catagory>
+
+  <Catagory>
+   
+    <BackGroundColor>
+      <A>255</A>
+      <R>1</R>
+      <G>147</G>
+      <B>154</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.243</Ratio>
+    <Title>Web Developer</Title>
+    <Explanation>A web designer/developer is responsible for the design, layout and coding of a website. They are involved with the technical and graphical aspects of a website - how the site works and how it looks. They can also be involved with the maintenance and update of an existing site.(creativepool.com)</Explanation>
+  </Catagory>
+
+  <Catagory>
+    <Title>Systems Analyst</Title>
+    <BackGroundColor>
+      <A>255</A>
+      <R>95</R>
+      <G>210</G>
+      <B>181</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Explanation>A systems analyst researches problems, plans solutions, recommends software and systems, at least at the functional level, and coordinates development to meet business or other requirements. Although they may be familiar with a variety of programming languages, operating systems, and computer hardware platforms, they do not normally involve themselves in the actual hardware or software development. Because they often write user requests into technical specifications, the systems analysts are the liaisons between vendors and information technology professionals.(Wikipedia)</Explanation>
+    <Ratio>0.186</Ratio>
+  </Catagory>
+  
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>52</R>
+      <G>198</G>
+      <B>205</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.166</Ratio>
+    <Title>Database Developer</Title>
+    <Explanation>
+      database manager is responsible for the way a company manages, organises, stores and accesses its information.
+      It's a role you'll often find in companies that hold a lot of information that needs putting into reports or documents, for example media companies, marketing companies, public sector organisations or financial institutions.(Totaljobs.com)
+    </Explanation>
+  </Catagory>
+
+  <Catagory>
+   <BackGroundColor>
+      <A>255</A>
+      <R>97</R>
+      <G>216</G>
+      <B>159</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.084</Ratio>
+    <Title>System Administrator</Title>
+    <Explanation>A system administrator is a professional practitioner of IT Administration, which is concerned mainly with the design, construction, and maintenance of computer systems and networks.</Explanation>
+  </Catagory>
+
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>29</R>
+      <G>112</G>
+      <B>116</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.031</Ratio>
+    <Title>Game Developer</Title>
+    <Explanation>A game programmer is a software engineer, programmer, or computer scientist who primarily develops codebase for video games or related software, such as game development tools. Game programming has many specialized disciplines all of which fall under the umbrella term of "game programmer"(Wikipedia)</Explanation>
+  </Catagory>
+
+  
+
+  
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>31</R>
+      <G>124</G>
+      <B>111</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.031</Ratio>
+    <Title>Interaction designer </Title>
+    <Explanation>
+      The Interaction Designer designs simple, human-centered experiences ranging from mobile,
+      web, and desktop applications.(unstuck)
+    </Explanation>
+  </Catagory>
+
+</ArrayOfCatagory>

@@ -22,17 +22,17 @@ using VideoButton;
 
 namespace PrototypeOne
 {
-    public class TreeMenu : Menu.Menu,INotifyPropertyChanged
+    public class TreeMenu : Menu.Menu, INotifyPropertyChanged
     {
-        private double height, width;
+        public double height, width;
         private Canvas canvas;
         TreeMenu child;
         private SurfaceButton Exit;
         List<Menu.Menu> ParentList;
         private List<SurfaceButton> breadCrumbs;
         DrawingImage image;
-         public event PropertyChangedEventHandler PropertyChanged;
-    
+        public event PropertyChangedEventHandler PropertyChanged;
+        private bool InHistory;
         /// <summary>
         /// gives image to use for the histroy
         /// </summary>
@@ -78,7 +78,7 @@ namespace PrototypeOne
                     else
                         list += (breadCrumbs[i].Content) + "/";
                 }
-                return  list;
+                return list;
             }
         }
         /// <summary>
@@ -101,15 +101,12 @@ namespace PrototypeOne
         {
             breadCrumbs = new List<SurfaceButton>();
             this.height = SurfaceWindow1.treeHeight;
-            this.width = SurfaceWindow1.treeWidth;
-            this.canvas = new Canvas();
-            children.ResizeAreas((height-0.15*height) * width);
-            MakeTree(0, width, height-0.15*height);
-
+            Initialize();
+            InHistory = true;
             this.ParentList = ParentList;
-          
+
             CreateExit();
-            CreateCrumb(creator); 
+            CreateCrumb(creator);
             SizeCrumbs();
             myTimer.Tick += new EventHandler(myTimer_Tick);
             FillDrawing();
@@ -125,14 +122,10 @@ namespace PrototypeOne
         {
             breadCrumbs = new List<SurfaceButton>();
             this.children = SquareList.createSquareList(children);
-            this.height = SurfaceWindow1.treeHeight;
-            this.width = SurfaceWindow1.treeWidth;
-            this.canvas = new Canvas();
-            children.ResizeAreas((height - 0.15 * height) * width);
-            MakeTree(0, width, height - 0.15 * height);
 
+            Initialize();
             this.ParentList = ParentList;
-
+            InHistory = true;
             foreach (SurfaceButton oldc in oldCrumbs)
             {
                 SurfaceButton crumb = new SurfaceButton();
@@ -145,9 +138,18 @@ namespace PrototypeOne
                 canvas.Children.Add(crumb);
             }
             CreateExit();
-            SizeCrumbs();           
-            myTimer.Tick += new EventHandler(myTimer_Tick); 
+            SizeCrumbs();
+            myTimer.Tick += new EventHandler(myTimer_Tick);
             FillDrawing();
+        }
+        private void Initialize()
+        {
+            this.height = SurfaceWindow1.treeHeight;
+            this.width = SurfaceWindow1.treeWidth;
+            this.canvas = new Canvas();
+            children.ResizeAreas((height - 0.15 * height) * width);
+            MakeTree(0, width, height - 0.15 * height);
+
         }
         /// <summary>
         /// Only to be used in the public addchild
@@ -158,12 +160,8 @@ namespace PrototypeOne
             : base(children)
         {
             breadCrumbs = new List<SurfaceButton>();
-            this.children = children;
-            this.height = SurfaceWindow1.treeHeight;
-            this.width = SurfaceWindow1.treeWidth;
-            this.canvas = new Canvas();
-            children.ResizeAreas((height - 0.15 * height) * width);
-            MakeTree(0, width, height - 0.15 * height);
+            InHistory = false;
+            Initialize();
 
             FillDrawing();
         }
@@ -187,12 +185,12 @@ namespace PrototypeOne
             else
             {
 
-                NewChild= child.addChild(grandChildren);
+                NewChild = child.addChild(grandChildren);
             }
             NotifyChange("Source");
             NotifyChange("Name");
             return NewChild;
-        } 
+        }
 
         /// <summary>
         /// Only to be used in the public addchild
@@ -209,6 +207,7 @@ namespace PrototypeOne
                 canvas.Children.Add(child.DrawMenu());
                 child.ReDraw(width, height);
                 return child;
+
             }
             else
                 return child.addChild(grandChildren);
@@ -218,23 +217,24 @@ namespace PrototypeOne
         /// Adds A new crumb based on creator
         /// </summary>
         /// <param name="creator">created the new menu</param>
-        private void CreateCrumb(Square creator){
-                
-                SurfaceButton crumb = new SurfaceButton();
-                crumb.Background = creator.BackGroundBrush;
-                crumb.Foreground = creator.TextBrush;
-                crumb.Content = creator.Name;
-                crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
-                breadCrumbs.Add(crumb);
-                canvas.Children.Add(crumb);
-                SizeCrumbs();
+        private void CreateCrumb(Square creator)
+        {
+
+            SurfaceButton crumb = new SurfaceButton();
+            crumb.Background = new SolidColorBrush(creator.BackGroundColor);
+            crumb.Foreground = creator.TextBrush;
+            crumb.Content = creator.Name;
+            crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
+            breadCrumbs.Add(crumb);
+            canvas.Children.Add(crumb);
+            SizeCrumbs();
         }
         private void CreateExit()
         {
             Exit = new SurfaceButton();
             try
-            {//this file is in bin/ debug or release directories
-                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/X.jpg", UriKind.Relative)));
+            {
+                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Images/X.jpg", UriKind.Relative)));
                 Exit.Background = buttonBrush;
             }
             catch (Exception e)
@@ -259,7 +259,7 @@ namespace PrototypeOne
                 return;
             }
 
-            if (used >= children.Count()-1)
+            if (used >= children.Count() - 1)
             {
                 children.SetSameHeight(used, 1, widthLeft);
                 //need to double set last block to insure the actual width and height are correct
@@ -268,8 +268,8 @@ namespace PrototypeOne
                 AddChildrenSide(widthLeft, heightLeft, used, 1);
                 return;
             }
-          
-            
+
+
             if (widthLeft > heightLeft)
             {
                 int divisions = 1;
@@ -285,7 +285,7 @@ namespace PrototypeOne
             else
             {
                 int divisions = 1;
-                children.SetSameHeight(used, divisions,widthLeft);
+                children.SetSameHeight(used, divisions, widthLeft);
                 do
                 {
                     divisions++;
@@ -309,9 +309,9 @@ namespace PrototypeOne
             for (int i = 0; i < count; i++)
             {
                 children.Get(start + i).X = curWidth - children.Get(start + i).Width;
-                children.Get(start + i).Y = height-curHeight +heightUsed;
+                children.Get(start + i).Y = height - curHeight + heightUsed;
                 heightUsed += children.Get(start + i).Height;
-               
+
             }
         }
         /// <summary>
@@ -328,10 +328,10 @@ namespace PrototypeOne
                 double widthUsed = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    children.Get(start + i).X = curWidth - children.Get(start + i).Width-widthUsed;
+                    children.Get(start + i).X = curWidth - children.Get(start + i).Width - widthUsed;
                     children.Get(start + i).Y = curHeight;// -children.Get(start + i).Height;
                     widthUsed += children.Get(start + i).Width;
-                    
+
                 }
             }
         }
@@ -352,21 +352,32 @@ namespace PrototypeOne
                 {
                     if (block.VideoString != null && !block.VideoString.Equals(""))
                     {
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+                        System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
+                        bind.Source = button;
+
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.FontSize = 12;
+                        txt.SetBinding(TextBlock.WidthProperty, bind);
 
                         StackPanel panel = new StackPanel();
                         panel.Children.Add(txt);
-                        
-                        
-                        
 
                         VideoPlayer player = new VideoPlayer(block.VideoString);
+
                         Viewbox vb = new Viewbox();
+
+                        System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
+                        vbBind.Source = txt;
+                        vbBind.Converter = new HeightConverter();
+                        vbBind.ConverterParameter = this;
+
                         vb.Child = player;
+                        vb.SetBinding(Viewbox.HeightProperty, vbBind);
+
                         panel.Children.Add(vb);
-                        SurfaceButton button = new SurfaceButton();
-                        SetButton(button, block);
+
                         button.Content = panel;
                         canvas.Children.Add(button);
 
@@ -374,51 +385,68 @@ namespace PrototypeOne
                     }
                     else if (block.ImageString != null && !block.ImageString.Equals(""))
                     {
-                       
                         
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+                       
+                        System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
+                        bind.Source = button;
+
+                        TextBlock txt = block.GetTextBlockLeft();
+                        txt.FontSize = 12;
+                        txt.Measure(new Size(0, 0));
+                        txt.Arrange(new Rect(0, 0, 0, 0));
+
+                        txt.SetBinding(TextBlock.WidthProperty, bind);
+                        StackPanel panel = new StackPanel();
+
                         Image img = new Image();
                         img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
                         img.Stretch = Stretch.UniformToFill;
                         img.Source = new BitmapImage(new Uri(block.ImageString, UriKind.Relative));
-                        Viewbox vb = new Viewbox();
-                        vb.Child = img;
 
-                        StackPanel panel = new StackPanel();
-                        TextBlock txt = block.GetTextBlockLeft();
-                        txt.FontSize = 12;
+                       
+                        
+                        Viewbox vb = new Viewbox();
+                        
+                        System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
+                        vbBind.Source = txt;
+                        vbBind.Converter = new HeightConverter();
+                        vbBind.ConverterParameter = this;
+
+                        vb.Child = img;
+                        vb.SetBinding(Viewbox.HeightProperty, vbBind);
 
                         panel.Children.Add(txt);
                         panel.Children.Add(vb);
-                       
 
-                        SurfaceButton button = new SurfaceButton();
-                        SetButton(button, block);
                         button.Content = panel;
-                        
+
                         canvas.Children.Add(button);
-                       
-                        
+
+
                     }
                     else
                     {
                         SurfaceButton button = new SurfaceButton();
                         SetButton(button, block);
-                        TextBlock txt= block.GetTextBlockLeft();
+                        System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
+                        bind.Source = button;
+
+                        TextBlock txt = block.GetTextBlockLeft();
+                        txt.SetBinding(TextBlock.WidthProperty, bind);
                         button.Content = txt;
+
                         canvas.Children.Add(button);
-                       
+
                     }
                 }
                 else
                 {//regular menu
                     SurfaceButton button = new SurfaceButton();
                     SetButton(button, block);
-                    TextBlock txt= block.GetTextBlock();
                     canvas.Children.Add(button);
-                    txt.HorizontalAlignment=System.Windows.HorizontalAlignment.Center;
-                    txt.VerticalAlignment=VerticalAlignment.Center;
-                   
-                    canvas.Children.Add(txt);
+                    canvas.Children.Add(block.GetTextBlock());
                 }
             }
         }
@@ -442,26 +470,25 @@ namespace PrototypeOne
 
             foreach (Square block in children)
             {
-                
+
                 block.Button.Height = block.Height;
                 block.Button.Width = block.Width;
                 block.Button.RenderTransform = new TranslateTransform(block.X, block.Y);
 
                 if (children.Count() != 1)
-                
                 {
                     canvas.Children.Add(block.GetTextBlock());
                 }
-                
             }
         }
-       /// <summary>
-       /// Whenever a TreeMenu is resized used to 
-       /// replace and resize all buttons
-       /// </summary>
-       /// <param name="width">new width to be drawn at</param>
-       /// <param name="height">new height to be drawn at</param>
-        public void ReDraw(double width, double height) {
+        /// <summary>
+        /// Whenever a TreeMenu is resized used to 
+        /// replace and resize all buttons
+        /// </summary>
+        /// <param name="width">new width to be drawn at</param>
+        /// <param name="height">new height to be drawn at</param>
+        public void ReDraw(double width, double height)
+        {
             this.height = height;
             this.width = width;
             removeTextBlocksFromCanvas();
@@ -470,12 +497,12 @@ namespace PrototypeOne
             RepositionButtons();
             if (child != null)
             {
-                
+
                 child.ReDraw(width, height);
                 canvas.Children.Remove(child.DrawMenu());
                 canvas.Children.Insert(canvas.Children.Count, child.DrawMenu());
             }
-            
+
         }
         /// <summary>
         /// removes anyText block associated with a square
@@ -488,22 +515,23 @@ namespace PrototypeOne
             {
                 canvas.Children.Remove(sqr.GetTextBlock());
             }
-        
+
         }
         /// <summary>
         /// sizes the bread crumbs to the availablity  space at the top of the 
         /// treeMenu
         /// </summary>
-        public void SizeCrumbs(){
+        public void SizeCrumbs()
+        {
 
-            for (int i=0; i < breadCrumbs.Count; i++)
+            for (int i = 0; i < breadCrumbs.Count; i++)
             {
                 SurfaceButton button = breadCrumbs[i];
-                button.Width = (width-0.15*height)/breadCrumbs.Count;
+                button.Width = (width - 0.15 * height) / breadCrumbs.Count;
                 button.Height = 0.15 * height;
-                button.RenderTransform = new TranslateTransform((width-0.15*height) / breadCrumbs.Count * i, 0);
+                button.RenderTransform = new TranslateTransform((width - 0.15 * height) / breadCrumbs.Count * i, 0);
             }
-            Exit.Width =  0.15 * height;
+            Exit.Width = 0.15 * height;
             Exit.Height = 0.15 * height;
             Exit.RenderTransform = new TranslateTransform(width - 0.15 * height, 0);
         }
@@ -529,7 +557,7 @@ namespace PrototypeOne
         /// <returns>true if sender exists anywhere in the menu. false otherwise</returns>
         public override bool ContainsButton(SurfaceButton sender)
         {
-            return children.Get(sender) !=null || (child!=null && child.ContainsButton(sender));
+            return children.Get(sender) != null || (child != null && child.ContainsButton(sender));
         }
         /// <summary>
         /// checks if treeMenu ever use
@@ -548,7 +576,7 @@ namespace PrototypeOne
         /// <returns>a string path to a file containing information for another treeMenu</returns>
         public override string FileToOpen(SurfaceButton sender)
         {
-            if (child!=null && child.ContainsButton(sender))
+            if (child != null && child.ContainsButton(sender))
             {
                 return child.FileToOpen(sender);
             }
@@ -584,14 +612,17 @@ namespace PrototypeOne
         private void RetraceToBreadCrumb(object sender, TouchEventArgs e)
         {
             interactive = true;
+            Log.CrumbUse(this);
+
             if (sender is SurfaceButton && e.TouchDevice.GetIsFingerRecognized())
             {
                 SurfaceButton button = (SurfaceButton)sender;
                 if (breadCrumbs.IndexOf(button) < breadCrumbs.Count - 1)
                 {
                     KeepChildren(breadCrumbs.IndexOf(button) + 1, this.canvas);
-                    for (int i = breadCrumbs.Count - 1; i > breadCrumbs.IndexOf(button); i--)
+                    for (int i = breadCrumbs.Count - 1; i > breadCrumbs.IndexOf(button) && i>0; i--)
                     {
+                        
                         canvas.Children.Remove(breadCrumbs[i]);
 
                         breadCrumbs.RemoveAt(i);
@@ -600,7 +631,8 @@ namespace PrototypeOne
                 }
                 NotifyChange("Source");
                 NotifyChange("Name");
-                ReDraw( width,height);
+                ReDraw(width, height);
+                Log.CrumbUse(this);
             }
         }
         /// <summary>
@@ -617,7 +649,7 @@ namespace PrototypeOne
                 {
                     child = null;
                 }
-                
+
                 return;
             }
             else
@@ -628,7 +660,7 @@ namespace PrototypeOne
                     child = null;
                 }
                 parentCanvas.Children.Remove(this.canvas);
-                
+
                 return;
             }
         }
@@ -639,9 +671,14 @@ namespace PrototypeOne
             if (e.TouchDevice.GetIsFingerRecognized())
             {
                 ParentList.Remove(this);
-                ((ScatterView)((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent).Parent).Items.Remove(((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent));
+                ScatterViewItem item = ((ScatterViewItem)((Canvas)((SurfaceButton)sender).Parent).Parent);
+                ScatterView scatter = (ScatterView)item.Parent;
+                if (item == null || scatter == null)
+                    return;
+                scatter.Items.Remove(item);
                 Log.Deleted(DeletionMethod.X, this);
                 StopTimer();
+                Delete();
             }
         }
         /// <summary>
@@ -651,7 +688,7 @@ namespace PrototypeOne
         /// <param name="e"></param>
         void myTimer_Tick(object sender, EventArgs e)
         {
-            
+
 
             if (!interactive)
             {
@@ -659,6 +696,7 @@ namespace PrototypeOne
                 ((ScatterView)((ScatterViewItem)(canvas.Parent)).Parent).Items.Remove(canvas.Parent);
                 Log.Deleted(DeletionMethod.TimeOut, this);
                 myTimer.Stop();
+                Delete();
             }
             interactive = false;
         }
@@ -676,21 +714,25 @@ namespace PrototypeOne
         public override string ToString()
         {
             string list = "";
+            /*if (breadCrumbs == null)
+            {
+                return base.ToString() + " TreeMenu";
+            }*/
             for (int i = 0; i < breadCrumbs.Count; i++)
             {
-                if (i == breadCrumbs.Count-1)
+                if (i == breadCrumbs.Count - 1)
                     list += (breadCrumbs[i].Content) + " ";
                 else
-                list += (breadCrumbs[i].Content)+"/";
+                    list += (breadCrumbs[i].Content) + "/";
             }
-            return base.ToString()+" TreeMenu: "+list;
-        }         
+            return base.ToString() + " TreeMenu: " + list;
+        }
 
         /// <summary>
         /// allows for updating the history
         /// </summary>
         /// <param name="property"></param>
-         public void NotifyChange(string property)
+        public void NotifyChange(string property)
         {
             if (PropertyChanged != null)
             {
@@ -703,35 +745,79 @@ namespace PrototypeOne
         /// this treeMenu
         /// </summary>
         /// <returns></returns>
-         public TreeMenu Clone()
-         {
-             TreeMenu newmenu = new TreeMenu(children, breadCrumbs, ParentList);
-             newmenu.addChildOf(this);
+        public TreeMenu Clone()
+        {
+            TreeMenu newmenu = new TreeMenu(children, breadCrumbs, ParentList);
+            newmenu.addChildOf(this);
 
-             return newmenu;
-         }
+            return newmenu;
+        }
         /// <summary>
         /// adds children to newly created clones
         /// </summary>
         /// <param name="menu">menu that has children to be coppied from</param>
-         private void addChildOf(TreeMenu menu)
-         {
-             if (menu.child == null)
-             {
-                 return;
-             }
-             child = new TreeMenu(SquareList.createSquareList(menu.child.children));
-             child.addChildOf(menu.child);
-         }
+        private void addChildOf(TreeMenu menu)
+        {
+            if (menu.child == null)
+            {
+                return;
+            }
+            child = new TreeMenu(SquareList.createSquareList(menu.child.children));
+            child.addChildOf(menu.child);
+        }
 
-         public override void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
-         {
-             if(children.Count()!=1)
-             children.addTouchUpHandler(target);
-             if (child != null)
-             {
-                 child.AddUpListenerToButtons(target);
-             }
-         }
+        public override void AddUpListenerToButtons(EventHandler<TouchEventArgs> target)
+        {
+            if (children.Count() != 1)
+                children.addTouchUpHandler(target);
+            if (child != null)
+            {
+                child.AddUpListenerToButtons(target);
+            }
+        }
+        public void Delete()
+        {
+            if (!InHistory)
+            {/*Deleting already deleted block*/
+                foreach (Square block in children)
+                {
+                    block.Delete();
+                }
+                breadCrumbs.Clear();
+                breadCrumbs = null;
+                if (child != null)
+                {
+                    child.Delete();
+                }
+                child = null;
+                canvas = null;
+                myTimer.Stop();
+                myTimer = null;
+                return;
+            }
+            InHistory = false;
+           
+        }
     }
+
+    [ValueConversion(typeof(double), typeof(double))]
+    public class HeightConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+
+            TreeMenu menu = (TreeMenu)parameter;
+            double height=(double)value;
+            double actualHeight;
+
+            actualHeight = menu.height * 0.85 - height;
+
+            return actualHeight;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

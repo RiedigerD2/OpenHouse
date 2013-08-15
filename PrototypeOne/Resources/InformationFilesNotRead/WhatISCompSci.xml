@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>188</G>
+      <B>64</B>
+    </BackGroundColor>
+    <Title>Artificial Intelligence</Title>
+    <Explanation>Artificial intelligence is the scientific understanding of the mechanisms underlying thought and intelligent behavior and their embodiment in machines (Association for the Advancement of Artificial Intelligence).</Explanation>
+    <Ratio>0.1428571429</Ratio>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+  </Catagory>
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>252</R>
+      <G>194</G>
+      <B>101</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Title>Human Computer Interactions</Title>
+    <Ratio>0.1428571429</Ratio>
+    <Explanation>Human-computer interaction involves the study, planning, and design of the interaction between people (users) and computers (Wikipedia).</Explanation>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>204</G>
+      <B>64</B>
+    </BackGroundColor>
+    <Title>Computer Security</Title>
+    <Ratio>0.1428571429</Ratio>
+    <Explanation>Computer security studies the processes and mechanisms by which computer-based equipment, information and services are protected from unintended or unauthorized access, change or destruction (Wikipedia).</Explanation>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>191</R>
+      <G>153</G>
+      <B>48</B>
+    </BackGroundColor>
+    <Title>Databases</Title>
+    <Ratio>0.1428571429</Ratio>
+    <Explanation>Database studies the organization, storage, and retrieval of large amounts of data (Wikipedia).</Explanation>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>165</G>
+      <B>00</B>
+    </BackGroundColor>
+    <Title>Computer Network</Title>
+    <Ratio>0.1428571429</Ratio>
+    <Explanation>A computer network or data network is a telecommunications network that allows computers to exchange data.(Wikipedia)</Explanation>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>187</G>
+      <B>00</B>
+    </BackGroundColor>
+    <Title>Game design</Title>
+    <Explanation>Game design is the game development process of designing the content and rules of a game in the pre-production stage and design of gameplay, environment, storyline, and characters during production stage (Wikipedia).</Explanation>
+    <Ratio>0.1428571429</Ratio>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Title>Parallel Computing</Title>
+    <Explanation>
+      Parallel computing is a form of computation in which many calculations are carried out simultaneously, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (Wikipedia).
+    </Explanation>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>140</G>
+      <B>00</B>
+    </BackGroundColor>
+    <Ratio>0.1428571429</Ratio>
+  </Catagory>
+  <!-- -->
+</ArrayOfCatagory>

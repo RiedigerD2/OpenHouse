@@ -125,19 +125,25 @@
     <Content Include="PrototypeOne.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\InformationFilesNotRead\Admission.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Base.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Carrers.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\OurPeople.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\OurProgram.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Professors.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Streams.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\StudentProjects.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Students.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Tech.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\Top.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\WhatISCompSci.xml" />
+    <Resource Include="Resources\InformationFilesNotRead\WhyMacewan.xml" />
+    <Resource Include="Resources\Images\Jon.jpg" />
+    <Resource Include="Resources\Images\Logo\circle.png" />
+    <Resource Include="Resources\Images\Logo\ring.png" />
+    <Resource Include="Resources\Images\Tuition.png" />
     <Resource Include="Resources\Images\Logo\LogoOnlyb.png" />
-    <Resource Include="Resources\Images\Logo\LogoOnlyc.jpg" />
-    <Resource Include="Resources\Images\Logo\TextLog.jpg" />
-    <Resource Include="Resources\Images\Logo\TextLogo.png" />
-    <Resource Include="Resources\Images\antiHero.jpg" />
-    <Resource Include="Resources\Images\sharp.jpg" />
-    <Resource Include="Resources\Images\shrek.jpg" />
-    <Resource Include="Resources\Images\spider.jpg" />
-    <Resource Include="Resources\Images\colorRandom.jpg" />
     <Resource Include="README.txt" />
-    <Resource Include="Resources\Images\X.jpg" />
-    <Resource Include="Resources\Information\XMLFile1.xml" />
-    <Resource Include="Resources\Images\Logo\macewanlogo.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

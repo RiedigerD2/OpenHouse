@@ -28,6 +28,7 @@
         </DataTemplate>
 
         
+        
 
         <Style x:Key="CursorStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="ContentTemplate"
@@ -43,18 +44,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Storyboard x:Key="Rotate">
+            <Storyboard.Children>
+            <DoubleAnimation BeginTime="00:00:00"
+                             Storyboard.TargetName="Ring"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                             Duration="00:00:35"
+                             To="360"
+                             IsCumulative="True"
+                             IsAdditive="True"
+                             RepeatBehavior="Forever"
+                             >
+                </DoubleAnimation>
+            </Storyboard.Children>
+           
+        </Storyboard>
+
     </s:SurfaceWindow.Resources>
     <Grid Style="{StaticResource MainGrid}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="26" />
             <ColumnDefinition Width="224" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="250" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="224"/>
             <ColumnDefinition Width="26" />
@@ -69,29 +90,46 @@
         </Border>
 
         <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Logo}">
-            <Image Source="Resources/Images/Logo/LogoOnlyb.png" ></Image>
-        </Border>
-
-        <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource Logo}">
-            <Image Source="Resources/Images/Logo/LogoOnlyb.png" RenderTransformOrigin="0.5,0.5">
+            <Image Source="Resources/Images/Logo/LogoOnlyb.png" >
                 <Image.RenderTransform>
-                    <ScaleTransform ScaleX="-1" ScaleY="-1" />
+                    <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
                 </Image.RenderTransform>
             </Image>
         </Border>
-    
-   
-        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="3"  Name="scatter"
+
+        <Border x:Name="Ring" Grid.Row="2" Grid.Column="3" Style="{StaticResource Logo}" >
+            <Image  Source="Resources/Images/Logo/ring.png" >
+                
+                
+            </Image>
+            <Border.RenderTransform>
+                <RotateTransform CenterX="125" CenterY="125"/>
+            </Border.RenderTransform>
+
+        </Border>
+        <Border x:Name="CenterRing" Grid.Row="2" Grid.Column="3" Style="{StaticResource Logo}" >
+            <Image  Source="Resources/Images/Logo/circle.png" >
+
+
+            </Image>
+            <Border.RenderTransform>
+                <RotateTransform CenterX="125" CenterY="125"/>
+            </Border.RenderTransform>
+
+        </Border>
+
+        <Border Grid.Row="4" Grid.Column="5" Style="{StaticResource Logo}">
+            <Image Source="Resources/Images/Logo/LogoOnlyb.png" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleX="-0.5" ScaleY="-0.5" />
+                </Image.RenderTransform>
+            </Image>
+        </Border>
+
+
+        <s:ScatterView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="5"  Name="scatter"
                AllowDrop="True" s:SurfaceDragDrop.Drop="Scatter_Drop" Background="Transparent"
-                       >
-            
-
-          
-
-
-
-        </s:ScatterView>
-
+                      />
         <Canvas Grid.Column="0" Grid.Row="0" >
             <Canvas.Children>
 

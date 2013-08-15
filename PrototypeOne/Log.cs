@@ -79,5 +79,12 @@ namespace PrototypeOne
             writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; From History: " + menu.ToString());
             writer.Close();
         }
+        public static void CrumbUse(Menu.Menu menu)
+        {
+            StreamWriter writer = new StreamWriter("LogFile.txt", true);
+            writer.WriteLine(DateTime.Now.TimeOfDay.ToString() + "; Crumb Use: " + menu.ToString());
+            writer.Close();
+        }
+
     }
 }

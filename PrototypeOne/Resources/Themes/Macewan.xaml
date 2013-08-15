@@ -6,16 +6,9 @@
     <!-- defined style for Main Grid -->
     <Style  x:Key="MainGrid"  TargetType="{x:Type Grid}">
         <Style.Resources>
-            <LinearGradientBrush x:Key="InnerGradient"
-                         StartPoint="0,0"
-                         EndPoint="1,1" >
-                <!-- gradient stop colors from macewan website -->
-                <!--light blue 1262AB-->
-                <GradientStop Color="#7ac755" Offset="1" />
-                <!-- navy blue --> 
-                <GradientStop Color="#458f21" Offset="0" />
-
-            </LinearGradientBrush>
+            <SolidColorBrush x:Key="InnerGradient"
+                         Color="Black">
+            </SolidColorBrush>
         </Style.Resources>
 
         <Setter Property="Background" Value="{StaticResource InnerGradient}" />
@@ -23,36 +16,27 @@
 
     <!-- defined style for the Grid Outer Borders -->
     <Style  x:Key="OuterRow" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#426b2e" />
+        <Setter Property="BorderBrush" Value="#000000" />
         <Setter Property="BorderThickness" Value="0,10,0,10" />
         <Setter Property="Grid.RowSpan" Value="1" />
         <Setter Property="Grid.ColumnSpan" Value="5" />
     </Style>
 
     <!-- defined gradients used in for the Grid Outer Borders (child rectangle uses it)-->
-    <LinearGradientBrush x:Key="TopOuterGradient"
-                         StartPoint="0.5,0" 
-                         EndPoint="0.5,1" >
-        <!-- gradient stop colors from macewan website -->
-        <GradientStop Color="White" Offset="0.5" />
-        <!-- light grey -->
-        <GradientStop Color="#A8A8A8" Offset="-2" />
+    <SolidColorBrush x:Key="TopOuterGradient"
+                        Color="Black">
 
-    </LinearGradientBrush>
+    </SolidColorBrush>
 
-    <LinearGradientBrush x:Key="BottomOuterGradient"
-                         StartPoint="0.5,1" 
-                         EndPoint="0.5,0" >
-        <!-- gradient stop colors from macewan website -->
-        <GradientStop Color="White" Offset="0.5" />
-        <!-- light grey -->
-        <GradientStop Color="#A8A8A8" Offset="-2" />
+    <SolidColorBrush x:Key="BottomOuterGradient" Color="Black">
+        
+                         
 
-    </LinearGradientBrush>
+    </SolidColorBrush>
 
     <!-- defined style for the logo border-->
     <Style x:Key="Logo" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#255d0b" />
+        <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="0,10,0,10" />
         <Setter Property="Grid.RowSpan" Value="1" />
         <Setter Property="Grid.ColumnSpan" Value="1" />

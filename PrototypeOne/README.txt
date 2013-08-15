@@ -34,13 +34,16 @@ Optional Fields
 	Explanation: If no SubCatagoryFile is provided when the subdivision related to this cataory
 			is selected this explanation will be presented to the user
 
+	BackGroundImage: will set an image as the background for that button. If this is used still need to provide a 
+					BackGroundColor. Images for the BackgroundImage must be stored in in \bin\Release\Images or \bin\Debug\Images
+
 	SubCatagoryFile: File name of an xml file in either \bin\Debug\Information or \bin\Release\Information
 			depending on the run the extension must be included in the name
 	Image: string relative path from PrototypeOne/Resources/Images to an image to be displayed 
 	
-	Video: string relative path from \bin\Debug or \bin\Release to an video to be displayed
+	Video: string relative path from \bin\Debug\Video or \bin\Release\Video to an video to be displayed
 
-	In the ?\Information directory only one file is Mandatory that is "Top.xml" this serves as the Main menu
+	In the \bin\Release\Information or \bin\release\Information directory only one file is Mandatory that is "Top.xml" this serves as the Main menu
 no catagory in the file should have an explanation seeing as it won't be displayed anyways.
 all other file in ?\Information are refered to in a file already existing in the file. eg."Top.xml" as a
  SubCatagoryFile

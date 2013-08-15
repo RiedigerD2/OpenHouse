@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>153</R>
+      <G>36</G>
+      <B>59</B>
+    </BackGroundColor>
+    <Ratio>0.3</Ratio>
+    <Title>MacEwan University</Title>
+    <BackGroundImage>button-macewan.png</BackGroundImage>
+    <SubCatagoryFile>WhyMacewan.xml</SubCatagoryFile>
+  </Catagory>
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>255</R>
+      <G>140</G>
+      <B>221</B>
+    </BackGroundColor>
+    <Ratio>0.2</Ratio>
+    <Title>What Is Computer Science</Title>
+    <BackGroundImage>button-cs.png</BackGroundImage>
+    <SubCatagoryFile>WhatIsCompSci.xml</SubCatagoryFile>
+  </Catagory>
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>254</A>
+      <R>00</R>
+      <G>96</G>
+      <B>100</B>
+    </BackGroundColor>
+    <Ratio>0.1</Ratio>
+    <SubCatagoryFile>Carrers.xml</SubCatagoryFile>
+    <BackGroundImage>button-careers.png</BackGroundImage>
+    <Title>Carrers in Computer Science</Title>
+  </Catagory>
+
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>109</R>
+      <G>152</G>
+      <B>36</B>
+    </BackGroundColor>
+    <Ratio>0.1</Ratio>
+    <Title>Admission Information</Title>
+    <BackGroundImage>button-admission.png</BackGroundImage>
+    <SubCatagoryFile>Admission.xml</SubCatagoryFile>
+  </Catagory>
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>164</R>
+      <G>85</G>
+      <B>39</B>
+    </BackGroundColor>
+    <Ratio>0.1</Ratio>
+    <BackGroundImage>button-people.png</BackGroundImage>
+    <SubCatagoryFile>OurPeople.xml</SubCatagoryFile>
+    <Title>Our People</Title>
+  </Catagory>
+
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>85</R>
+      <G>29</G>
+      <B>109</B>
+    </BackGroundColor>
+    <Ratio>0.1</Ratio>
+    <SubCatagoryFile>OurProgram.xml</SubCatagoryFile>
+    <Title>Our Program</Title>
+    <BackGroundImage>button-program.png</BackGroundImage>
+  </Catagory>
+  
+</ArrayOfCatagory>

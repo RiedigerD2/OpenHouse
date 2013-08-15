@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>123</R>
+      <G>54</G>
+      <B>53</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Title>Teaching-focused University</Title>
+    <Ratio>0.25</Ratio>
+    <Explanation>
+      Faculty members at MacEwan put teaching as their number one priority while actively conducting innovative research projects. MacEwan receives a high score (A) for its quality of teaching and learning in The Globe and Mail’s Canadian University Report(2013).
+    </Explanation>
+  </Catagory>
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>115</R>
+      <G>49</G>
+      <B>62</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Title>Small class size</Title>
+    <Ratio>0.25</Ratio>
+    <Explanation>Class sizes in computer science courses range from 10 (senior-level courses) to 72 (first-year courses).A small class means that you'll get to know your professors and classmates better, and have a better learning experience.</Explanation>
+  </Catagory>
+  <Catagory>
+    <BackGroundColor>
+      <A>255</A>
+      <R>210</R>
+      <G>92</G>
+      <B>89</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Title>High student satisfaction</Title>
+    <Ratio>0.25</Ratio>
+    <Explanation>MacEwan is ranked highly in student satisfaction in The Globe and Mail’s Canadian University Report (2013).</Explanation>
+  </Catagory>
+  <Catagory>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <BackGroundColor>
+      <A>255</A>
+      <R>99</R>
+      <G>12</G>
+      <B>29</B>
+    </BackGroundColor>
+    <Title>Student-faculty interaction</Title>
+    <Ratio>0.25</Ratio>
+    <Explanation>Faculty members at MacEwan are approachable both inside and outside the classroom. Students have opportunities to work with faculty members in research project</Explanation>
+  </Catagory>
+</ArrayOfCatagory>

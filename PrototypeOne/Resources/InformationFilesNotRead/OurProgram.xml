@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Catagory>
+    <Title>Available Streams</Title>
+    <Ratio>0.5</Ratio>
+    <BackGroundColor>
+      <A>255</A>
+      <R>152</R>
+      <G>82</G>
+      <B>182</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <SubCatagoryFile>Streams.xml</SubCatagoryFile>
+      </Catagory>
+  <Catagory>
+    <Title>Technologies learned</Title>
+    <Ratio>0.5</Ratio>
+    <BackGroundColor>
+      <A>255</A>
+      <R>160</R>
+      <G>109</G>
+      <B>182</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <SubCatagoryFile>Tech.xml</SubCatagoryFile>
+   </Catagory>
+</ArrayOfCatagory>

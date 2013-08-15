@@ -98,7 +98,7 @@ namespace PrototypeOne
             }
             catch (Exception e)
             {
-                Console.Out.WriteLine("\n\n\nproblem WritingFile: " + e.InnerException + "\n\n\n");
+                Console.Out.WriteLine("\nproblem WritingFile: " + e.InnerException + "\n\n\n");
             }
 
         }
@@ -156,7 +156,7 @@ namespace PrototypeOne
                 //video for explanation
                 if (cat.Video!=null && !cat.Video.Equals(""))
                 {
-                    square.VideoString = cat.Video;
+                    square.VideoString = @"Videos/" + cat.Video;
                 }
                 //background image to use instead of backgroundcolor
                 if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))

@@ -29,8 +29,9 @@ namespace PrototypeOne.Menu
         {
             get { return history; }
         }
-        
 
+        public double Width { get { return children.Count() * SurfaceWindow1.MenuTileSize - 10; } private set { } }
+        public double Height { get { return  SurfaceWindow1.MenuTileSize-2; } private set { } }
         /// <summary>
         /// Creates Individual menu
         /// </summary>
@@ -43,6 +44,7 @@ namespace PrototypeOne.Menu
             myTimer.Tick += new EventHandler(myTimer_Tick);
         }
         
+
         /// <summary>
         /// adds buttons to a canvas based on 
         /// the information from the children list
@@ -57,7 +59,7 @@ namespace PrototypeOne.Menu
             canvas = new Canvas();
             ScatterViewItem sizeItem=new ScatterViewItem();
             double X = -(SurfaceWindow1.MenuTileSize * (double)children.Count() / 2) + 0.5 * SurfaceWindow1.MenuTileSize;
-            for (int i = 0 ; i < children.Count();i++ ,X+=SurfaceWindow1.MenuTileSize)
+            for (int i = 0 ; i < children.Count();i++ ,X+=SurfaceWindow1.MenuTileSize-1)
             {
                 Square sqr = children.Get(i);
 
@@ -77,8 +79,8 @@ namespace PrototypeOne.Menu
 
 
                 canvas.Children.Add(button);
-                TextBlock block = sqr.GetTextBlockTop();/*********/
-                block.RenderTransform = new TranslateTransform(X, 0);
+                TextBlock block = sqr.GetTextBlockCenter();/*********/
+                block.RenderTransform = new TranslateTransform(X, SurfaceWindow1.MenuTileSize*1.2);
                 block.Height = SurfaceWindow1.MenuTileSize;
                 block.Width = SurfaceWindow1.MenuTileSize;
                 canvas.Children.Add(block);
@@ -102,7 +104,7 @@ namespace PrototypeOne.Menu
                 }
                 catch (Exception el)
                 {
-                    Console.Out.WriteLine("\nThis\nException:" + el.Message);
+                    Console.Out.WriteLine("Timed Story board Individual menu:" + el.Message);
                 }
             }
             interactive = false;
@@ -130,7 +132,9 @@ namespace PrototypeOne.Menu
 
             if (history.Count > 9)
             {
-                history.RemoveAt(history.Count-1);
+                TreeMenu removed = (TreeMenu)history[history.Count - 1];
+                history.RemoveAt(history.Count - 1);
+                removed.Delete();
             }
         }
         
