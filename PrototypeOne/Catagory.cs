@@ -68,9 +68,9 @@ namespace PrototypeOne
                     if (e.InnerException != null)
                     {
                         
-                        error.Title = e.InnerException.ToString();
+                        error.Title = e.InnerException.Message;
                     }else
-                    error.Title = e.Message;
+                    error.Title += e.Message;
                 }
                 else
                 {
@@ -163,10 +163,6 @@ namespace PrototypeOne
                 {
                     square.setBackGround(cat.BackGroundImage);
                 }
-               
-
-
-
                 newList.Add(square);
             }
             return newList;

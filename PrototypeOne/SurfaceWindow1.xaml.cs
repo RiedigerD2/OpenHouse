@@ -172,17 +172,14 @@ namespace PrototypeOne
         {
             ScatterViewItem item = NonMovingItemFactory(center, angle);
 
-
-
             IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), AddAnimation(item));
             MenuList.Add(sideMenu);
 
             TextBlock block = new TextBlock();
             block.Text="Touch Here to Begin";
-            block.FontSize = 30;
+            block.FontSize = 35;
             ScatterViewItem touchme = NonMovingItemFactory(center, angle);
             touchme.Content = block;
-            touchme.Background = Brushes.Gray;
             touchme.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
             touchme.Focusable = false;
             touchme.Width = sideMenu.Width;
@@ -203,17 +200,11 @@ namespace PrototypeOne
             sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
             canvas.Children.Insert(0, historyMenu);
 
-
-
-
-
-
-
             return sideMenu;
         }
 
         /// <summary>
-        /// adds a opacity animation to item
+        /// adds a looping opacity animation to item
         /// </summary>
         /// <param name="item"></param>
         private Storyboard AddAnimation(ScatterViewItem item)
@@ -222,7 +213,7 @@ namespace PrototypeOne
             DoubleAnimation Animation = new DoubleAnimation();
             Animation.From = 1.0;
             Animation.To = 0.02;
-            Animation.Duration = new Duration(TimeSpan.FromSeconds(7));
+            Animation.Duration = new Duration(TimeSpan.FromSeconds(6));
             Animation.AutoReverse = true;
             Animation.RepeatBehavior = RepeatBehavior.Forever;
 
@@ -258,9 +249,9 @@ namespace PrototypeOne
 
 
             //left
-            created = BuildMenu(new Point(this.Width * 0.10, this.Height / 2), 90);
+            created = BuildMenu(new Point(this.Width * 0.08, this.Height / 2), 90);
             SetUpHistory(leftHistory, created);
-            MoveHistory(leftHistory, new Point(this.Width * 0.10 - 0.5 * created.Height, this.Height * .5 - 0.495 * created.Width), 90);
+            MoveHistory(leftHistory, new Point(this.Width * 0.08 - 0.5 * created.Height, this.Height * .5 - 0.495 * created.Width), 90);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryLeft);
 
             //top
@@ -270,9 +261,9 @@ namespace PrototypeOne
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryTop);
 
             //right
-            created = BuildMenu(new Point(this.Width * 0.90, this.Height / 2), -90);
+            created = BuildMenu(new Point(this.Width * 0.92, this.Height / 2), -90);
             SetUpHistory(rightHistory, created);
-            MoveHistory(rightHistory, new Point(this.Width * 0.90 + 0.5 * created.Height, this.Height * 0.5 + 0.495 * created.Width), -90);
+            MoveHistory(rightHistory, new Point(this.Width * 0.92 + 0.5 * created.Height, this.Height * 0.5 + 0.495 * created.Width), -90);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryRight);
 
 
@@ -328,7 +319,8 @@ namespace PrototypeOne
         /// <param name="menu"></param>
         private void SetUpHistory(SurfaceListBox container, IndividualMenu menu)
         {
-            container.MaxWidth = menu.Width * 2.2222- 35;//2.22222 is the inverse of the scaling factor used in moveHistory
+            //2.22222 is the inverse of the scaling factor used in moveHistory 35 was picked for looks so the menu doesn't over lap the ItemMenu
+            container.MaxWidth = menu.Width * 2.2222- 35;
             System.Windows.Data.Binding bind = new System.Windows.Data.Binding("History");
             bind.Source = menu;
             container.SetBinding(LibraryBar.ItemsSourceProperty, bind);
@@ -358,7 +350,7 @@ namespace PrototypeOne
             item.MaxHeight = MaxHeightItem;
             item.MaxWidth = MaxWidthItem;
             item.ContainerManipulationDelta += new ContainerManipulationDeltaEventHandler(OnManipulation);
-
+            item.ContainerManipulationCompleted += new ContainerManipulationCompletedEventHandler(AfterManipulationCompleted);
             item.Width = treeWidth;
             item.Height = treeHeight;
             item.Content = map.DrawMenu();
@@ -381,7 +373,7 @@ namespace PrototypeOne
             {
                 SurfaceButton button = (SurfaceButton)sender;
                 Menu.Menu menu = FindTheMenu(button);
-               
+
                 if (menu == null)
                 {
                     return;
@@ -394,7 +386,6 @@ namespace PrototypeOne
                     TreeMenu map = (TreeMenu)menu;
                     if (file != null && !file.Equals(""))
                     {
-
                         TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file), map.Get(button));
                         childAdded.AddUpListenerToButtons(TouchUpMenu);
                     }
@@ -417,9 +408,7 @@ namespace PrototypeOne
 
                             sqr.Ratio = 1;
                             list.Add(sqr);
-                             map.addChild(list, map.Get(button));
-                            
-
+                            map.addChild(list, map.Get(button));
                         }
                     }
                     map.ReDraw();
@@ -431,12 +420,14 @@ namespace PrototypeOne
                         ((IndividualMenu)menu).StopAnimation();
                     }
                     else
+                    {
                         if (MenuList.Count < MaxMenus)
                         {
                             TouchDevice c = (TouchDevice)e.TouchDevice;
                             PlaceTreeMap(menu.FileToOpen(button), menu.Get(button), c.GetOrientation(this), c.GetPosition(this));
 
                         }
+                    }
                 }
             }
         }
@@ -506,12 +497,28 @@ namespace PrototypeOne
                 {
                     ((TreeMenu)menu).ReDraw(item.Width, item.Height);
                     ((TreeMenu)menu).SizeCrumbs();
-                    Log.Resized(menu, item.Width, item.Height);
-
                 }
-                Log.Moved(item.Center, item.Orientation, menu);
                 menu.interactive = true;
             }
+        }
+        /// <summary>
+        /// Used for logging the new Height Width X and Y After Manipulation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void AfterManipulationCompleted(object sender, ContainerManipulationCompletedEventArgs e)
+        {
+            ScatterViewItem item = (ScatterViewItem)sender;
+            Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
+            if (menu == null)
+            {
+                return;
+            }
+            if (e.ScaleFactor != 1)
+            {
+                Log.Resized(menu, item.Width, item.Height);
+            }
+            Log.Moved(item.Center, item.Orientation, menu);
         }
         /// <summary>
         /// Finds a good position to open a new tree menu
@@ -548,8 +555,6 @@ namespace PrototypeOne
             //at bottom of screen
             placement = (this.Height - parent.Y) / slope + parent.X;
             bottom = placement > 0 && placement < this.Width;
-
-
 
 
             if (top && angle > 0 && angle < 180)
@@ -661,7 +666,7 @@ namespace PrototypeOne
                 item.MaxHeight = MaxHeightItem;
                 item.MaxWidth = MaxWidthItem;
                 item.ContainerManipulationDelta += new ContainerManipulationDeltaEventHandler(OnManipulation);
-
+                item.ContainerManipulationCompleted += new ContainerManipulationCompletedEventHandler(AfterManipulationCompleted);
                 item.Width = treeWidth;
                 item.Height = treeHeight;
                 item.Content = map.DrawMenu();
@@ -681,6 +686,8 @@ namespace PrototypeOne
                 
             }
         }
+
+        
 
         private void ListBox_PreviewTouchDown(object sender, TouchEventArgs e)
         {

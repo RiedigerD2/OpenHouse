@@ -54,12 +54,8 @@ namespace PrototypeOne
         public string Name;
         public string SubFile;
         public string Explanation;
-
-        //public Image Image { get; private set; }
         public string ImageString;
-        //public MediaElement Video { get; private set; }
         public string VideoString;
-
         private Brush backGroundColorBrush;
         private Brush backGroundImageBrush;
         public Color BackGroundColor {
@@ -69,9 +65,8 @@ namespace PrototypeOne
                 return ((SolidColorBrush)backGroundColorBrush).Color;
                 else return Colors.Black;
             }
-            
-            
             private set { setBackGround(value); } }
+        
         public Brush BackGroundBrush {
             get
             {
@@ -83,6 +78,7 @@ namespace PrototypeOne
             }
             private set { BackGroundBrush = value; }
         }
+
         public Color TextColor {
             get
             {
@@ -97,16 +93,10 @@ namespace PrototypeOne
 
 
         
-        public void setBackGround(Color backGroundColor){
-            
+        public void setBackGround(Color backGroundColor){ 
             Brush brush = new SolidColorBrush();
-
             ((SolidColorBrush)brush).Color = backGroundColor;
-
-
-            
             backGroundColorBrush = brush;
-        
         }
         /// <summary>
         /// uses the path to an image
@@ -199,7 +189,7 @@ namespace PrototypeOne
             return textBlock;
         }
         /// <summary>
-        /// returns a text block wit all the right 
+        /// returns a text block with all the right 
         /// transforms so the block 
         /// at the top of the button 
         /// it's associated with 
@@ -245,7 +235,11 @@ namespace PrototypeOne
 
             return textBlock;
         }
-
+        /// <summary>
+        /// returns a text block with no transformations
+        /// Left aligned text
+        /// </summary>
+        /// <returns></returns>
         public TextBlock GetTextBlockLeft()
         {
 

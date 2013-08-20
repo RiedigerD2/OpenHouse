@@ -28,8 +28,6 @@
             </Grid>
         </DataTemplate>
 
-        
-        
 
         <Style x:Key="CursorStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="ContentTemplate"
@@ -45,6 +43,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="boxStyle" TargetType="{x:Type s:SurfaceListBox}">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="AllowDrop" Value="False"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="ItemTemplate" Value="{StaticResource MapImage}"/>
+            <EventSetter Event="s:SurfaceDragDrop.DragCompleted" Handler="DragCompleted"/>
+            <EventSetter Event="PreviewTouchDown" Handler="ListBox_PreviewTouchDown"/>
+        </Style>
 
         <Storyboard x:Key="Rotate">
             <Storyboard.Children>
@@ -59,7 +66,6 @@
                              >
                 </DoubleAnimation>
             </Storyboard.Children>
-           
         </Storyboard>
 
     </s:SurfaceWindow.Resources>
@@ -76,12 +82,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- defines border and fill of different grid rows using other UI elements (need to find better way to do this)-->
-       
-
         <Border x:Name="Ring" Grid.Row="1" Grid.Column="1" >
-            <Image  Source="Resources/Images/Logo/ring.png" >
-            </Image>
+            <Image  Source="Resources/Images/Logo/ring.png" />
             <Border.RenderTransform>
                 <RotateTransform CenterX="125" CenterY="125"/>
             </Border.RenderTransform>
@@ -89,7 +91,7 @@
         
         
         <Border x:Name="CenterRing" Grid.Row="1" Grid.Column="1"  >
-            <Image  Source="Resources/Images/Logo/circle.png" > </Image>
+            <Image  Source="Resources/Images/Logo/circle.png" />
             <Border.RenderTransform>
                 <RotateTransform CenterX="125" CenterY="125"/>
             </Border.RenderTransform>
@@ -102,11 +104,10 @@
         <Canvas Grid.Column="0" Grid.Row="0" >
             <Canvas.Children>
 
-                <s:SurfaceListBox  Name="leftHistory" Visibility="Hidden"
-                      s:SurfaceDragDrop.DragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" 
-                                AllowDrop="False" Background="Black"
-                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                <s:SurfaceListBox  
+                    Name="leftHistory"  
+                    Style="{StaticResource boxStyle}"           
+                   >
                     <s:SurfaceListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -114,11 +115,10 @@
                     </s:SurfaceListBox.ItemsPanel>
                 </s:SurfaceListBox>
 
-                <s:SurfaceListBox  Name="topHistory"  Visibility="Hidden"
-                      s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" 
-                                AllowDrop="False" Background="Black"
-                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                <s:SurfaceListBox  
+                    Name="topHistory" 
+                    Style="{StaticResource boxStyle}"  
+                    >
                     <s:SurfaceListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -126,11 +126,10 @@
                     </s:SurfaceListBox.ItemsPanel>
                 </s:SurfaceListBox>
 
-                <s:SurfaceListBox  Name="rightHistory" Visibility="Hidden"
-                      s:SurfaceDragDrop.PreviewDragCompleted ="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" 
-                               AllowDrop="False" Background="Black"
-                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                <s:SurfaceListBox
+                    Name="rightHistory" 
+                    Style="{StaticResource boxStyle}"  
+                    >
                     <s:SurfaceListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -138,22 +137,18 @@
                     </s:SurfaceListBox.ItemsPanel>
                 </s:SurfaceListBox>
 
-                <s:SurfaceListBox  Name="bottomHistory"  Visibility="Hidden"
-                      s:SurfaceDragDrop.PreviewDragCompleted="DragCompleted"                   
-                   ItemTemplate="{StaticResource MapImage}" 
-                         AllowDrop="False" Background="Black"
-                               PreviewTouchDown="ListBox_PreviewTouchDown">
+                <s:SurfaceListBox
+                    Name="bottomHistory"
+                    Style="{StaticResource boxStyle}"
+                    >
                     <s:SurfaceListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </s:SurfaceListBox.ItemsPanel>
                 </s:SurfaceListBox>
-
             </Canvas.Children>
         </Canvas>
-
-
     </Grid>
     
 </s:SurfaceWindow>

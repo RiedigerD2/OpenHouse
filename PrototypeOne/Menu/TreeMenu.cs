@@ -109,6 +109,7 @@ namespace PrototypeOne
             CreateCrumb(creator);
             SizeCrumbs();
             myTimer.Tick += new EventHandler(myTimer_Tick);
+            interactive = true;
             FillDrawing();
         }
         /// <summary>
@@ -145,6 +146,7 @@ namespace PrototypeOne
             CreateExit();
             SizeCrumbs();
             myTimer.Tick += new EventHandler(myTimer_Tick);
+            interactive = true;
             FillDrawing();
         }
         private void Initialize()
