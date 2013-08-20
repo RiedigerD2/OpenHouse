@@ -74,9 +74,9 @@ namespace PrototypeOne
                 for (int i = 0; i < breadCrumbs.Count; i++)
                 {
                     if (i == breadCrumbs.Count - 1)
-                        list += (breadCrumbs[i].Content);
+                        list += ((TextBlock)(breadCrumbs[i].Content)).Text;
                     else
-                        list += (breadCrumbs[i].Content) + "/";
+                        list += ((TextBlock)(breadCrumbs[i].Content)).Text + "/";
                 }
                 return list;
             }
@@ -131,7 +131,12 @@ namespace PrototypeOne
                 SurfaceButton crumb = new SurfaceButton();
                 crumb.Height = 0.15 * height;
                 crumb.Background = oldc.Background;
-                crumb.Content = oldc.Content.ToString();
+
+                TextBlock block = new TextBlock();
+                block.Text = ((TextBlock)oldc.Content).Text;
+                block.FontSize = 13;
+
+                crumb.Content = block;
                 crumb.Foreground = oldc.Foreground;
                 crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
                 breadCrumbs.Add(crumb);
@@ -186,6 +191,7 @@ namespace PrototypeOne
             {
 
                 NewChild = child.addChild(grandChildren);
+                NewChild.ReDraw(width, height);
             }
             NotifyChange("Source");
             NotifyChange("Name");
@@ -205,13 +211,14 @@ namespace PrototypeOne
             {
                 child = new TreeMenu(grandChildren);
                 canvas.Children.Add(child.DrawMenu());
-                child.ReDraw(width, height);
-                return child;
 
+                return child;
             }
             else
-                return child.addChild(grandChildren);
-
+            {
+                TreeMenu gchild = child.addChild(grandChildren);
+                return gchild;
+            }
         }
         /// <summary>
         /// Adds A new crumb based on creator
@@ -223,8 +230,14 @@ namespace PrototypeOne
             SurfaceButton crumb = new SurfaceButton();
             crumb.Background = new SolidColorBrush(creator.BackGroundColor);
             crumb.Foreground = creator.TextBrush;
-            crumb.Content = creator.Name;
+            
+            TextBlock block =new TextBlock();
+            block.Text    = creator.Name;
+            block.FontSize = 13;
+            
+            crumb.Content = block;
             crumb.PreviewTouchUp += new EventHandler<TouchEventArgs>(RetraceToBreadCrumb);
+            crumb.BorderThickness = new Thickness(0);
             breadCrumbs.Add(crumb);
             canvas.Children.Add(crumb);
             SizeCrumbs();
@@ -291,25 +304,26 @@ namespace PrototypeOne
                     divisions++;
                     children.SetSameHeight(used, divisions, widthLeft);
                 } while (children.IsAverageARLess(used, divisions));
-                AddChildrenTop(widthLeft, height - heightLeft, used, divisions - 1);
+                AddChildrenTop(widthLeft, heightLeft, used, divisions - 1);
                 MakeTree(used + divisions - 1, widthLeft, heightLeft - children.Get(used).Height);
             }
         }
         /// <summary>
         /// Positions count number of children from
         /// the start location to the side of the map
+        /// ontop of eachother
         /// </summary>
-        /// <param name="curWidth">width of the treeMenu</param>
-        /// <param name="curHeight">Height of the treeMenu</param>
+        /// <param name="widthleft">width of the treeMenu not filled yet</param>
+        /// <param name="heightleft">Height of the treeMenu not filled yet</param>
         /// <param name="start">distance in children to start</param>
         /// <param name="count">number of children to place on the side</param>
-        private void AddChildrenSide(double curWidth, double curHeight, int start, int count)
+        private void AddChildrenSide(double widthleft, double heightleft, int start, int count)
         {
             double heightUsed = 0;
             for (int i = 0; i < count; i++)
             {
-                children.Get(start + i).X = curWidth - children.Get(start + i).Width;
-                children.Get(start + i).Y = height - curHeight + heightUsed;
+                children.Get(start + i).X = width-widthleft;
+                children.Get(start + i).Y = height - heightleft + heightUsed;
                 heightUsed += children.Get(start + i).Height;
 
             }
@@ -317,19 +331,20 @@ namespace PrototypeOne
         /// <summary>
         /// Positions count number of children from
         /// the start location to the top of the map
+        /// beside eachother
         /// </summary>
-        /// <param name="curWidth">width of the treeMenu</param>
-        /// <param name="curHeight">Height of the treeMenu</param>
+        /// <param name="widthleft">width of the treeMenu not filled yet</param>
+        /// <param name="heightleft">Height of the treeMenu not filled yet</param>
         /// <param name="start">distance in children to start</param>
         /// <param name="count">number of children to place on the top</param>
-        private void AddChildrenTop(double curWidth, double curHeight, int start, int count)
+        private void AddChildrenTop(double widthleft, double heightleft, int start, int count)
         {
             {
                 double widthUsed = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    children.Get(start + i).X = curWidth - children.Get(start + i).Width - widthUsed;
-                    children.Get(start + i).Y = curHeight;// -children.Get(start + i).Height;
+                    children.Get(start + i).X =  width-widthleft + widthUsed;
+                    children.Get(start + i).Y = height-heightleft;
                     widthUsed += children.Get(start + i).Width;
 
                 }
@@ -360,7 +375,7 @@ namespace PrototypeOne
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.FontSize = 12;
                         txt.SetBinding(TextBlock.WidthProperty, bind);
-
+                        txt.Foreground = Brushes.Transparent;
                         StackPanel panel = new StackPanel();
                         panel.Children.Add(txt);
 
@@ -385,10 +400,10 @@ namespace PrototypeOne
                     }
                     else if (block.ImageString != null && !block.ImageString.Equals(""))
                     {
-                        
+
                         SurfaceButton button = new SurfaceButton();
                         SetButton(button, block);
-                       
+
                         System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
                         bind.Source = button;
 
@@ -396,19 +411,20 @@ namespace PrototypeOne
                         txt.FontSize = 12;
                         txt.Measure(new Size(0, 0));
                         txt.Arrange(new Rect(0, 0, 0, 0));
-
                         txt.SetBinding(TextBlock.WidthProperty, bind);
+                        txt.Foreground = Brushes.Transparent;
                         StackPanel panel = new StackPanel();
+
 
                         Image img = new Image();
                         img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
                         img.Stretch = Stretch.UniformToFill;
                         img.Source = new BitmapImage(new Uri(block.ImageString, UriKind.Relative));
 
-                       
-                        
+
+
                         Viewbox vb = new Viewbox();
-                        
+
                         System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
                         vbBind.Source = txt;
                         vbBind.Converter = new HeightConverter();
@@ -422,9 +438,25 @@ namespace PrototypeOne
 
                         button.Content = panel;
 
+
+                        TextBlock visibleblock = block.GetTextBlockTop();
+                        System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
+                        fontSizebind.Source = visibleblock;
+                        txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
+
+                        visibleblock.FontSize = 18;
+                        visibleblock.Measure(new Size(0, 0));
+                        visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                        while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 12)
+                        {
+                            block.GetTextBlockTop().FontSize--;
+
+                        }
+                        
                         canvas.Children.Add(button);
-
-
+                        block.GetTextBlockTop().Height = txt.Height;
+                        canvas.Children.Add(visibleblock);
+                       
                     }
                     else
                     {
@@ -435,10 +467,27 @@ namespace PrototypeOne
 
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.SetBinding(TextBlock.WidthProperty, bind);
+                        txt.Foreground = Brushes.Transparent;
                         button.Content = txt;
 
-                        canvas.Children.Add(button);
+                        TextBlock visibleblock = block.GetTextBlockTop();
+                        
+                     
+                        System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
+                        fontSizebind.Source = visibleblock;
+                        txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
 
+                        visibleblock.FontSize = 18;
+                        visibleblock.Measure(new Size(0, 0));
+                        visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                        while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize>10)
+                        {
+                            block.GetTextBlockTop().FontSize--;
+                            visibleblock.Measure(new Size(0, 0));
+                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                        }
+                        canvas.Children.Add(button);
+                        canvas.Children.Add(visibleblock);
                     }
                 }
                 else
@@ -446,7 +495,10 @@ namespace PrototypeOne
                     SurfaceButton button = new SurfaceButton();
                     SetButton(button, block);
                     canvas.Children.Add(button);
-                    canvas.Children.Add(block.GetTextBlock());
+                    TextBlock text = block.GetTextBlock();
+                    text.Measure(new Size(0, 0));
+                    text.Arrange(new Rect(0, 0, 0, 0));
+                    canvas.Children.Add(text);
                 }
             }
         }
@@ -479,6 +531,10 @@ namespace PrototypeOne
                 {
                     canvas.Children.Add(block.GetTextBlock());
                 }
+                else
+                {
+                    canvas.Children.Add(block.GetTextBlockTop());
+                }
             }
         }
         /// <summary>
@@ -503,6 +559,11 @@ namespace PrototypeOne
                 canvas.Children.Insert(canvas.Children.Count, child.DrawMenu());
             }
 
+        }
+
+        public void ReDraw()
+        {
+            ReDraw(width, height);
         }
         /// <summary>
         /// removes anyText block associated with a square
@@ -631,7 +692,6 @@ namespace PrototypeOne
                 }
                 NotifyChange("Source");
                 NotifyChange("Name");
-                ReDraw(width, height);
                 Log.CrumbUse(this);
             }
         }
@@ -721,9 +781,9 @@ namespace PrototypeOne
             for (int i = 0; i < breadCrumbs.Count; i++)
             {
                 if (i == breadCrumbs.Count - 1)
-                    list += (breadCrumbs[i].Content) + " ";
+                    list += ((TextBlock)(breadCrumbs[i].Content)).Text + " ";
                 else
-                    list += (breadCrumbs[i].Content) + "/";
+                    list += ((TextBlock)(breadCrumbs[i].Content)).Text + "/";
             }
             return base.ToString() + " TreeMenu: " + list;
         }
@@ -812,7 +872,7 @@ namespace PrototypeOne
 
             actualHeight = menu.height * 0.85 - height;
 
-            return actualHeight;
+            return actualHeight > 0 ? actualHeight : 0;
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

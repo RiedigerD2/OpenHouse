@@ -16,7 +16,6 @@ using System.Windows.Forms;
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
-using System.Windows.Data;
 using Microsoft.Surface.Presentation.Input;
 using System.Collections.ObjectModel;
 
@@ -29,20 +28,19 @@ namespace PrototypeOne
     public partial class SurfaceWindow1 : SurfaceWindow
     {
 
-        public static double treeHeight = 325;
+        public static double treeHeight = 320;
         public static double treeWidth = 450;
         public static double treeArea = treeWidth * treeHeight;
         public static double MenuTileSize = 85;
         public static int MaxMenus = 15;
 
 
-        // menu sizes
-
-        public static double MaxHeightItem = 400;
+        /// menu sizes
         public static double MaxWidthItem = 560;
-        public static double MinHeightItem = 260;
-        public static double MinWidthItem = 360;
-
+        public static double MaxHeightItem = 400;
+        
+        public static double MinWidthItem = 450;
+        public static double MinHeightItem = 320;
         //private Menu.Menu constMenu;
         public List<Menu.Menu> MenuList;
 
@@ -52,7 +50,6 @@ namespace PrototypeOne
         public SurfaceWindow1()
         {
             InitializeComponent();
-            AutoOrientsOnStartup = false;
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
 
@@ -180,9 +177,11 @@ namespace PrototypeOne
             IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), AddAnimation(item));
             MenuList.Add(sideMenu);
 
-
+            TextBlock block = new TextBlock();
+            block.Text="Touch Here to Begin";
+            block.FontSize = 30;
             ScatterViewItem touchme = NonMovingItemFactory(center, angle);
-            touchme.Content = "Touch Here To begin";
+            touchme.Content = block;
             touchme.Background = Brushes.Gray;
             touchme.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
             touchme.Focusable = false;
@@ -222,8 +221,8 @@ namespace PrototypeOne
 
             DoubleAnimation Animation = new DoubleAnimation();
             Animation.From = 1.0;
-            Animation.To = 0.2;
-            Animation.Duration = new Duration(TimeSpan.FromSeconds(5));
+            Animation.To = 0.02;
+            Animation.Duration = new Duration(TimeSpan.FromSeconds(7));
             Animation.AutoReverse = true;
             Animation.RepeatBehavior = RepeatBehavior.Forever;
 
@@ -259,9 +258,9 @@ namespace PrototypeOne
 
 
             //left
-            created = BuildMenu(new Point(this.Width * 0.125, this.Height / 2), 90);
+            created = BuildMenu(new Point(this.Width * 0.10, this.Height / 2), 90);
             SetUpHistory(leftHistory, created);
-            MoveHistory(leftHistory, new Point(this.Width * 0.125 - 0.5 * created.Height, this.Height * .5 - 0.495 * created.Width), 90);
+            MoveHistory(leftHistory, new Point(this.Width * 0.10 - 0.5 * created.Height, this.Height * .5 - 0.495 * created.Width), 90);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryLeft);
 
             //top
@@ -271,9 +270,9 @@ namespace PrototypeOne
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryTop);
 
             //right
-            created = BuildMenu(new Point(this.Width * 0.875, this.Height / 2), -90);
+            created = BuildMenu(new Point(this.Width * 0.90, this.Height / 2), -90);
             SetUpHistory(rightHistory, created);
-            MoveHistory(rightHistory, new Point(this.Width * 0.875 + 0.5 * created.Height, this.Height * 0.5 + 0.495 * created.Width), -90);
+            MoveHistory(rightHistory, new Point(this.Width * 0.90 + 0.5 * created.Height, this.Height * 0.5 + 0.495 * created.Width), -90);
             created.DrawMenu().Children[0].PreviewTouchDown += new EventHandler<TouchEventArgs>(ShowHistoryRight);
 
 
@@ -418,11 +417,12 @@ namespace PrototypeOne
 
                             sqr.Ratio = 1;
                             list.Add(sqr);
-                            TreeMenu child = map.addChild(list, map.Get(button));
-
+                             map.addChild(list, map.Get(button));
+                            
 
                         }
                     }
+                    map.ReDraw();
                 }
                 else//non tree menu
                 {
@@ -526,7 +526,7 @@ namespace PrototypeOne
             Point center = new Point();
             bool left, top, right, bottom;
             double smallAngle = 0.0, distance, slope, crossingX, crossingY, placement;
-            double ratioBetween = 0.45;
+            double ratioBetween = 0.2;
             center.X = 300;
             center.Y = 300;
             slope = Math.Tan(angle * 3.14 / 180);
@@ -650,13 +650,11 @@ namespace PrototypeOne
             if (MenuList.Count < MaxMenus)
             {
                 TreeMenu old = e.Cursor.Data as TreeMenu;
-
-
                 TreeMenu map = old.Clone();
                 map.AddUpListenerToButtons(TouchUpMenu);
 
                 ScatterViewItem item = new ScatterViewItem();
-                item.Center = e.Cursor.GetPosition(scatter);
+                item.Center = findPosition(e.Cursor.GetPosition(this), e.Cursor.GetOrientation(scatter) + 90);                
                 item.Orientation = e.Cursor.GetOrientation(scatter);
                 item.MinHeight = MinHeightItem;
                 item.MinWidth = MinWidthItem;

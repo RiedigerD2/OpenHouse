@@ -2,45 +2,5 @@
                     xmlns:s="http://schemas.microsoft.com/surface/2008"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--following code curtesy of Micheal Hnatiw HnatiwM4@mymacewan.ca-->
-    <!-- defined style for Main Grid -->
-    <Style  x:Key="MainGrid"  TargetType="{x:Type Grid}">
-        <Style.Resources>
-            <SolidColorBrush x:Key="InnerGradient"
-                         Color="Black">
-            </SolidColorBrush>
-        </Style.Resources>
-
-        <Setter Property="Background" Value="{StaticResource InnerGradient}" />
-    </Style>
-
-    <!-- defined style for the Grid Outer Borders -->
-    <Style  x:Key="OuterRow" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#000000" />
-        <Setter Property="BorderThickness" Value="0,10,0,10" />
-        <Setter Property="Grid.RowSpan" Value="1" />
-        <Setter Property="Grid.ColumnSpan" Value="5" />
-    </Style>
-
-    <!-- defined gradients used in for the Grid Outer Borders (child rectangle uses it)-->
-    <SolidColorBrush x:Key="TopOuterGradient"
-                        Color="Black">
-
-    </SolidColorBrush>
-
-    <SolidColorBrush x:Key="BottomOuterGradient" Color="Black">
-        
-                         
-
-    </SolidColorBrush>
-
-    <!-- defined style for the logo border-->
-    <Style x:Key="Logo" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="Black" />
-        <Setter Property="BorderThickness" Value="0,10,0,10" />
-        <Setter Property="Grid.RowSpan" Value="1" />
-        <Setter Property="Grid.ColumnSpan" Value="1" />
-    </Style>
-    
 
 </ResourceDictionary>

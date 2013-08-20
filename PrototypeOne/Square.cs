@@ -189,7 +189,7 @@ namespace PrototypeOne
                 textBlock.RenderTransform = new TranslateTransform(X, Y);
                 textBlock.MaxHeight =  curHeight;
             }
-            textBlock.Width = curWidth;
+            textBlock.Width = Width;
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;
             textBlock.Foreground = TextBrush;
@@ -214,14 +214,15 @@ namespace PrototypeOne
             
             textBlock.Text = Name;
             textBlock.RenderTransform = new TranslateTransform(X, Y);
-            textBlock.Height = curHeight;
-            textBlock.Width = curWidth;
+            textBlock.Width = Width;
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;
             textBlock.Foreground = TextBrush;
             textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
             textBlock.TextAlignment = TextAlignment.Left;
 
+            
+           
             return textBlock;
         }     
         /// <summary>
