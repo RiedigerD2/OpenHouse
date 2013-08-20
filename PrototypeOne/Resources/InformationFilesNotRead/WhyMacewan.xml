@@ -13,10 +13,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Title>Teaching-focused University</Title>
-    <Ratio>0.25</Ratio>
-    <Explanation>
-      Faculty members at MacEwan put teaching as their number one priority while actively conducting innovative research projects. MacEwan receives a high score (A) for its quality of teaching and learning in The Globe and Mail’s Canadian University Report(2013).
+    <Title>Teaching-Focused University</Title>
+    <Ratio>0.2</Ratio>
+    <Explanation>Faculty members put teaching as their number one priority while actively conducting innovative research projects. They often teach labs (rather than graduate students), allowing students to have good quality instruction and consistency between lectures and labs. MacEwan receives a high score (A) for its quality of teaching and learning in The Globe and Mail’s Canadian University Report (2013).
     </Explanation>
   </Catagory>
   <Catagory>
@@ -32,15 +31,15 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Title>Small class size</Title>
-    <Ratio>0.25</Ratio>
-    <Explanation>Class sizes in computer science courses range from 10 (senior-level courses) to 72 (first-year courses).A small class means that you'll get to know your professors and classmates better, and have a better learning experience.</Explanation>
+    <Title>Small Class Size</Title>
+    <Ratio>0.2</Ratio>
+    <Explanation>Class sizes in computer science courses range from 10 (senior-level courses) to 72 (first-year courses). A small class means that you'll get to know your professors and classmates better, and have a better learning experience.</Explanation>
   </Catagory>
   <Catagory>
     <BackGroundColor>
       <A>255</A>
       <R>210</R>
-      <G>92</G>
+      <G>93</G>
       <B>89</B>
     </BackGroundColor>
     <TextColor>
@@ -49,8 +48,8 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Title>High student satisfaction</Title>
-    <Ratio>0.25</Ratio>
+    <Title>High Student Satisfaction</Title>
+    <Ratio>0.2</Ratio>
     <Explanation>MacEwan is ranked highly in student satisfaction in The Globe and Mail’s Canadian University Report (2013).</Explanation>
   </Catagory>
   <Catagory>
@@ -66,8 +65,26 @@
       <G>12</G>
       <B>29</B>
     </BackGroundColor>
-    <Title>Student-faculty interaction</Title>
-    <Ratio>0.25</Ratio>
-    <Explanation>Faculty members at MacEwan are approachable both inside and outside the classroom. Students have opportunities to work with faculty members in research project</Explanation>
+    <Title>Student-Faculty Interaction</Title>
+    <Ratio>0.2</Ratio>
+    <Explanation>Faculty members at MacEwan are approachable both inside and outside the classroom. Students have opportunities to work with faculty members in research projects. For example, this tabletop application was developed by a student research assistant in collaboration with faculty members of the Department of Computer Science.</Explanation>
+  </Catagory>
+  <Catagory>
+    <Title>Modern Facilities</Title>
+    <Explanation>MacEwan has invested in the latest technology, for example, this Microsoft PixelSense, so that students can gain experience with some of the latest technology.</Explanation>
+    <Ratio>0.2</Ratio> 
+    <TextColor>
+        <A>255</A>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
+      </TextColor>
+      <BackGroundColor>
+        <A>255</A>
+        <R>210</R>
+        <G>124</G>
+        <B>121</B>
+      </BackGroundColor>
+    
   </Catagory>
 </ArrayOfCatagory>

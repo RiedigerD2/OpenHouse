@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Catagory>
-    <Title>Computer Science Major</Title>
+    <Title>Computer Science Major
+The general computer science major is flexible. It allows you to create a focus that reflects your interests and prepares you for a range of careers, such as programmer, systems analyst, database administrator, interaction designer, and network administrator.
+    </Title>
     <Ratio>0.5</Ratio>
     <BackGroundColor>
       <A>255</A>
@@ -15,13 +17,11 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      Computer Science Major
-      The general computer science major is flexible. It allows you to create a focus that reflects your interests and prepares you for a range of careers, such as programmer, systems analyst, database administrator, interaction designer, and network administrator.
-    </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Software Professional</Title>
+    <Title>Software Professional
+The software professional concentration provides you with the best preparation you can have for a career in software development. This stream requires you to take courses that have considerable programming components.
+    </Title>
     <Ratio>0.5</Ratio>
     <BackGroundColor>
       <A>255</A>
@@ -35,9 +35,5 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      Software Professional
-      The software professional concentration provides you with the best preparation you can have for a career in software development. This stream requires you to take courses that have considerable programming components.
-    </Explanation>
   </Catagory>
 </ArrayOfCatagory>

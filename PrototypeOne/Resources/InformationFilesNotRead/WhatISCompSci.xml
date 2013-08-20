@@ -30,7 +30,7 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Title>Human Computer Interactions</Title>
+    <Title>Human-Computer Interaction</Title>
     <Ratio>0.1428571429</Ratio>
     <Explanation>Human-computer interaction involves the study, planning, and design of the interaction between people (users) and computers (Wikipedia).</Explanation>
   </Catagory>
@@ -66,7 +66,7 @@
     </BackGroundColor>
     <Title>Databases</Title>
     <Ratio>0.1428571429</Ratio>
-    <Explanation>Database studies the organization, storage, and retrieval of large amounts of data (Wikipedia).</Explanation>
+    <Explanation>In databases, students study the organization, storage, and retrieval of large amounts of data (Wikipedia).</Explanation>
   </Catagory>
   <Catagory>
     <TextColor>
@@ -83,7 +83,7 @@
     </BackGroundColor>
     <Title>Computer Network</Title>
     <Ratio>0.1428571429</Ratio>
-    <Explanation>A computer network or data network is a telecommunications network that allows computers to exchange data.(Wikipedia)</Explanation>
+    <Explanation>In computer network, students learn about the topology, protocols, applications, and management of communication networks that allow computers to exchange data (Wikipedia).</Explanation>
   </Catagory>
   <Catagory>
     <TextColor>
@@ -98,7 +98,7 @@
       <G>187</G>
       <B>00</B>
     </BackGroundColor>
-    <Title>Game design</Title>
+    <Title>Game Design</Title>
     <Explanation>Game design is the game development process of designing the content and rules of a game in the pre-production stage and design of gameplay, environment, storyline, and characters during production stage (Wikipedia).</Explanation>
     <Ratio>0.1428571429</Ratio>
   </Catagory>
@@ -110,8 +110,7 @@
       <B>255</B>
     </TextColor>
     <Title>Parallel Computing</Title>
-    <Explanation>
-      Parallel computing is a form of computation in which many calculations are carried out simultaneously, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (Wikipedia).
+    <Explanation>Parallel computing is a form of computation in which many calculations are carried out simultaneously, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (Wikipedia).
     </Explanation>
     <BackGroundColor>
       <A>255</A>

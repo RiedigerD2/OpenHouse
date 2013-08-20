@@ -15,13 +15,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.258</Ratio>
+    <Ratio>0.248</Ratio>
     <Title>Software Developer</Title>
-    <Explanation>
-      Software developers (or computer programmers) are the brains behind the design, installation, testing and maintenance of software systems.
-      Much more than just playing around with codes, if you work with software you'll play an important part in making a business more efficient and helping to provide a better IT service.(TotalJobs.com)
-      
-    </Explanation>
+    <Explanation>Typical duties include coding, testing, and debugging programs; modifying and updating applications; and communicating with a team that includes analysts, engineers, and quality assurance testers in order to coordinate and document application development and testing (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -38,9 +34,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.243</Ratio>
+    <Ratio>0.233</Ratio>
     <Title>Web Developer</Title>
-    <Explanation>A web designer/developer is responsible for the design, layout and coding of a website. They are involved with the technical and graphical aspects of a website - how the site works and how it looks. They can also be involved with the maintenance and update of an existing site.(creativepool.com)</Explanation>
+    <Explanation>Typical duties include gathering business requirements and developing specifications for web applications; integrating websites with back-end systems such as databases; and writing test plans and analyzing test results (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -57,8 +53,8 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>A systems analyst researches problems, plans solutions, recommends software and systems, at least at the functional level, and coordinates development to meet business or other requirements. Although they may be familiar with a variety of programming languages, operating systems, and computer hardware platforms, they do not normally involve themselves in the actual hardware or software development. Because they often write user requests into technical specifications, the systems analysts are the liaisons between vendors and information technology professionals.(Wikipedia)</Explanation>
-    <Ratio>0.186</Ratio>
+    <Explanation>Typical duties include analyzing hardware and software problems and developing technical solutions; translating user and/or system requirements into functional technical specifications; and acting as a liaison between developers and end users to ensure technical compatibility and satisfaction (Robert Half Technology).</Explanation>
+    <Ratio>0.176</Ratio>
   </Catagory>
   
   <Catagory>
@@ -74,12 +70,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.166</Ratio>
+    <Ratio>0.161</Ratio>
     <Title>Database Developer</Title>
-    <Explanation>
-      database manager is responsible for the way a company manages, organises, stores and accesses its information.
-      It's a role you'll often find in companies that hold a lot of information that needs putting into reports or documents, for example media companies, marketing companies, public sector organisations or financial institutions.(Totaljobs.com)
-    </Explanation>
+    <Explanation>Typical duties include developing database structures for data storage, retrieval, and reporting according to project specifications; implementing, testing, and tuning database design, functionality, and performance; and designing and developing back-end database interfaces to web applications (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -95,9 +88,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.084</Ratio>
+    <Ratio>0.0835</Ratio>
     <Title>System Administrator</Title>
-    <Explanation>A system administrator is a professional practitioner of IT Administration, which is concerned mainly with the design, construction, and maintenance of computer systems and networks.</Explanation>
+    <Explanation>Typical duties include installing operating systems, patches, and upgrades; analyzing, troubleshooting, and resolving hardware, software, and networking issues; and configuring, optimizing, and monitoring servers (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -113,9 +106,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.031</Ratio>
+    <Ratio>0.05</Ratio>
     <Title>Game Developer</Title>
-    <Explanation>A game programmer is a software engineer, programmer, or computer scientist who primarily develops codebase for video games or related software, such as game development tools. Game programming has many specialized disciplines all of which fall under the umbrella term of "game programmer"(Wikipedia)</Explanation>
+    <Explanation>Typical duties include developing ideas and concepts of games; designing, implementing, and testing various aspects of games; and maintaining software and fixing bugs (Wikipedia).</Explanation>
   </Catagory>
 
   
@@ -134,12 +127,9 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.031</Ratio>
-    <Title>Interaction designer </Title>
-    <Explanation>
-      The Interaction Designer designs simple, human-centered experiences ranging from mobile,
-      web, and desktop applications.(unstuck)
-    </Explanation>
+    <Ratio>0.0485</Ratio>
+    <Title>Interaction Designer </Title>
+    <Explanation>Typical duties include identifying user requirements; designing user interfaces and developing both low- and high-fidelity prototypes; and performing evaluations on prototypes and existing products (monster.com)</Explanation>
   </Catagory>
 
 </ArrayOfCatagory>

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Catagory>
-    <Title>Tuition</Title>
+    <Title>Tuition and Fees</Title>
     <BackGroundColor>
       <A>255</A>
-      <R>128</R>
-      <G>175</G>
-      <B>79</B>
+      <R>144</R>
+      <G>155</G>
+      <B>41</B>
     </BackGroundColor>
     <TextColor>
       <A>255</A>
@@ -14,14 +14,13 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.33333333</Ratio>
-    <Explanation>
-      Domestic fees apply to Canadian citizens, permanent residents and Convention refugees.
-      Costs listed below reflect 100% enrolment (five courses per term).</Explanation>
+    <Ratio>0.3</Ratio>
+    <Explanation>These cost estimates apply to Canadian citizens, permanent residents, and Convention refugees, and reflect 100% enrolment (five courses per term).
+    </Explanation>
     <Image>Tuition.png</Image>
   </Catagory>
   <Catagory>
-    <Title>Regular Admisssion Requirments</Title>
+    <Title>Regular Admisssion</Title>
     <BackGroundColor>
       <A>255</A>
       <R>102</R>
@@ -34,19 +33,19 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.333333333</Ratio>
-    <Explanation>
-      Applicants must have a minimum overall average of 65 percent, with no course grade lower than 50 percent, in the following high school courses:
-
-1. ELA 30-1
-2. Mathematics 30-1 or Pure Mathematics 30
-3. Two of the following: Biology 30, Chemistry 30, Mathematics 31, Physics 30, Computing Science (CSE) Advanced Level Career and Technology Studies (CTS)(minimum 5 credits)
-4. An Additional Science, Fine Art, or Humanities 30 Level Course.
+    <Ratio>0.3</Ratio>
+    <Explanation>*A minimum overall average of 65 percent.
+*No course grade lower than 50 percent in these high school courses:
+      1. ELA 30-1
+      2. Mathematics 30-1 or Pure Mathematics 30
+      3. Two of the following: Biology 30, Chemistry 30, Mathematics 31, Physics 30, Computing Science (CSE) Advanced Level Career and Technology Studies (CTS) (minimum 5 credits)
+      4. An additional Humanities, Fine Arts, or Sciences 30-level course
+*Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Previous post-secondary work</Title>
-    <Ratio>0.1</Ratio>
+    <Title>Previous Post-Secondary Work</Title>
+    <Ratio>0.133</Ratio>
     <BackGroundColor>
       <A>255</A>
       <R>155</R>
@@ -59,16 +58,15 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      Admission in this category does not imply or guarantee the transfer of any coursework and/or credential unless a block transfer agreement (internal or external) is in effect and published in the calendar by the Office of the Registrar. In addition, transfer of coursework does not imply or guarantee that an applicant will be admitted.
-
-      Applicants must have successfully completed the following:
-      - A minimum of 24 credits of university-transferable coursework, from a recognized institution, with a minimum Admission Grade Point Average (AGPA) of 2.0 on a 4.0 scale.
-      - The required core courses listed under the Regular or Mature Admission category.
+    <Explanation>*Previous Post-Secondary Work
+*A minimum of 24 credits of university-transferable coursework from a recognized institution
+*A minimum Admission Grade Point Average (AGPA) of 2.0 on a 4.0 scale.
+*Have completed core courses listed under the Regular or Mature Admission category.
+*Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Mature Admisssion Requirments</Title>
+    <Title>Mature Admisssion</Title>
     <BackGroundColor>
       <A>255</A>
       <R>127</R>
@@ -81,12 +79,33 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.233333333</Ratio>
-    <Explanation>
-      Applicants must be 20 years of age or older and have been out of full-time high school at least one year by the beginning of the intake term. Applicants must have a minimum overall average of 60 percent, with no course grade lower than 50 percent, in the following high school courses:
-1. ELA 30-1
-2. Mathematics 30-1 or Pure Mathematics 30
-3. Two of the following: Biology 30, Chemistry 30, Mathematics 31, Physics 30, Computing Science (CSE) Advanced Level Career and Technology Studies (CTS) (minimum 5 credits)
+    <Ratio>0.1333</Ratio>
+    <Explanation>*Must be 20 years of age or older and have been out of full-time high school at least one year by the beginning of the intake term.
+*A minimum overall average of 60 percent.
+*No course grade lower than 50 percent in these high school courses:
+      1. ELA 30-1
+      2. Mathematics 30-1 or Pure Mathematics 30
+      3. Two of the following: Biology 30, Chemistry 30, Mathematics 31, Physics 30, Computing Science (CSE) Advanced Level Career and Technology Studies (CTS) (minimum 5 credits)
+*Please see MacEwan website or talk with a Program Advisor for more details.
+    </Explanation>
+  </Catagory>
+  <Catagory>
+    <Title>Probationary Admission</Title>
+    <BackGroundColor>
+      <A>255</A>
+      <R>168</R>
+      <G>175</G>
+      <B>79</B>
+    </BackGroundColor>
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
+    <Ratio>0.1333</Ratio>
+    <Explanation>*Have completed nine credits of university level coursework, with no grade less than C, or have completed more than nine credits of university level coursework with a minimum GPA of 2.0 on a 4.0 scale.
+*Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
   </Catagory>
   

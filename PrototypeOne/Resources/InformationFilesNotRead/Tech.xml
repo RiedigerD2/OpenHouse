@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Catagory>
-    <Title>General Programming</Title>
-    <Ratio>.25</Ratio>
+    <Title>General Programming
+      
+C,C++,C#,Java,Python
+    </Title>
+    <Ratio>.2</Ratio>
     <BackGroundColor>
       <A>255</A>
       <R>102</R>
@@ -15,13 +18,13 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      C,C++,C#,Java,Python
-    </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Database Management Systems</Title>
-    <Ratio>0.25</Ratio>
+    <Title>Database Management Systems
+    
+MySQL,Oracle,SQL Server
+    </Title>
+    <Ratio>0.2</Ratio>
     <BackGroundColor>
       <A>255</A>
       <R>138</R>
@@ -34,13 +37,12 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      MySQL,Oracle,SQL Server
-    </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Web Development Tools</Title>
-    <Ratio>0.25</Ratio>
+    <Title>Web Development Tools
+    
+Java EE,JavaScript, jQuery, PHP</Title>
+    <Ratio>0.2</Ratio>
     <BackGroundColor>
       <A>255</A>
       <R>176</R>
@@ -53,18 +55,17 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      Java EE,JavaScript, jQuery, PHP
-    </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Game Engine</Title>
-    <Ratio>0.25</Ratio>
+    <Title>Game Engine
+    
+Unity</Title>
+    <Ratio>0.2</Ratio>
     <BackGroundColor>
       <A>255</A>
-      <R>74</R>
-      <G>32</G>
-      <B>111</B>
+      <R>61</R>
+      <G>46</G>
+      <B>124</B>
     </BackGroundColor>
     <TextColor>
       <A>255</A>
@@ -72,8 +73,19 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>
-      Unity
-    </Explanation>
   </Catagory>
+  <Catagory>
+    <Title>Development Environments and Tools
+
+Xcode, Eclipse, NetBeans, emacs, vim, gdb, gprof, gcov
+    </Title>
+    <Ratio>0.2</Ratio>
+    <BackGroundColor>
+      <A>255</A>
+      <R>74</R>
+      <G>32</G>
+      <B>111</B>
+    </BackGroundColor>
+  </Catagory>
+  
 </ArrayOfCatagory>

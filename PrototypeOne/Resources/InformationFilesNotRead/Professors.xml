@@ -3,10 +3,9 @@
 
   <Catagory>
     <Title>Calin Anton</Title>
-    <Ratio>0.090909090</Ratio>
-    <Explanation>
-      Calin Anton PhD(Alberta),M.Sc(Bucharest)
-      Calin obtained his BSc(computing science) in 1996, and MSc(computing science) in 1997 at University of Bucharest(Romania). In 1999 he started a PhD in computing science at University of Alberta. During his graduate studies, Calin worked mainly on identifying structural properties of combinatorial problems. Between 2005 and 2007 Calin was assistant professor of computer science at Augustana Faculty (University of Alberta). Since 2008 he has been working as instructor in the Computer Science Department at Grant MacEwan University. At MacEwan, Calin teaches courses in the areas of Algorithmics and Artificial Intelligence, as well as basic computer science courses.
+    <Ratio>0.1063829787</Ratio>
+    <Explanation>Calin Anton, PhD(Alberta)
+In 1999 Calin started a PhD in Computing Science at University of Alberta. During his graduate studies, Calin worked mainly on identifying structural properties of combinatorial problems. Between 2005 and 2007 Calin was Assistant Professor of Computer Science at Augustana Faculty (University of Alberta). Since 2008 he has been working as Instructor in the Computer Science Department at MacEwan University. At MacEwan, Calin teaches courses in the area of Algorithmics and Artificial Intelligence, as well as basic computer science courses.
     </Explanation>
     <BackGroundColor>
       <A>255</A>
@@ -23,8 +22,8 @@
   </Catagory>
   <Catagory>
     <Title>Nicholas Boers</Title>
-    <Ratio>0.090909090</Ratio>
-    <Explanation>Nicholas Boers Phd(Alberta), M.Sc(Alberta)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Nicholas Boers, Phd(Alberta)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>210</R>
@@ -40,8 +39,8 @@
   </Catagory>
   <Catagory>
     <Title>Sharon Bratt</Title>
-    <Ratio>0.090909090909</Ratio>
-    <Explanation>Sharon Bratt Phd(Simon Fraser), M.Ed(Alberta),B.Ed(Alberta),BFA(Alberta)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Sharon Bratt, Phd(Simon Fraser)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>80</R>
@@ -57,8 +56,8 @@
   </Catagory>
   <Catagory>
     <Title>Brian Brookwell</Title>
-    <Ratio>0.090909090909</Ratio>
-    <Explanation>Brian Brookwell M.Sc(Calgary), B.Sc(Calgary)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Brian Brookwell, M.Sc(Calgary)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>239</R>
@@ -74,13 +73,10 @@
   </Catagory>
   <Catagory>
     <Title>Jon Coulson</Title>
-    <Ratio>0.090909090909</Ratio>
-    <Explanation>
-      Jon Coulson M.Comp(New England, Australia), B.Ed(Alberta), B.Sc(Alberta)
-      Laboratory Supervisor, Computer Science
-      Jon began professional life as a high school math, physics, chemistry, and biology teacher. He taught high school in Alberta and in Queensland and Tasmania in Australia.  After completing his Master’s degree in Computer Science at the University of New England (Australia), Jon held a joint appointment of Lecturer in the School of Education and as instructional designer in the School of Health at the University of New England. Jon taught in the Computer Science department at the University of Prince Edward Island before returning to Edmonton. In 2006, Jon joined the Instructional Media and Design department at Grant MacEwan Univeristy as an Educational Technology Facilitator. He then joined the Computer Science department as it’s Laboratory Supervisor in 2012 where he also teaches Computer Science and Educational Technology.
+    <Ratio>0.1063829787</Ratio>
+    <Explanation>Jon Coulson, M.Comp. (New England, Australia)
+Jon began professional life as a high school math, physics, chemistry, and biology teacher. He taught high school in Alberta and in Queensland and Tasmania in Australia.  After completing his Master’s degree in Computer Science at the University of New England (Australia), Jon held a joint appointment of Lecturer in the School of Education and as instructional designer in the School of Health at the University of New England. Jon taught in the Computer Science department at the University of Prince Edward Island before returning to Edmonton. In 2006, Jon joined the Instructional Media and Design department at Grant MacEwan University as an Educational Technology Facilitator. He then joined the Computer Science department (also at MacEwan University) as its Laboratory Supervisor in 2012 where he also teaches Computer Science and Educational Technology.
     </Explanation>
-    <Image>Jon.jpg</Image>
     <BackGroundColor>
       <A>255</A>
       <R>106</R>
@@ -96,8 +92,8 @@
   </Catagory>
   <Catagory>
     <Title>Mohamad El-Hajj</Title>
-    <Ratio>0.0909090909090</Ratio>
-    <Explanation>Mohamad El-Hajj PhD(UofA), M.Sc(LAU-Lebanon), B.Sc(BUC_Lebanon)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Mohamad El-Hajj, PhD(Alberta)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>196</R>
@@ -113,11 +109,9 @@
   </Catagory>
   <Catagory>
     <Title>Indratmo</Title>
-    <Ratio>0.0909090909090</Ratio>
-    <Explanation>
-      Indratmo PhD(Saskatchewan), M.Sc(Manitoba), B.Eng(Petra)
-      
-      Indratmo is Assistant Professor of Computer Science at MacEwan University. He enjoys teaching both introductory and advanced programming courses, such as object-oriented programming, interactive systems, and mobile software development. His research interests cover multidisciplinary areas of information visualization, human-computer interaction, and social computing. Outside the academic world, he enjoys traveling, hiking, and camping in the Canadian Rockies.
+    <Ratio>0.1063829787</Ratio>
+    <Explanation>Indratmo, PhD (Saskatchewan)
+Indratmo is Assistant Professor of Computer Science at MacEwan University. He enjoys teaching both introductory and advanced programming courses, such as object-oriented programming, interactive systems, and mobile software development. His research interests cover multidisciplinary areas of information visualization, human-computer interaction, and social computing. Outside the academic world, he enjoys traveling, hiking, and camping in the Canadian Rockies.
     </Explanation>
     <BackGroundColor>
       <A>255</A>
@@ -133,9 +127,9 @@
     </TextColor>
   </Catagory>
   <Catagory>
-    <Title>Cam MacDonell</Title>
-    <Ratio>0.09090909090909</Ratio>
-    <Explanation>Cam MacDonell PhD(Alberta)</Explanation>
+    <Title>Cam Macdonell</Title>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Cam MacDonell, PhD(Alberta)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>107</R>
@@ -151,8 +145,8 @@
   </Catagory>
   <Catagory>
     <Title>Nicole Malloy</Title>
-    <Ratio>0.090909090909</Ratio>
-    <Explanation>Nicole Malloy M.Sc(Alberta), B.Sc(Alberta)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Nicole Malloy, M.Sc(Alberta)</Explanation>
     
     <BackGroundColor>
       <A>255</A>
@@ -169,8 +163,8 @@
   </Catagory>
   <Catagory>
     <Title>Ron Meleshko</Title>
-    <Ratio>0.0909090909090</Ratio>
-    <Explanation>PhD(Alberta), M.Sc(Alberta), B.Sc(Alberta)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Ron Meleshko, PhD(Alberta)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>27</R>
@@ -186,8 +180,8 @@
   </Catagory>
   <Catagory>
     <Title>Ibrahim Sumrain</Title>
-    <Ratio>0.0909090909</Ratio>
-    <Explanation>Ibrahim Sumrain PhD(Oregon State), M.Sc(Portland State), BA(Jordan)</Explanation>
+    <Ratio>0.0851064</Ratio>
+    <Explanation>Ibrahim Sumrain, PhD(Oregon State)</Explanation>
     <BackGroundColor>
       <A>255</A>
       <R>164</R>

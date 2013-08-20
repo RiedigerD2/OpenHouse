@@ -9,12 +9,13 @@
     </TextColor>
     <BackGroundColor>
       <A>255</A>
-      <R>37</R>
-      <G>93</G>
-      <B>11</B>
+      <R>70</R>
+      <G>161</G>
+      <B>179</B>
     </BackGroundColor>
     <Ratio>0.5</Ratio>
-    <SubCatagoryFile>Students.xml</SubCatagoryFile>
+    <Explanation>The purpose of Grant MacEwan Undergraduates of Computing Science (GMUCS) is to promote an environment for the interaction of computing science students with other computing science students and with other relevant parties. GMUCS shall engage in activities relating to social, academic, and professional interests (GMUCS Constitution).
+    </Explanation>
     <Title>Students</Title>
   </Catagory>
 

@@ -14,7 +14,7 @@
       <B>59</B>
     </BackGroundColor>
     <Ratio>0.3</Ratio>
-    <Title>MacEwan University</Title>
+    <Title>Why MacEwan</Title>
     <BackGroundImage>button-macewan.png</BackGroundImage>
     <SubCatagoryFile>WhyMacewan.xml</SubCatagoryFile>
   </Catagory>
@@ -30,10 +30,10 @@
       <A>255</A>
       <R>255</R>
       <G>140</G>
-      <B>221</B>
+      <B>00</B>
     </BackGroundColor>
     <Ratio>0.2</Ratio>
-    <Title>What Is Computer Science</Title>
+    <Title>Computer Science</Title>
     <BackGroundImage>button-cs.png</BackGroundImage>
     <SubCatagoryFile>WhatIsCompSci.xml</SubCatagoryFile>
   </Catagory>
@@ -54,7 +54,7 @@
     <Ratio>0.1</Ratio>
     <SubCatagoryFile>Carrers.xml</SubCatagoryFile>
     <BackGroundImage>button-careers.png</BackGroundImage>
-    <Title>Carrers in Computer Science</Title>
+    <Title>Careers</Title>
   </Catagory>
 
 
@@ -72,7 +72,7 @@
       <B>36</B>
     </BackGroundColor>
     <Ratio>0.1</Ratio>
-    <Title>Admission Information</Title>
+    <Title>Admission</Title>
     <BackGroundImage>button-admission.png</BackGroundImage>
     <SubCatagoryFile>Admission.xml</SubCatagoryFile>
   </Catagory>
@@ -86,8 +86,8 @@
     </TextColor>
     <BackGroundColor>
       <A>255</A>
-      <R>164</R>
-      <G>85</G>
+      <R>196</R>
+      <G>87</G>
       <B>39</B>
     </BackGroundColor>
     <Ratio>0.1</Ratio>
