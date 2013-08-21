@@ -106,7 +106,7 @@ namespace PrototypeOne
         public void setBackGround(string imagePath)
         {
 
-             backGroundImageBrush = new ImageBrush(new BitmapImage(new Uri(@"Images/"+imagePath, UriKind.Relative)));
+             backGroundImageBrush = new ImageBrush(new BitmapImage(new Uri(@"Resources/Images/"+imagePath, UriKind.Relative)));
         }
         public void setTextColor(Color textColor)
         {

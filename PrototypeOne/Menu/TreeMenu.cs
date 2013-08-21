@@ -249,7 +249,7 @@ namespace PrototypeOne
             Exit = new SurfaceButton();
             try
             {
-                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Images/X.jpg", UriKind.Relative)));
+                ImageBrush buttonBrush = new ImageBrush(new BitmapImage(new Uri("Resources/Images/X.jpg", UriKind.Relative)));
                 Exit.Background = buttonBrush;
             }
             catch (Exception e)

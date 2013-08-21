@@ -147,10 +147,10 @@ namespace PrototypeOne
             first.Title = "firstTitle";
 
             first.Video = @"C:\Users\Public\Videos\Sample Videos\Wildlife.wmv";
-            first.Image = "Resources/X.jpg";
+            first.Image = "X.jpg";
             first.Explanation = "long string with\n to make sence i should say newline\nLol\n";
             first.SubCatagoryFile = "Top";
-            first.BackGroundImage = @"Resources/bond.jpg";
+            first.BackGroundImage = @"bond.jpg";
             second.BackGroundColor = Colors.AntiqueWhite;
             second.TextColor = Colors.Black;
             second.Ratio = 0.55;
@@ -159,7 +159,7 @@ namespace PrototypeOne
             saveList.Add(first);
             saveList.Add(second);
 
-            Catagory.WriteFile(saveList, "Information/Example.xml");
+            Catagory.WriteFile(saveList, "Resources/Information/Example.xml");
 
         }
 
@@ -172,7 +172,7 @@ namespace PrototypeOne
         {
             ScatterViewItem item = NonMovingItemFactory(center, angle);
 
-            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Information/Top.xml"), AddAnimation(item));
+            IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Resources/Information/Top.xml"), AddAnimation(item));
             MenuList.Add(sideMenu);
 
             TextBlock block = new TextBlock();
@@ -337,7 +337,7 @@ namespace PrototypeOne
         public void PlaceTreeMap(String fileName, Square caller, double angle, Point parent)
         {
 
-            TreeMenu map = new TreeMenu(Catagory.ReadFile("Information/" + fileName), caller, MenuList);
+            TreeMenu map = new TreeMenu(Catagory.ReadFile( fileName), caller, MenuList);
 
 
             map.AddUpListenerToButtons(TouchUpMenu);
@@ -386,7 +386,7 @@ namespace PrototypeOne
                     TreeMenu map = (TreeMenu)menu;
                     if (file != null && !file.Equals(""))
                     {
-                        TreeMenu childAdded = map.addChild(Catagory.ReadFile("Information/" + file), map.Get(button));
+                        TreeMenu childAdded = map.addChild(Catagory.ReadFile( file), map.Get(button));
                         childAdded.AddUpListenerToButtons(TouchUpMenu);
                     }
                     else
@@ -526,7 +526,7 @@ namespace PrototypeOne
         /// that requested a treemenu be created
         /// </summary>
         /// <param name="parent">location of finger in scatterview</param>
-        /// <param name="angle">angle of finger in scatterview</param>
+        /// <param name="angle">angle of finger in scatterview degrees</param>
         /// <returns></returns>
         private Point findPosition(Point parent, double angle)
         {
@@ -534,21 +534,26 @@ namespace PrototypeOne
             bool left, top, right, bottom;
             double smallAngle = 0.0, distance, slope, crossingX, crossingY, placement;
             double ratioBetween = 0.2;
-            center.X = 300;
-            center.Y = 300;
+            while (angle > 360) angle -= 360;
+            center.X = 100;// parent.X;
+            center.Y = 100;// parent.Y;
             slope = Math.Tan(angle * 3.14 / 180);
 
-            //True if the y line is within the window
-            //at left of screen
+            //useing the formula (y2-y1)=(x2-x1)m
+
+            
+            //y2=m(x2-x1)+y1
             placement = (slope * (0 - parent.X) + parent.Y);
             left = placement > 0 && placement < this.Height;
 
             //at right of screen
+            //y2=m(x2-x1)+y1
             placement = slope * (this.Width - parent.X) + parent.Y;
             right = placement > 0 && placement < this.Height;
 
             //true if the x value line is within the window
             //at top of screen
+            //x2=(y2-y1)/m+x1
             placement = (0 - parent.Y) / slope + parent.X;
             top = placement > 0 && placement < this.Width;
 
@@ -586,7 +591,7 @@ namespace PrototypeOne
                 smallAngle = 270 - angle;
                 center.X = parent.X + Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
                 center.Y = parent.Y + Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
-
+                Console.Out.WriteLine("He has been made captain\n\n");
             }
             else if (left && (angle < 90 || angle > 270))
             {
@@ -606,7 +611,7 @@ namespace PrototypeOne
                 center.X = parent.X - Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
 
             }
-
+            
             if (center.X < treeHeight * 0.5)
             {
                 center.X = treeHeight * 0.5;
@@ -628,7 +633,11 @@ namespace PrototypeOne
         }
 
 
-
+        /// <summary>
+        /// Removes the dragged item from the associated collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DragCompleted(object sender, SurfaceDragCompletedEventArgs e)
         {
             Menu.Menu removed = e.Cursor.Data as Menu.Menu;
@@ -649,7 +658,11 @@ namespace PrototypeOne
                 e.Handled = true;
             }
         }
-
+        /// <summary>
+        /// Adds the dragged map to the scatter view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Scatter_Drop(object sender, SurfaceDragDropEventArgs e)
         {
             if (MenuList.Count < MaxMenus)
@@ -657,7 +670,7 @@ namespace PrototypeOne
                 TreeMenu old = e.Cursor.Data as TreeMenu;
                 TreeMenu map = old.Clone();
                 map.AddUpListenerToButtons(TouchUpMenu);
-
+                Console.Out.WriteLine(e.Cursor);
                 ScatterViewItem item = new ScatterViewItem();
                 item.Center = findPosition(e.Cursor.GetPosition(this), e.Cursor.GetOrientation(scatter) + 90);                
                 item.Orientation = e.Cursor.GetOrientation(scatter);
@@ -688,7 +701,11 @@ namespace PrototypeOne
         }
 
         
-
+        /// <summary>
+        /// sets up the information needed for the drag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_PreviewTouchDown(object sender, TouchEventArgs e)
         {
             if (e.TouchDevice.GetIsFingerRecognized())

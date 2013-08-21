@@ -122,7 +122,7 @@ namespace PrototypeOne
                 //set file to open if this square is followed
                 if (cat.SubCatagoryFile!=null && !cat.SubCatagoryFile.Equals(""))
                 {
-                    square.SubFile = cat.SubCatagoryFile;
+                    square.SubFile = @"Resources/Information/" + cat.SubCatagoryFile;
                 }
 
                 //provide text explanation if no file is provided to follow
@@ -156,7 +156,7 @@ namespace PrototypeOne
                 //video for explanation
                 if (cat.Video!=null && !cat.Video.Equals(""))
                 {
-                    square.VideoString = @"Videos/" + cat.Video;
+                    square.VideoString = @"Resources/Videos/" + cat.Video;
                 }
                 //background image to use instead of backgroundcolor
                 if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))
