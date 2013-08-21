@@ -14,7 +14,7 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.3</Ratio>
+    <Ratio>0.1966</Ratio>
     <Explanation>These cost estimates apply to Canadian citizens, permanent residents, and Convention refugees, and reflect 100% enrolment (five courses per term).
     </Explanation>
     <Image>Tuition.png</Image>
@@ -45,7 +45,7 @@
   </Catagory>
   <Catagory>
     <Title>Previous Post-Secondary Work</Title>
-    <Ratio>0.133</Ratio>
+    <Ratio>0.1966</Ratio>
     <BackGroundColor>
       <A>255</A>
       <R>155</R>
@@ -79,7 +79,7 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.1333</Ratio>
+    <Ratio>0.1966</Ratio>
     <Explanation>*Must be 20 years of age or older and have been out of full-time high school at least one year by the beginning of the intake term.
 *A minimum overall average of 60 percent.
 *No course grade lower than 50 percent in these high school courses:
@@ -103,7 +103,7 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Ratio>0.1333</Ratio>
+    <Ratio>0.1102</Ratio>
     <Explanation>*Have completed nine credits of university level coursework, with no grade less than C, or have completed more than nine credits of university level coursework with a minimum GPA of 2.0 on a 4.0 scale.
 *Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>

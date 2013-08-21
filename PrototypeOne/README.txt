@@ -43,10 +43,26 @@ Optional Fields
 	
 	Video: string relative path from \bin\Debug\Resources\Video or \bin\Release\Resources\Video to an video to be displayed
 
-	In the \bin\Release\Resources\Information or \bin\Release\Resources\Information directory only one file is Mandatory that is "Top.xml" this serves as the Main menu
+	CONFIG FILES:
+
+	In the PrototypeOne\Resources\Information directory only one file is Mandatory that is "Top.xml" this serves as the Main menu
 no catagory in the file should have an explanation seeing as it won't be displayed anyways.
-all other file in ?\Information are refered to in a file already existing in the file. eg."Top.xml" as a
+all other files in \Information are refered to in a file already existing in the file. eg."Top.xml" as a
  SubCatagoryFile
+
+All the config files, for the menus, are actually read from \bin\Debug\Resources\Information or \bin\Release\Resources\Information inorder for them to be
+updated when the files in PrototypeOne\Resources\Information are updated the PrototypeOne.csproj file must be updated.
+
+When a file is first added to a Visual studio project it first appears in PrototypeOne/PrototypeOne.csproj like so
+
+<Resource Include="Resources\Information\Top.xml" />
+
+simply change that line to look like this
+    <Content Include="Resources\Information\Top.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+
 
 
  A LogFile is created and stored as \bin\Debug\Log.txt or \bin\Release\Log.txt. To reset this file simply delete it.
