@@ -117,20 +117,43 @@
     <Content Include="PrototypeOne.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\icon.png" />
-    <Resource Include="Resources\Information\Admission.xml" />
-    <Resource Include="Resources\Information\Base.xml" />
-    <Resource Include="Resources\Information\Carrers.xml" />
-    <Resource Include="Resources\Information\OurPeople.xml" />
-    <Resource Include="Resources\Information\OurProgram.xml" />
-    <Resource Include="Resources\Information\Professors.xml" />
-    <Resource Include="Resources\Information\Streams.xml" />
-    <Resource Include="Resources\Information\StudentProjects.xml" />
-    <Resource Include="Resources\Information\Students.xml" />
-    <Resource Include="Resources\Information\Tech.xml" />
-    <Resource Include="Resources\Information\Top.xml" />
-    <Resource Include="Resources\Information\WhatISCompSci.xml" />
-    <Resource Include="Resources\Information\WhyMacewan.xml" />
+    <Content Include="Resources\icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Admission.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Base.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Carrers.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\OurPeople.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Information\OurProgram.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Professors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Streams.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Tech.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Top.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\WhatISCompSci.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\WhyMacewan.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\Jon.jpg" />
     <Resource Include="Resources\Images\Logo\circle.png" />
     <Resource Include="Resources\Images\Logo\ring.png" />
