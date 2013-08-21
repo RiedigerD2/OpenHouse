@@ -48,3 +48,16 @@ no catagory in the file should have an explanation seeing as it won't be display
 all other file in ?\Information are refered to in a file already existing in the file. eg."Top.xml" as a
  SubCatagoryFile
 
+
+ A LogFile is created and stored as \bin\Debug\Log.txt or \bin\Release\Log.txt. To reset this file simply delete it.
+
+ Loading the application onto the surface.
+	
+	
+
+	Place the file PrototypeOne in C:\Surface Code Samples\SDKSamples\Core
+	The Permisions of the PrototypeOne file must be changed to read and write allowed. Right click the file open properties and deselect ReadOnly.
+
+	create a shortcut of \bin\release\PrototypeOne.xml and place it in C:\ProgramData\Microsoft\Surface\v2.0\Programs
+
+	

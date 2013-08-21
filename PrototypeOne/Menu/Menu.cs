@@ -37,7 +37,7 @@ namespace PrototypeOne.Menu
         {
             children = list;
             myTimer = new Timer();
-            myTimer.Interval = 60000;
+            myTimer.Interval = 90000;
             myTimer.Enabled = true;
         }
         /// <summary>

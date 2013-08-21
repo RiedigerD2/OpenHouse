@@ -213,7 +213,7 @@ namespace PrototypeOne
             DoubleAnimation Animation = new DoubleAnimation();
             Animation.From = 1.0;
             Animation.To = 0.02;
-            Animation.Duration = new Duration(TimeSpan.FromSeconds(6));
+            Animation.Duration = new Duration(TimeSpan.FromSeconds(7.5));
             Animation.AutoReverse = true;
             Animation.RepeatBehavior = RepeatBehavior.Forever;
 
