@@ -141,6 +141,7 @@
     </Content>
     <Content Include="Resources\Information\Streams.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\Tech.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

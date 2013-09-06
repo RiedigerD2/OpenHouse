@@ -171,7 +171,7 @@ namespace PrototypeOne
         public IndividualMenu BuildMenu(Point center, double angle)
         {
             ScatterViewItem item = NonMovingItemFactory(center, angle);
-
+           
             IndividualMenu sideMenu = new Menu.IndividualMenu(Catagory.ReadFile("Resources/Information/Top.xml"), AddAnimation(item));
             MenuList.Add(sideMenu);
 
@@ -186,7 +186,7 @@ namespace PrototypeOne
             touchme.Height = sideMenu.Height;
             scatter.Items.Add(touchme);
             Canvas canvas = sideMenu.DrawMenu();
-
+            
             item.Content = canvas;
             item.Background = Brushes.Transparent;
             scatter.Items.Add(item);
@@ -213,6 +213,7 @@ namespace PrototypeOne
             DoubleAnimation Animation = new DoubleAnimation();
             Animation.From = 1.0;
             Animation.To = 0.02;
+            //Duration needs to divide the timer length(set in Menu.Menu) evenly for the animation to be smooth
             Animation.Duration = new Duration(TimeSpan.FromSeconds(7.5));
             Animation.AutoReverse = true;
             Animation.RepeatBehavior = RepeatBehavior.Forever;
@@ -360,6 +361,8 @@ namespace PrototypeOne
             ((IndividualMenu)FindTheMenu(caller.Button)).AddToHistory(map);
         }
 
+       
+
         /// <summary>
         /// Event Handler finds and executes the correct response to menu Surfacebutton that 
         /// raised an event
@@ -473,6 +476,8 @@ namespace PrototypeOne
         private void OnManipulation(object sender, ContainerManipulationDeltaEventArgs e)
         {
             ScatterViewItem item = (ScatterViewItem)sender;
+           
+
             Menu.Menu menu = FindTheMenu((Canvas)(item.Content));
             if (menu == null)
             {
@@ -520,6 +525,7 @@ namespace PrototypeOne
             }
             Log.Moved(item.Center, item.Orientation, menu);
         }
+
         /// <summary>
         /// Finds a good position to open a new tree menu
         /// based on the position and angle of a finger
@@ -535,6 +541,7 @@ namespace PrototypeOne
             double smallAngle = 0.0, distance, slope, crossingX, crossingY, placement;
             double ratioBetween = 0.2;
             while (angle > 360) angle -= 360;
+            while (angle < 0) angle += 360;
             center.X = 100;// parent.X;
             center.Y = 100;// parent.Y;
             slope = Math.Tan(angle * 3.14 / 180);
@@ -591,7 +598,6 @@ namespace PrototypeOne
                 smallAngle = 270 - angle;
                 center.X = parent.X + Math.Sin(smallAngle * 3.14 / 180) * distance * ratioBetween;
                 center.Y = parent.Y + Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
-                Console.Out.WriteLine("He has been made captain\n\n");
             }
             else if (left && (angle < 90 || angle > 270))
             {
@@ -611,23 +617,23 @@ namespace PrototypeOne
                 center.X = parent.X - Math.Cos(smallAngle * 3.14 / 180) * distance * ratioBetween;
 
             }
-            
-            if (center.X < treeHeight * 0.5)
+
+            if (center.X < treeWidth * 0.52)
             {
-                center.X = treeHeight * 0.5;
+                center.X = treeWidth * 0.5;
             }
-            else if (center.X > this.Width - treeHeight * 0.5)
+            else if (center.X > this.Width - treeWidth * 0.52)
             {
-                center.X = this.Width - treeHeight * 0.5;
+                center.X = this.Width - treeWidth * 0.52;
             }
 
-            if (center.Y < treeWidth * 0.45)
+            if (center.Y < treeWidth * 0.55)
             {
-                center.Y = treeWidth * 0.45;
+                center.Y = treeWidth * 0.55;
             }
-            else if (center.Y > this.Height - treeWidth * 0.45)
+            else if (center.Y > this.Height - treeWidth * 0.55)
             {
-                center.Y = this.Height - treeWidth * 0.45;
+                center.Y = this.Height - treeWidth * 0.55;
             }
             return center;
         }
@@ -670,9 +676,8 @@ namespace PrototypeOne
                 TreeMenu old = e.Cursor.Data as TreeMenu;
                 TreeMenu map = old.Clone();
                 map.AddUpListenerToButtons(TouchUpMenu);
-                Console.Out.WriteLine(e.Cursor);
                 ScatterViewItem item = new ScatterViewItem();
-                item.Center = findPosition(e.Cursor.GetPosition(this), e.Cursor.GetOrientation(scatter) + 90);                
+                item.Center = findPosition(e.Cursor.GetPosition(this), e.Cursor.GetOrientation(scatter) - 90);                
                 item.Orientation = e.Cursor.GetOrientation(scatter);
                 item.MinHeight = MinHeightItem;
                 item.MinWidth = MinWidthItem;

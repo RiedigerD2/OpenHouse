@@ -16,11 +16,16 @@
       <B>255</B>
     </TextColor>
     <Ratio>0.5</Ratio>
-    <Explanation>The puivities relating to social, academic, and professional interests (GMUCS Constitution).</Explanation>
+    <Explanation>The purpose of GMUCS is to promote an environment for the interaction of computing science students with other computing science students and with other relevant parties. GMUCS shall engage in activities relating to social, academic, and professional interests (GMUCS Constitution).</Explanation>
   </Catagory>
   
   <Catagory>
-    
+    <TextColor>
+      <A>255</A>
+      <R>255</R>
+      <G>255</G>
+      <B>255</B>
+    </TextColor>
     <BackGroundColor>
       <A>255</A>
       <R>107</R>

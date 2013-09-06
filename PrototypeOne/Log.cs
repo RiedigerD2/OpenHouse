@@ -78,8 +78,8 @@ namespace PrototypeOne
         }
         private static void WriteLog(string logString)
         {
-            StreamWriter writer = new StreamWriter(DateTime.Now.Day+"LogFile.txt", true);
-            writer.WriteLine(DateTime.Now.TimeOfDay.ToString()+"; " + logString);
+            StreamWriter writer = new StreamWriter("LogFile.txt", true);
+            writer.WriteLine(DateTime.Now+"; " + logString);
             writer.Close();
         }
 

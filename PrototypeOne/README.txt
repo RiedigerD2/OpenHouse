@@ -1,9 +1,12 @@
-Prototype for open house
+
+
+The Information for this application is stored in xml files. The files should be stored in PrototypeOne/Resources/Information.
+Each file represents a menu where the catagorys in the file represent the divisions of the menu. The format of these files are as follows.
 
 Creating Config Files
 
-Information for the Menu system is provided by XML files. xml version 1.0. 
-The root element is ArrayOfCatagory useing three schemas "http://www.w3.org/2001/XMLSchema" , "http://www.w3.org/2001/XMLSchema-instance"
+ xml version 1.0. 
+The root element is ArrayOfCatagory
 
 Fill this structure with Catagory elements
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
@@ -12,7 +15,7 @@ Fill this structure with Catagory elements
 once the xml file is open. Go to properties/Schemas and add FormatSchema in Prototype/PrototypeOne
 this will alow for text completion and help with finding errors in the format file
 
-Each file represents a menu. where the catagorys in the file represent the divisions of the menu.
+
 
 Catagory Information
 Must be included:
@@ -46,12 +49,14 @@ Optional Fields
 	CONFIG FILES:
 
 	In the PrototypeOne\Resources\Information directory only one file is Mandatory that is "Top.xml" this serves as the Main menu
-no catagory in the file should have an explanation seeing as it won't be displayed anyways.
+all catagories in this file should have a SubCatagoryFile to follow.
+
 all other files in \Information are refered to in a file already existing in the file. eg."Top.xml" as a
  SubCatagoryFile
 
 All the config files, for the menus, are actually read from \bin\Debug\Resources\Information or \bin\Release\Resources\Information inorder for them to be
-updated when the files in PrototypeOne\Resources\Information are updated the PrototypeOne.csproj file must be updated.
+updated when the files in PrototypeOne\Resources\Information are updated the PrototypeOne.csproj file must be updated. 
+Note PrototypeOne.csproj cannot be opened while visual studios has to project open. If you try you will open PrototypeOne.csproj.user which is not the file you need.
 
 When a file is first added to a Visual studio project it first appears in PrototypeOne/PrototypeOne.csproj like so
 
@@ -62,13 +67,14 @@ simply change that line to look like this
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
+Now it will update the correct files everytime you rebuild your solution.
 
-
+LOGING 
 
  A LogFile is created and stored as \bin\Debug\Log.txt or \bin\Release\Log.txt. To reset this file simply delete it.
 
- Loading the application onto the surface.
-	
+
+LOADING APPLICATION ONTO SURFACE.	
 	
 
 	Place the file PrototypeOne in C:\Surface Code Samples\SDKSamples\Core
@@ -76,4 +82,10 @@ simply change that line to look like this
 
 	create a shortcut of \bin\release\PrototypeOne.xml and place it in C:\ProgramData\Microsoft\Surface\v2.0\Programs
 
-	
+
+
+	Inorder to Change the Center Logo replace circle.png and ring.png.
+
+	circle.png is in the center and does not rotate.
+
+	ring.png is a ring around  circle.png the center must be transparent ring.png will rotate
