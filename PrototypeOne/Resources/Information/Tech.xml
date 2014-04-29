@@ -3,7 +3,7 @@
   <Catagory>
     <Title>General Programming
       
-C,C++,C#,Java,Python
+C, C++, C#, Java, Python
     </Title>
     <Ratio>.2</Ratio>
     <BackGroundColor>
@@ -22,7 +22,7 @@ C,C++,C#,Java,Python
   <Catagory>
     <Title>Database Management Systems
     
-MySQL,Oracle,SQL Server
+MySQL, Oracle, SQL Server
     </Title>
     <Ratio>0.2</Ratio>
     <BackGroundColor>
@@ -41,7 +41,7 @@ MySQL,Oracle,SQL Server
   <Catagory>
     <Title>Web Development Tools
     
-Java EE,JavaScript, jQuery, PHP</Title>
+Java EE, JavaScript, jQuery, PHP</Title>
     <Ratio>0.2</Ratio>
     <BackGroundColor>
       <A>255</A>

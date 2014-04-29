@@ -20,7 +20,7 @@
     <Image>Tuition.png</Image>
   </Catagory>
   <Catagory>
-    <Title>Regular Admisssion</Title>
+    <Title>Regular Admission</Title>
     <BackGroundColor>
       <A>255</A>
       <R>102</R>
@@ -58,15 +58,14 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>*Previous Post-Secondary Work
-*A minimum of 24 credits of university-transferable coursework from a recognized institution
+    <Explanation>*A minimum of 24 credits of university-transferable coursework from a recognized institution
 *A minimum Admission Grade Point Average (AGPA) of 2.0 on a 4.0 scale.
 *Have completed core courses listed under the Regular or Mature Admission category.
 *Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
   </Catagory>
   <Catagory>
-    <Title>Mature Admisssion</Title>
+    <Title>Mature Admission</Title>
     <BackGroundColor>
       <A>255</A>
       <R>127</R>

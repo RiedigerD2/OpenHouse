@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Catagory>
     <BackGroundColor>
@@ -15,7 +15,7 @@
     </TextColor>
     <Title>Teaching-Focused University</Title>
     <Ratio>0.22222222222</Ratio>
-    <Explanation>Faculty members put teaching as their number one priority while actively conducting innovative research projects. They often teach labs (rather than graduate students), allowing students to have good quality instruction and consistency between lectures and labs. MacEwan receives a high score (A) for its quality of teaching and learning in The Globe and Mail’s Canadian University Report (2013).
+    <Explanation>Faculty members put teaching as their number one priority while actively conducting innovative research projects. They often teach labs (rather than graduate students), allowing students to have good quality instruction and consistency between lectures and labs. MacEwan received a high score (A) for its quality of teaching and learning in The Globe and Mail’s Canadian University Report (2013).
     </Explanation>
   </Catagory>
   <Catagory>
@@ -33,7 +33,7 @@
     </TextColor>
     <Title>Small Class Size</Title>
     <Ratio>0.185185</Ratio>
-    <Explanation>Class sizes in computer science courses range from 10 (senior-level courses) to 72 (first-year courses). A small class means that you'll get to know your professors and classmates better, and have a better learning experience.</Explanation>
+    <Explanation>Class sizes in computer science courses range from 10 (senior-level courses) to 72 (first-year courses). A small class means that you'll get to know your professors and classmates better, and have a better learning experience. You won't be just another face in the crowd.</Explanation>
   </Catagory>
   <Catagory>
     <BackGroundColor>
@@ -50,7 +50,7 @@
     </TextColor>
     <Title>High Student Satisfaction</Title>
     <Ratio>0.185185</Ratio>
-    <Explanation>MacEwan is ranked highly in student satisfaction in The Globe and Mail’s Canadian University Report (2013).</Explanation>
+    <Explanation>MacEwan was ranked highly in student satisfaction in The Globe and Mail’s Canadian University Report (2013). Among universities between 4,000 to 10,000 students, our students placed us among the top five in the survey for the quality of teaching and learning, student/faculty interaction, and instructors' teaching style.</Explanation>
   </Catagory>
   <Catagory>
     <TextColor>
@@ -71,7 +71,7 @@
   </Catagory>
   <Catagory>
     <Title>Modern Facilities</Title>
-    <Explanation>MacEwan has invested in the latest technology, for example, this Microsoft PixelSense, so that students can gain experience with some of the latest technology.</Explanation>
+    <Explanation>MacEwan has invested in the latest technology, for example, this Microsoft PixelSense, so that students can gain experience with some of the latest technology. Full access to wireless networks, dedicated study spaces, and meeting rooms were created so that you can expand your learning experience outside the classroom to any corner of our campuses.</Explanation>
     <Ratio>0.185185</Ratio> 
     <TextColor>
         <A>255</A>

@@ -2,7 +2,6 @@
 <ArrayOfCatagory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <Catagory>
-    
     <BackGroundColor>
       <A>255</A>
       <R>00</R>
@@ -17,7 +16,7 @@
     </TextColor>
     <Ratio>0.248</Ratio>
     <Title>Software Developer</Title>
-    <Explanation>Typical duties include coding, testing, and debugging programs; modifying and updating applications; and communicating with a team that includes analysts, engineers, and quality assurance testers in order to coordinate and document application development and testing (Robert Half Technology).</Explanation>
+    <Explanation>Software developers need to be detail-oriented and have excellent problem-solving and analytical skills. They should be able to work both independently and collaboratively. Typical duties include coding, testing, and debugging programs; modifying and updating applications; and communicating with a team that includes analysts, engineers, and quality assurance testers in order to coordinate and document application development and testing (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -36,7 +35,7 @@
     </TextColor>
     <Ratio>0.233</Ratio>
     <Title>Web Developer</Title>
-    <Explanation>Typical duties include gathering business requirements and developing specifications for web applications; integrating websites with back-end systems such as databases; and writing test plans and analyzing test results (Robert Half Technology).</Explanation>
+    <Explanation>Web developers should have in-depth knowledge of Internet protocols and applications, as well as a solid understanding of business strategy. Typical duties include gathering business requirements and developing specifications for web applications; integrating websites with back-end systems such as databases; and writing test plans and analyzing test results (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -53,7 +52,7 @@
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <Explanation>Typical duties include analyzing hardware and software problems and developing technical solutions; translating user and/or system requirements into functional technical specifications; and acting as a liaison between developers and end users to ensure technical compatibility and satisfaction (Robert Half Technology).</Explanation>
+    <Explanation>Systems analysts need a broad understanding of hardware and software systems. Typical duties include analyzing hardware and software problems and developing technical solutions; translating user and/or system requirements into functional technical specifications; and acting as a liaison between developers and end users to ensure technical compatibility and satisfaction (Robert Half Technology).</Explanation>
     <Ratio>0.176</Ratio>
   </Catagory>
   
@@ -72,7 +71,7 @@
     </TextColor>
     <Ratio>0.161</Ratio>
     <Title>Database Developer</Title>
-    <Explanation>Typical duties include developing database structures for data storage, retrieval, and reporting according to project specifications; implementing, testing, and tuning database design, functionality, and performance; and designing and developing back-end database interfaces to web applications (Robert Half Technology).</Explanation>
+    <Explanation>Database developers need a thorough understanding of database theory and practice. Typical duties include developing database structures for data storage, retrieval, and reporting according to project specifications; implementing, testing, and tuning database design, functionality, and performance; and designing and developing back-end database interfaces to web applications (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -90,7 +89,7 @@
     </TextColor>
     <Ratio>0.0835</Ratio>
     <Title>System Administrator</Title>
-    <Explanation>Typical duties include installing operating systems, patches, and upgrades; analyzing, troubleshooting, and resolving hardware, software, and networking issues; and configuring, optimizing, and monitoring servers (Robert Half Technology).</Explanation>
+    <Explanation>System administrators should possess strong problem-solving skills and in-depth technical knowledge of the employer's hardware and software systems. Typical duties include installing operating systems, patches, and upgrades; analyzing, troubleshooting, and resolving hardware, software, and networking issues; and configuring, optimizing, and monitoring servers (Robert Half Technology).</Explanation>
   </Catagory>
 
   <Catagory>
@@ -108,7 +107,7 @@
     </TextColor>
     <Ratio>0.05</Ratio>
     <Title>Game Developer</Title>
-    <Explanation>Typical duties include developing ideas and concepts of games; designing, implementing, and testing various aspects of games; and maintaining software and fixing bugs (Wikipedia).</Explanation>
+    <Explanation>Game developers should have the creativity and technical knowledge of game programming. Typical duties include developing ideas and concepts of games; designing, implementing, and testing various aspects of games; and maintaining software and fixing bugs (Wikipedia).</Explanation>
   </Catagory>
 
   
@@ -128,8 +127,8 @@
       <B>255</B>
     </TextColor>
     <Ratio>0.0485</Ratio>
-    <Title>Interaction Designer </Title>
-    <Explanation>Typical duties include identifying user requirements; designing user interfaces and developing both low- and high-fidelity prototypes; and performing evaluations on prototypes and existing products (monster.com)</Explanation>
+    <Title>Interaction Designer</Title>
+    <Explanation>Interaction designers need good analytical, design, and communication skills. Typical duties include identifying user requirements; designing user interfaces and developing both low- and high-fidelity prototypes; and performing evaluations on prototypes and existing products (monster.com).</Explanation>
   </Catagory>
 
 </ArrayOfCatagory>
