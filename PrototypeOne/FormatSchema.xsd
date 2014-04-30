@@ -15,6 +15,7 @@
               <xsd:element minOccurs="0" name="Image" type="xsd:string" />
               <xsd:element minOccurs="0" name="Video" type="xsd:string" />
               <xsd:element minOccurs="0" name="BackGroundImage" type="xsd:string"/>
+              <xsd:element minOccurs="0" name="ImageSetup" type="ImageSetup"/>
             </xsd:all>
           </xsd:complexType>
         </xsd:element>
@@ -23,10 +24,10 @@
   </xsd:element>
 
   <xsd:complexType name="Color">
-    <xsd:sequence>
+    <xsd:choice>
       <xsd:group ref="byteColor" minOccurs="0"/>
       <xsd:group ref="fractionColor" minOccurs="0"/>
-    </xsd:sequence>
+    </xsd:choice>
   </xsd:complexType>
 
 
@@ -48,8 +49,30 @@
     </xsd:sequence>
   </xsd:group>
 
+  <xsd:complexType name="ImageSetup">
+    <xsd:attribute name="Placement" type="PlacementType"/>
+    <xsd:attribute name="Path" type="xsd:string"/>
+    <xsd:attribute name="Width" type="xsd:double"/>
+    <xsd:attribute name="Height" type="xsd:double"/>
+  </xsd:complexType>
+
   
 
+  <xs:simpleType name="PlacementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Inline"/>
+      <xs:enumeration value="Top"/>
+      <xs:enumeration value="Bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  
+  <xsd:complexType name="Size">
+    <xsd:sequence>
+      <xsd:element name="Width" type="xsd:decimal"/>
+      <xsd:element name="Height" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
   
     <xsd:simpleType name="smallFraction">
       <xsd:restriction base="xs:decimal">

@@ -99,6 +99,7 @@ namespace PrototypeOne
         public TreeMenu(SquareList children, Square creator, List<Menu.Menu> ParentList)
             : base(children)
         {
+          
             breadCrumbs = new List<SurfaceButton>();
             this.height = SurfaceWindow1.treeHeight;
             Initialize();
@@ -166,6 +167,7 @@ namespace PrototypeOne
         private TreeMenu(SquareList children)
             : base(children)
         {
+           
             breadCrumbs = new List<SurfaceButton>();
             InHistory = false;
             Initialize();
@@ -400,7 +402,7 @@ namespace PrototypeOne
 
 
                     }
-                    else if (block.ImageString != null && !block.ImageString.Equals(""))
+                    /*else if (block.ImageString != null && !block.ImageString.Equals(""))
                     {
 
                         SurfaceButton button = new SurfaceButton();
@@ -459,7 +461,7 @@ namespace PrototypeOne
                         block.GetTextBlockTop().Height = txt.Height;
                         canvas.Children.Add(visibleblock);
                        
-                    }
+                    }*/
                     else
                     {
                         SurfaceButton button = new SurfaceButton();
@@ -471,7 +473,7 @@ namespace PrototypeOne
                         txt.SetBinding(TextBlock.WidthProperty, bind);
                         txt.Foreground = Brushes.Transparent;
                         button.Content = txt;
-
+                       
                         TextBlock visibleblock = block.GetTextBlockTop();
                         
                      
@@ -558,6 +560,7 @@ namespace PrototypeOne
 
                 child.ReDraw(width, height);
                 canvas.Children.Remove(child.DrawMenu());
+                //making sure it is on the top
                 canvas.Children.Insert(canvas.Children.Count, child.DrawMenu());
             }
 

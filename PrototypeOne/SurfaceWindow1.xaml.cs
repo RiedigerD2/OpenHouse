@@ -33,7 +33,7 @@ namespace PrototypeOne
         public static double treeArea = treeWidth * treeHeight;
         public static double MenuTileSize = 85;
         public static int MaxMenus = 15;
-
+        public static int MaxHistorySize = 9;
 
         /// menu sizes
         public static double MaxWidthItem = 560;
@@ -53,7 +53,7 @@ namespace PrototypeOne
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
 
-            //CreateXAML();
+            CreateXAML();
             MenuList = new List<Menu.Menu>(MaxMenus);
             MakeIndividualMenus();
             DataContext = this;
@@ -151,6 +151,8 @@ namespace PrototypeOne
             first.Explanation = "long string with\n to make sence i should say newline\nLol\n";
             first.SubCatagoryFile = "Top";
             first.BackGroundImage = @"bond.jpg";
+          
+            first.ImageSetup = new ImageInformation();
             second.BackGroundColor = Colors.AntiqueWhite;
             second.TextColor = Colors.Black;
             second.Ratio = 0.55;
@@ -408,7 +410,7 @@ namespace PrototypeOne
                             }
                             sqr.setBackGround(map.Get(button).BackGroundColor);
                             sqr.setTextColor((map.Get(button).TextColor));
-
+                            sqr.singleImage = map.Get(button).singleImage;
                             sqr.Ratio = 1;
                             list.Add(sqr);
                             map.addChild(list, map.Get(button));
@@ -659,6 +661,9 @@ namespace PrototypeOne
                 collection.Remove(removed);
                 if (MenuList.Count >= MaxMenus)
                 {
+                    //puts the removed Menu back into the history 
+                    //because it will not be accepted in the 
+                    //scatterview
                     collection.Insert(index, removed);
                 }
                 e.Handled = true;
@@ -695,7 +700,9 @@ namespace PrototypeOne
                 ObservableCollection<Menu.Menu> collection = origin.GetValue(SurfaceListBox.ItemsSourceProperty) as ObservableCollection<Menu.Menu>;
                 collection.Insert(0, map);
                 Log.FromHistory(map);
-                if (collection.Count > 9)
+
+                //remove oldest item
+                if (collection.Count > MaxHistorySize)
                 {
                     TreeMenu removed=(TreeMenu)collection[collection.Count - 1];
                     collection.RemoveAt(collection.Count - 1);

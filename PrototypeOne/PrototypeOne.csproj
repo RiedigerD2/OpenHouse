@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Catagory.cs" />
+    <Compile Include="ImageInformation.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Menu\IndividualMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
@@ -153,6 +154,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Information\WhyMacewan.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Images\Jon.jpg" />

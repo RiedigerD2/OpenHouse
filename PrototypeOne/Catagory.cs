@@ -26,13 +26,17 @@ namespace PrototypeOne
         public string SubCatagoryFile { get; set; }
    
         public string Image { get; set; }
+        
         public string BackGroundImage { get; set; }
         public string Video { get; set; }
-   
+
+        public ImageInformation ImageSetup { get; set; }
+
         public Catagory() { }
         public Catagory(Color BackGroundColor, double Ratio) {
             this.BackGroundColor = BackGroundColor;
             this.Ratio = Ratio;
+            
         }
 
         public static SquareList ReadFile(string file)
@@ -153,18 +157,28 @@ namespace PrototypeOne
                 {
                     square.ImageString = @"Resources/Images/" + cat.Image;
                 }
+
+                if (cat.ImageSetup != null)
+                {
+                    Console.WriteLine(square.Name);
+                    Console.WriteLine(square.Explanation);
+                    Console.WriteLine(":"+cat.ImageSetup.Path+":");
+                    square.singleImage = (ImageInformation)cat.ImageSetup.Clone();
+                    square.singleImage.Path = @"Resources/Images/" + square.singleImage.Path;
+                }
                 //video for explanation
                 if (cat.Video!=null && !cat.Video.Equals(""))
                 {
                     square.VideoString = @"Resources/Videos/" + cat.Video;
                 }
                 //background image to use instead of backgroundcolor
-                if (cat.BackGroundImage!=null && cat.BackGroundImage.Equals(cat.BackGroundImage))
+                if (cat.BackGroundImage!=null && !cat.BackGroundImage.Equals(""))
                 {
                     square.setBackGround(cat.BackGroundImage);
                 }
                 newList.Add(square);
             }
+            
             return newList;
         }
 

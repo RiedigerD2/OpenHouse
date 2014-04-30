@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Shapes;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Documents;
 
 namespace PrototypeOne
 {
@@ -18,7 +19,7 @@ namespace PrototypeOne
         /// cur aspect ratio is better or worse than the potential new asspect ratio
         /// </summary>
         private double curWidth, curHeight, newWidth, newHeight;
-       
+        public ImageInformation singleImage { get; set; }
         private TextBlock textBlock;
         
         public double Width {
@@ -26,8 +27,7 @@ namespace PrototypeOne
             set { curWidth = newWidth;
                   curHeight = newHeight;
                   newWidth = value;
-                  newHeight = Area / newWidth;
-                  
+                  newHeight = Area / newWidth; 
             }
         }      
         public double Height
@@ -102,7 +102,7 @@ namespace PrototypeOne
         /// uses the path to an image
         /// to create a ImageBrush to use for backgrounds
         /// </summary>
-        /// <param name="imagePath">path to an image file</param>
+        /// <param name="imagePath">path to an image file assumed to be in Resources/Images/</param>
         public void setBackGround(string imagePath)
         {
 
@@ -153,7 +153,7 @@ namespace PrototypeOne
             return newHeight / newWidth > newWidth / newHeight ? newHeight / newWidth : newWidth / newHeight;
         }
         /// <summary>
-        /// returns a text block wit all the right 
+        /// returns a text block with all the right 
         /// transforms so the block 
         /// ends in the middle the button 
         /// it's associated with
@@ -197,12 +197,71 @@ namespace PrototypeOne
         /// <returns></returns>
         public TextBlock GetTextBlockTop()
         {
+          
             if (textBlock == null)
             {
                 textBlock = new TextBlock();
             }
+            textBlock.Inlines.Clear();
             
-            textBlock.Text = Name;
+            if (singleImage != null)
+            {
+               
+                Image freshImage = new Image();
+                freshImage.Source = new BitmapImage(new Uri(this.singleImage.Path, UriKind.Relative));
+                freshImage.RenderTransformOrigin = new Point(singleImage.Width / 2, singleImage.Height);
+                freshImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                freshImage.Width = this.singleImage.Width;
+                freshImage.Height = this.singleImage.Height;
+                freshImage.Visibility = Visibility.Visible;
+               
+               BlockUIContainer BlockImage = new BlockUIContainer(freshImage);
+
+
+                textBlock.Text = this.Name;
+                
+                Floater floatingImage = new Floater(BlockImage);
+                floatingImage.HorizontalAlignment = HorizontalAlignment.Left;
+                floatingImage.BaselineAlignment = BaselineAlignment.Top;
+                floatingImage.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                try
+                {
+                    textBlock.Inlines.Add((Inline)floatingImage);
+                }
+                catch (InvalidOperationException e)
+                {
+                    Console.WriteLine(e.Message);
+                  
+                    Console.WriteLine(e.StackTrace);
+                }
+                textBlock.Inlines.Add(new Run(Name));
+                
+
+                /*if (this.singleImage.Placement == _Placement.Top)
+                {
+                    textBlock.Inlines.Add(floatingImage);
+                    textBlock.Inlines.Add(new System.Windows.Documents.Run("\n"+Name));
+                }
+                if (this.singleImage.Placement == _Placement.Inline)
+                {
+                    textBlock.Inlines.Add(floatingImage);
+                    
+                    textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
+                   
+                }
+                if (this.singleImage.Placement == _Placement.Bottom)
+                {
+                
+                    textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
+                    textBlock.Inlines.Add(floatingImage);
+                }*/
+
+            }
+            else
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
+            }
+                
             textBlock.RenderTransform = new TranslateTransform(X, Y);
             textBlock.Width = Width;
             textBlock.Focusable = false;
