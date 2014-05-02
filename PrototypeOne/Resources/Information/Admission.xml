@@ -17,7 +17,7 @@
     <Ratio>0.1966</Ratio>
     <Explanation>These cost estimates apply to Canadian citizens, permanent residents, and Convention refugees, and reflect 100% enrolment (five courses per term).
     </Explanation>
-    <Image>Tuition.png</Image>
+    <ImageSetup Height="200" Width="500" Placement="Top" Path="Tuition.png"/>
   </Catagory>
   <Catagory>
     <Title>Regular Admission</Title>

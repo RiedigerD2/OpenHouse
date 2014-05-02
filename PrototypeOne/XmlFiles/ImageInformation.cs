@@ -24,8 +24,8 @@ namespace PrototypeOne
         public ImageInformation()
         { 
             Path = "EMPTY PATH";
-            Width = 234.3;
-            Height=123.3;
+            Width = 120;
+            Height= 120;
             Placement = _Placement.Inline;
         }
         public ImageInformation(string path,double height,double width,_Placement placement)

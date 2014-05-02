@@ -193,6 +193,8 @@ namespace PrototypeOne
         /// transforms so the block 
         /// at the top of the button 
         /// it's associated with 
+        /// same text block everytime
+        /// Could contain images
         /// </summary>
         /// <returns></returns>
         public TextBlock GetTextBlockTop()
@@ -204,58 +206,25 @@ namespace PrototypeOne
             }
             textBlock.Inlines.Clear();
             
-            if (singleImage != null)
+            //If it is placed on the top we will place the image in TreeMenu
+            if (singleImage != null && singleImage.Placement==_Placement.Inline)
             {
                
                 Image freshImage = new Image();
                 freshImage.Source = new BitmapImage(new Uri(this.singleImage.Path, UriKind.Relative));
                 freshImage.RenderTransformOrigin = new Point(singleImage.Width / 2, singleImage.Height);
-                freshImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                freshImage.HorizontalAlignment = HorizontalAlignment.Center;
                 freshImage.Width = this.singleImage.Width;
                 freshImage.Height = this.singleImage.Height;
                 freshImage.Visibility = Visibility.Visible;
                
-               BlockUIContainer BlockImage = new BlockUIContainer(freshImage);
-
-
-                textBlock.Text = this.Name;
-                
-                Floater floatingImage = new Floater(BlockImage);
-                floatingImage.HorizontalAlignment = HorizontalAlignment.Left;
-                floatingImage.BaselineAlignment = BaselineAlignment.Top;
-                floatingImage.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                try
-                {
-                    textBlock.Inlines.Add((Inline)floatingImage);
-                }
-                catch (InvalidOperationException e)
-                {
-                    Console.WriteLine(e.Message);
-                  
-                    Console.WriteLine(e.StackTrace);
-                }
-                textBlock.Inlines.Add(new Run(Name));
-                
-
-                /*if (this.singleImage.Placement == _Placement.Top)
-                {
-                    textBlock.Inlines.Add(floatingImage);
-                    textBlock.Inlines.Add(new System.Windows.Documents.Run("\n"+Name));
-                }
-                if (this.singleImage.Placement == _Placement.Inline)
-                {
-                    textBlock.Inlines.Add(floatingImage);
-                    
+                 InlineUIContainer InlineImage = new InlineUIContainer(freshImage);
+                 InlineImage.BaselineAlignment = BaselineAlignment.Bottom;
+               
+              
+                    textBlock.Inlines.Add(InlineImage);
                     textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
-                   
-                }
-                if (this.singleImage.Placement == _Placement.Bottom)
-                {
-                
-                    textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
-                    textBlock.Inlines.Add(floatingImage);
-                }*/
-
+              
             }
             else
             {
@@ -270,12 +239,12 @@ namespace PrototypeOne
             textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
             textBlock.TextAlignment = TextAlignment.Left;
 
-            
            
             return textBlock;
         }     
         /// <summary>
         /// returns a text block with no transformations
+        /// will be the same text block everytime
         /// </summary>
         /// <returns></returns>
         public TextBlock GetTextBlockCenter()
@@ -296,7 +265,7 @@ namespace PrototypeOne
         }
         /// <summary>
         /// returns a text block with no transformations
-        /// Left aligned text
+        /// Left aligned text This is a new textblock every time
         /// </summary>
         /// <returns></returns>
         public TextBlock GetTextBlockLeft()

@@ -93,8 +93,7 @@ Jon began professional life as a high school math, physics, chemistry, and biolo
       <G>255</G>
       <B>255</B>
     </TextColor>
-    <ImageSetup Height="150" Width="150" Placement="Bottom" Path="Jon.jpg" />
-    <Image>Jon.jpg</Image>
+    <ImageSetup  Width="120" Height="120" Placement="Inline"  Path="Jon.jpg" />
   </Catagory>
   <Catagory>
     <Title>Mohamad El-Hajj</Title>

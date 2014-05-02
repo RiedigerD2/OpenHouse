@@ -402,66 +402,108 @@ namespace PrototypeOne
 
 
                     }
-                    /*else if (block.ImageString != null && !block.ImageString.Equals(""))
+                    else if (block.singleImage != null)
                     {
-
-                        SurfaceButton button = new SurfaceButton();
-                        SetButton(button, block);
-
-                        System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
-                        bind.Source = button;
-
-                        TextBlock txt = block.GetTextBlockLeft();
-                        txt.FontSize = 12;
-                        txt.Measure(new Size(0, 0));
-                        txt.Arrange(new Rect(0, 0, 0, 0));
-                        txt.SetBinding(TextBlock.WidthProperty, bind);
-                        txt.Foreground = Brushes.Transparent;
-                        StackPanel panel = new StackPanel();
-
-
-                        Image img = new Image();
-                        img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                        img.Stretch = Stretch.UniformToFill;
-                        img.Source = new BitmapImage(new Uri(block.ImageString, UriKind.Relative));
-
-
-
-                        Viewbox vb = new Viewbox();
-
-                        System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
-                        vbBind.Source = txt;
-                        vbBind.Converter = new HeightConverter();
-                        vbBind.ConverterParameter = this;
-
-                        vb.Child = img;
-                        vb.SetBinding(Viewbox.HeightProperty, vbBind);
-
-                        panel.Children.Add(txt);
-                        panel.Children.Add(vb);
-
-                        button.Content = panel;
-
-
-                        TextBlock visibleblock = block.GetTextBlockTop();
-                        System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
-                        fontSizebind.Source = visibleblock;
-                        txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
-
-                        visibleblock.FontSize = 18;
-                        visibleblock.Measure(new Size(0, 0));
-                        visibleblock.Arrange(new Rect(0, 0, 0, 0));
-                        while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 12)
+                        if (block.singleImage.Placement != _Placement.Inline)
                         {
-                            block.GetTextBlockTop().FontSize--;
+
+                            SurfaceButton button = new SurfaceButton();
+                            SetButton(button, block);
+
+                            System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
+                            bind.Source = button;
+
+                            TextBlock txt = block.GetTextBlockLeft();
+                            txt.FontSize = 12;
+                            txt.Measure(new Size(0, 0));
+                            txt.Arrange(new Rect(0, 0, 0, 0));
+                            txt.SetBinding(TextBlock.WidthProperty, bind);
+                            // txt.Foreground = Brushes.Transparent;
+                            StackPanel panel = new StackPanel();
+
+
+                            Image img = new Image();
+                            img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                            img.Stretch = Stretch.UniformToFill;
+                            img.Source = new BitmapImage(new Uri(block.singleImage.Path, UriKind.Relative));
+
+
+
+                            Viewbox vb = new Viewbox();
+
+                            System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
+                            vbBind.Source = txt;
+                            vbBind.Converter = new HeightConverter();
+                            vbBind.ConverterParameter = this;
+
+                            vb.Child = img;
+                            vb.SetBinding(Viewbox.HeightProperty, vbBind);
+
+                            if (block.singleImage.Placement == _Placement.Bottom)
+                            {
+                                panel.Children.Add(txt);
+                                panel.Children.Add(vb);
+                            }
+                            else
+                            {
+                                panel.Children.Add(vb);
+                                panel.Children.Add(txt);
+                            }
+                            button.Content = panel;
+
+
+                            TextBlock visibleblock = block.GetTextBlockTop();
+                            System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
+                            fontSizebind.Source = visibleblock;
+                            txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
+                            visibleblock.Foreground = Brushes.Transparent;
+                            visibleblock.FontSize = 18;
+                            visibleblock.Measure(new Size(0, 0));
+                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                            while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 12)
+                            {
+                                visibleblock.FontSize--;
+
+                            }
+
+                            canvas.Children.Add(button);
+                            //block.GetTextBlockTop().Height = txt.Height;
+                            //canvas.Children.Add(visibleblock);
 
                         }
-                        
-                        canvas.Children.Add(button);
-                        block.GetTextBlockTop().Height = txt.Height;
-                        canvas.Children.Add(visibleblock);
-                       
-                    }*/
+                        else//inline
+                        {
+
+                            SurfaceButton button = new SurfaceButton();
+                            SetButton(button, block);
+                            System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
+                            bind.Source = button;
+
+                            TextBlock txt = block.GetTextBlockLeft();
+                            txt.SetBinding(TextBlock.WidthProperty, bind);
+                            txt.Foreground = Brushes.Transparent;
+                            button.Content = txt;
+
+                            TextBlock visibleblock = block.GetTextBlockTop();
+
+
+                            System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
+                            fontSizebind.Source = visibleblock;
+                            txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
+
+                            visibleblock.FontSize = 18;
+                            visibleblock.Measure(new Size(0, 0));
+                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                            while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 10)
+                            {
+                                block.GetTextBlockTop().FontSize--;
+                                visibleblock.Measure(new Size(0, 0));
+                                visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                            }
+                            canvas.Children.Add(button);
+                            canvas.Children.Add(visibleblock);
+                        }
+                    }
                     else
                     {
                         SurfaceButton button = new SurfaceButton();
@@ -471,27 +513,22 @@ namespace PrototypeOne
 
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.SetBinding(TextBlock.WidthProperty, bind);
-                        txt.Foreground = Brushes.Transparent;
-                        button.Content = txt;
-                       
-                        TextBlock visibleblock = block.GetTextBlockTop();
-                        
-                     
-                        System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
-                        fontSizebind.Source = visibleblock;
-                        txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
+                        txt.ClipToBounds = false;
 
-                        visibleblock.FontSize = 18;
-                        visibleblock.Measure(new Size(0, 0));
-                        visibleblock.Arrange(new Rect(0, 0, 0, 0));
-                        while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize>10)
+
+
+                        txt.FontSize = 18;
+                        txt.Measure(new Size(0, 0));
+                        txt.Arrange(new Rect(0, 0, 0, 0));
+                        while (txt.ActualHeight > block.Height && txt.FontSize > 10)
                         {
-                            block.GetTextBlockTop().FontSize--;
-                            visibleblock.Measure(new Size(0, 0));
-                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
+                            txt.FontSize--;
+                            txt.Measure(new Size(0, 0));
+                            txt.Arrange(new Rect(0, 0, 0, 0));
                         }
+                        button.Content = txt;
                         canvas.Children.Add(button);
-                        canvas.Children.Add(visibleblock);
+
                     }
                 }
                 else
@@ -502,6 +539,8 @@ namespace PrototypeOne
                     TextBlock text = block.GetTextBlock();
                     text.Measure(new Size(0, 0));
                     text.Arrange(new Rect(0, 0, 0, 0));
+                    
+                    //centers text better if they are not content of the button
                     canvas.Children.Add(text);
                 }
             }
@@ -515,6 +554,7 @@ namespace PrototypeOne
             button.RenderTransform = new TranslateTransform(block.X, block.Y);
             button.Foreground = block.TextBrush;
             button.BorderBrush = Brushes.Black;
+            button.Padding = new Thickness(0);
             block.Button = button;
         }
         /// <summary>
@@ -535,10 +575,11 @@ namespace PrototypeOne
                 {
                     canvas.Children.Add(block.GetTextBlock());
                 }
-                else
+                else if (block.singleImage != null && block.singleImage.Placement==_Placement.Inline)
                 {
                     canvas.Children.Add(block.GetTextBlockTop());
                 }
+                
             }
         }
         /// <summary>
@@ -560,7 +601,7 @@ namespace PrototypeOne
 
                 child.ReDraw(width, height);
                 canvas.Children.Remove(child.DrawMenu());
-                //making sure it is on the top
+                //making sure child canvas is on the top
                 canvas.Children.Insert(canvas.Children.Count, child.DrawMenu());
             }
 
@@ -579,7 +620,10 @@ namespace PrototypeOne
         {
             foreach (Square sqr in children)
             {
-                canvas.Children.Remove(sqr.GetTextBlock());
+                if (canvas.Children.Contains(sqr.GetTextBlock()))
+                {
+                    canvas.Children.Remove(sqr.GetTextBlock());
+                }
             }
 
         }
@@ -865,6 +909,13 @@ namespace PrototypeOne
         }
     }
 
+
+    
+    /// <summary>
+    /// binds the height of the viewBox used with images and videos
+    /// to the height of the tree map. keeps its height small enough 
+    /// so the total height is less than the height of the tree map
+    /// </summary>
     [ValueConversion(typeof(double), typeof(double))]
     public class HeightConverter : IValueConverter
     {
@@ -872,9 +923,12 @@ namespace PrototypeOne
         {
 
             TreeMenu menu = (TreeMenu)parameter;
+
+            //height is the actualheight of the txt block
             double height=(double)value;
             double actualHeight;
-
+            //multiplying the menu height by 0.85 gives the height with out the breadCrumbs
+            
             actualHeight = menu.height * 0.85 - height;
 
             return actualHeight > 0 ? actualHeight : 0;

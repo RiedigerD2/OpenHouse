@@ -59,8 +59,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Catagory.cs" />
-    <Compile Include="ImageInformation.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Menu\IndividualMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
@@ -68,6 +66,9 @@
     <Compile Include="VideoPlayer.xaml.cs">
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XmlFiles\Catagory.cs" />
+    <Compile Include="XmlFiles\ImageInformation.cs" />
+    <Compile Include="XmlFiles\MediaFile.cs" />
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +140,7 @@
     </Content>
     <Content Include="Resources\Information\Professors.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\Streams.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
