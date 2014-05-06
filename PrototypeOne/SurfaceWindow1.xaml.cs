@@ -18,6 +18,7 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using System.Collections.ObjectModel;
+using PrototypeOne.XmlFiles;
 
 using System.Windows.Media.Animation;
 namespace PrototypeOne
@@ -53,12 +54,14 @@ namespace PrototypeOne
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
 
-            CreateXAML();
+            //CreateXAML();
+           
+
             MenuList = new List<Menu.Menu>(MaxMenus);
             MakeIndividualMenus();
             DataContext = this;
             BeginStoryboard(Resources["Rotate"] as Storyboard);
-
+            
             
             
         }
@@ -157,10 +160,18 @@ namespace PrototypeOne
             second.TextColor = Colors.Black;
             second.Ratio = 0.55;
             second.Title = "SecondTitle";
-
+            
+            //second.Slides = new List<Int32>(5);
+            
+            //second.Slides[0] = new VideoFile("string");
+            /*second.Slides[1] = 4;
+            second.Slides[2] = 3;
+            second.Slides[3] = 7;
+            second.Slides[4] = 2;
+            */
             saveList.Add(first);
             saveList.Add(second);
-
+            
             Catagory.WriteFile(saveList, "Resources/Information/Example.xml");
 
         }
@@ -357,6 +368,7 @@ namespace PrototypeOne
             item.Width = treeWidth;
             item.Height = treeHeight;
             item.Content = map.DrawMenu();
+            item.ClipToBounds = false;
             scatter.Items.Add(item);
             MenuList.Add(map);
 
@@ -398,6 +410,10 @@ namespace PrototypeOne
                     {
                         if (map.HasExplanation(button))
                         {
+                            /*
+                             * Creates a new TreeMenu from the information stored in the Square
+                             * selected
+                             */
                             SquareList list = new SquareList();
                             Square sqr = new Square(1, map.Get(button).Explanation);
                             if (map.Get(button).VideoString != null)
@@ -408,13 +424,16 @@ namespace PrototypeOne
                             {
                                 sqr.ImageString = map.Get(button).ImageString;
                             }
+                         
                             sqr.setBackGround(map.Get(button).BackGroundColor);
                             sqr.setTextColor((map.Get(button).TextColor));
                             sqr.singleImage = map.Get(button).singleImage;
+                            sqr.Slides = map.Get(button).Slides;
                             sqr.Ratio = 1;
                             list.Add(sqr);
                             map.addChild(list, map.Get(button));
                         }
+                       
                     }
                     map.ReDraw();
                 }
@@ -485,6 +504,7 @@ namespace PrototypeOne
             {
                 return;
             }
+            //if the menu has been moved to the edge of the screen
             if (item.Center.X <= -item.Width * 0.10 || item.Center.Y <= -item.Height * 0.10 || item.Center.Y >= this.Height + item.Height * 0.10 || item.Center.X >= this.Width + item.Width * 0.10)
             {
 

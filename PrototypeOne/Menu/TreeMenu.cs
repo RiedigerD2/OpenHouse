@@ -59,7 +59,7 @@ namespace PrototypeOne
                         drawing.Geometry = rectangle;
 
                         squares.Children.Add(drawing);
-
+                        
                     }
                     image = new DrawingImage(squares);
                     return image;
@@ -379,12 +379,12 @@ namespace PrototypeOne
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.FontSize = 12;
                         txt.SetBinding(TextBlock.WidthProperty, bind);
-                        txt.Foreground = Brushes.Transparent;
+                       
                         StackPanel panel = new StackPanel();
                         panel.Children.Add(txt);
 
                         VideoPlayer player = new VideoPlayer(block.VideoString);
-
+                       
                         Viewbox vb = new Viewbox();
 
                         System.Windows.Data.Binding vbBind = new System.Windows.Data.Binding("ActualHeight");
@@ -406,7 +406,6 @@ namespace PrototypeOne
                     {
                         if (block.singleImage.Placement != _Placement.Inline)
                         {
-
                             SurfaceButton button = new SurfaceButton();
                             SetButton(button, block);
 
@@ -503,6 +502,24 @@ namespace PrototypeOne
                             canvas.Children.Add(button);
                             canvas.Children.Add(visibleblock);
                         }
+                    }
+                    else if(block.Slides!=null && block.Slides.Count>0){
+                       
+                        SurfaceButton button = new SurfaceButton();
+                        SetButton(button, block);
+
+                        System.Windows.Data.Binding bindWidth = new System.Windows.Data.Binding("Width");
+                        bindWidth.Source = button;
+
+                        System.Windows.Data.Binding bindHeight = new System.Windows.Data.Binding("Height");
+                        bindHeight.Source = button;
+                      
+                        SlideShow thisSlideShow = new SlideShow(block.Slides);
+                        thisSlideShow.SetBinding(SlideShow.WidthProperty,bindWidth);
+                        thisSlideShow.SetBinding(SlideShow.HeightProperty, bindHeight);
+                        thisSlideShow.Background = block.BackGroundBrush;
+                        button.Content = thisSlideShow;
+                        canvas.Children.Add(button);
                     }
                     else
                     {
@@ -710,7 +727,7 @@ namespace PrototypeOne
             }
             else
             {
-                return children.Get(sender).Explanation != null || children.Get(sender).ImageString != null || children.Get(sender).VideoString != null;
+                return children.Get(sender).HasExplanation();
             }
         }
         /// <summary>

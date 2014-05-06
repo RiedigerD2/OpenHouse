@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Documents;
+using PrototypeOne.XmlFiles;
 
 namespace PrototypeOne
 {
@@ -21,7 +22,7 @@ namespace PrototypeOne
         private double curWidth, curHeight, newWidth, newHeight;
         public ImageInformation singleImage { get; set; }
         private TextBlock textBlock;
-        
+        public List<MediaFile> Slides { get; set; }
         public double Width {
             get { return curWidth; }
             set { curWidth = newWidth;
@@ -113,7 +114,12 @@ namespace PrototypeOne
             TextBrush = new SolidColorBrush(textColor);
         }
 
+        public bool HasExplanation()
+        {
 
+            return Explanation != null || ImageString != null ||VideoString != null || (Slides!=null && Slides.Count>0) || singleImage!=null;
+        
+        }
        
         public Square(Double size,string name) 
         {

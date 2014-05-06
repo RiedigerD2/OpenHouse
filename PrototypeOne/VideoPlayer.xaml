@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:s="http://schemas.microsoft.com/surface/2008"
-        Width="500" Height="307.5">
+        >
     
     <s:SurfaceButton.Resources>
         <Storyboard x:Key="Pause">
@@ -33,7 +33,7 @@
     </s:SurfaceButton.Resources>
     
     <Grid Background="Transparent">
-        <MediaElement x:Name="Media" Margin="30" Stretch="UniformToFill"  HorizontalAlignment="Center"
+        <MediaElement x:Name="Media" Margin="10" Stretch="UniformToFill"  HorizontalAlignment="Center"
                       Source="{Binding Video}" LoadedBehavior="Manual" Volume="0" />
         <Path x:Name="PlayPath" Stroke="White" StrokeThickness="2" 
               Fill="#33FFFFFF" Data="M 0,0 L 40,30 0,60 Z" 

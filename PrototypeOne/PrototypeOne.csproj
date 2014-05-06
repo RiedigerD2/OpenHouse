@@ -63,12 +63,23 @@
     <Compile Include="Menu\IndividualMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\TreeMenu.cs" />
+    <Compile Include="SlideShow.xaml.cs">
+      <DependentUpon>SlideShow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoPlayer.xaml.cs">
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="XmlFiles\Catagory.cs" />
     <Compile Include="XmlFiles\ImageInformation.cs" />
     <Compile Include="XmlFiles\MediaFile.cs" />
+    <Page Include="Resources\Themes\MySlideShow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SlideShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +172,7 @@
     <Content Include="Resources\Images\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Videos\Wildlife.wmv" />
     <Resource Include="Resources\Images\Jon.jpg" />
     <Resource Include="Resources\Images\Logo\circle.png" />
     <Resource Include="Resources\Images\Logo\ring.png" />
@@ -168,6 +180,7 @@
     <Resource Include="Resources\Images\Logo\LogoOnlyb.png" />
     <Resource Include="README.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

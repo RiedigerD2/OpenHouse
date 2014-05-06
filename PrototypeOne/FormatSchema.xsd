@@ -16,6 +16,7 @@
               <xsd:element minOccurs="0" name="Video" type="xsd:string" />
               <xsd:element minOccurs="0" name="BackGroundImage" type="xsd:string"/>
               <xsd:element minOccurs="0" name="ImageSetup" type="ImageSetup"/>
+              <xsd:element minOccurs="0" name="Slides" type="SlideShow"/>
             </xsd:all>
           </xsd:complexType>
         </xsd:element>
@@ -29,7 +30,26 @@
       <xsd:group ref="fractionColor" minOccurs="0"/>
     </xsd:choice>
   </xsd:complexType>
-
+  
+  
+  <xsd:complexType name ="SlideShow">
+    <xsd:choice maxOccurs="unbounded">
+      
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="VideoFile" >
+        <xsd:complexType>
+          <xsd:attribute name="Path" type="xs:string"/>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="ImageFile" >
+        <xsd:complexType>
+          <xsd:attribute name="Path" type="xs:string"/>
+        </xsd:complexType>
+      </xsd:element>
+    
+    </xsd:choice>
+  </xsd:complexType>
+    
 
   <xsd:group name="byteColor">
     <xsd:sequence>

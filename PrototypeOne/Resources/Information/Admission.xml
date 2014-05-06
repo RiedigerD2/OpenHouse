@@ -17,7 +17,7 @@
     <Ratio>0.1966</Ratio>
     <Explanation>These cost estimates apply to Canadian citizens, permanent residents, and Convention refugees, and reflect 100% enrolment (five courses per term).
     </Explanation>
-    <ImageSetup Height="200" Width="500" Placement="Top" Path="Tuition.png"/>
+    <ImageSetup Placement="Top" Path="Tuition.png"/>
   </Catagory>
   <Catagory>
     <Title>Regular Admission</Title>
@@ -52,6 +52,11 @@
       <G>170</G>
       <B>67</B>
     </BackGroundColor>
+    <Slides>
+      <ImageFile Path="Jon.jpg"/>
+      <VideoFile Path="Wildlife.wmv"/> 
+      <ImageFile Path="Tuition.png"/>
+    </Slides>
     <TextColor>
       <A>255</A>
       <R>255</R>
@@ -106,6 +111,7 @@
     <Explanation>*Have completed nine credits of university level coursework, with no grade less than C, or have completed more than nine credits of university level coursework with a minimum GPA of 2.0 on a 4.0 scale.
 *Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
+    <Video>Wildlife.wmv</Video>
   </Catagory>
   
 </ArrayOfCatagory>

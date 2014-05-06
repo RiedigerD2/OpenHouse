@@ -10,6 +10,10 @@ using System.Collections;
 using System.Xml.Serialization;
 using System.IO;
 using System.Windows.Markup;
+using PrototypeOne.XmlFiles;
+using System.Xml;
+
+
 namespace PrototypeOne
 {
     /// <summary>
@@ -32,8 +36,18 @@ namespace PrototypeOne
 
         public ImageInformation ImageSetup { get; set; }
 
-        public Catagory() { }
+        [XmlArray(ElementName = "Slides")]
+        [
+             XmlArrayItem(typeof(ImageFile), ElementName = "ImageFile"),
+             XmlArrayItem(typeof(VideoFile), ElementName="VideoFile")
+        ]
+        public List<MediaFile> Slides { get; set; }
+
+        public Catagory() {
+           /// Slides = new List<Int32>(6);
+        }
         public Catagory(Color BackGroundColor, double Ratio) {
+           // Slides = new List<Int32>(6);
             this.BackGroundColor = BackGroundColor;
             this.Ratio = Ratio;
             
@@ -93,12 +107,13 @@ namespace PrototypeOne
 
         public static void WriteFile(List<Catagory> saveList,string file)
         {
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Catagory>));
-            FileStream reader = new FileStream(file, FileMode.OpenOrCreate);
+            
             try
             {
-                serializer.Serialize(reader, saveList);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Catagory>));
+            FileStream writer = new FileStream(file, FileMode.OpenOrCreate);
+            
+                serializer.Serialize(writer, saveList);
             }
             catch (Exception e)
             {
@@ -157,13 +172,13 @@ namespace PrototypeOne
                 {
                     square.ImageString = @"Resources/Images/" + cat.Image;
                 }
-
+                if (cat.Slides != null && cat.Slides.Count>0)
+                {
+                    square.Slides = cat.Slides;
+                }
                 if (cat.ImageSetup != null)
                 {
-                    Console.WriteLine(square.Name);
-                    Console.WriteLine(square.Explanation);
-                    Console.WriteLine(":"+cat.ImageSetup.Path+":");
-                    square.singleImage = (ImageInformation)cat.ImageSetup.Clone();
+                    square.singleImage = cat.ImageSetup;
                     square.singleImage.Path = @"Resources/Images/" + square.singleImage.Path;
                 }
                 //video for explanation
