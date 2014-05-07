@@ -129,24 +129,14 @@ namespace PrototypeOne
 
         private void UpdateContent()
         {
-            MediaFile currentFile = Slides[current];
+            
             if (Slides.Count == 0)
             {
                 current = 0;
                 return;
             }
-            if (currentFile is ImageFile)
-            {
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri(currentFile.Path, UriKind.Relative));
-                this.Content = img;
-            }
-            if (currentFile is VideoFile)
-            {
-                VideoPlayer player = new VideoPlayer(currentFile.Path);
-                this.Content = player;
-            }
-
+            MediaFile currentFile = Slides[current];
+            Content = currentFile.Contents();
         }
     }
 }

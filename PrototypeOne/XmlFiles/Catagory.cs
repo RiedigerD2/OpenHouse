@@ -39,7 +39,8 @@ namespace PrototypeOne
         [XmlArray(ElementName = "Slides")]
         [
              XmlArrayItem(typeof(ImageFile), ElementName = "ImageFile"),
-             XmlArrayItem(typeof(VideoFile), ElementName="VideoFile")
+             XmlArrayItem(typeof(VideoFile), ElementName = "VideoFile"),
+             XmlArrayItem(typeof(TextFile), ElementName = "TextPage")
         ]
         public List<MediaFile> Slides { get; set; }
 

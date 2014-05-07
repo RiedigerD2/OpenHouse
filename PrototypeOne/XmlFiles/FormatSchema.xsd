@@ -46,7 +46,16 @@
           <xsd:attribute name="Path" type="xs:string"/>
         </xsd:complexType>
       </xsd:element>
-    
+
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="TextPage" >
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element name="Text" type="xs:string"/>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      
+      
     </xsd:choice>
   </xsd:complexType>
     
