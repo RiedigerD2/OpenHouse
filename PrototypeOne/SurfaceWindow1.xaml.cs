@@ -161,14 +161,7 @@ namespace PrototypeOne
             second.Ratio = 0.55;
             second.Title = "SecondTitle";
             
-            //second.Slides = new List<Int32>(5);
-            
-            //second.Slides[0] = new VideoFile("string");
-            /*second.Slides[1] = 4;
-            second.Slides[2] = 3;
-            second.Slides[3] = 7;
-            second.Slides[4] = 2;
-            */
+          
             saveList.Add(first);
             saveList.Add(second);
             
@@ -210,7 +203,7 @@ namespace PrototypeOne
             transform.Children.Add(new TranslateTransform(sideMenu.Width * 0.5 + 1.7 * MenuTileSize, 2.2 * MenuTileSize));
             historyMenu.RenderTransform = transform;
             historyMenu.ActivationMode = ElementMenuActivationMode.AlwaysActive;
-            sideMenu.AddUpListenerToButtons(new EventHandler<System.Windows.Input.TouchEventArgs>(TouchUpMenu));
+            sideMenu.AddUpListenerToButtons(new EventHandler<TouchEventArgs>(TouchUpMenu));
             canvas.Children.Insert(0, historyMenu);
 
             return sideMenu;

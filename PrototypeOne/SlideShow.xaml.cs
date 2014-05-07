@@ -42,14 +42,14 @@ namespace PrototypeOne
             {
                 if (nextButton != null)
                 {
-                    nextButton.TouchUp -=
+                    nextButton.PreviewTouchDown -=
                         new EventHandler<TouchEventArgs>(NextButton_PreviewTouchUp);
                 }
                 nextButton = value;
 
                 if (nextButton != null)
                 {
-                    nextButton.TouchUp += new EventHandler<TouchEventArgs>(NextButton_PreviewTouchUp);
+                    nextButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(NextButton_PreviewTouchUp);
                 }
             }
         }
@@ -67,14 +67,14 @@ namespace PrototypeOne
             {
                 if (backButton != null)
                 {
-                    backButton.TouchUp -=
+                    backButton.PreviewTouchDown -=
                         new EventHandler<TouchEventArgs>(BackButton_PreviewTouchUp);
                 }
                 backButton = value;
 
                 if (backButton != null)
                 {
-                    backButton.TouchUp += new EventHandler<TouchEventArgs>(BackButton_PreviewTouchUp);
+                    backButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(BackButton_PreviewTouchUp);
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace PrototypeOne
                 current++;
             }
             else
-            {
+            {//wrapping
                 current = 0;
             }
             UpdateContent();
