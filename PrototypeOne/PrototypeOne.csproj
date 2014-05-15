@@ -135,6 +135,7 @@
     </Content>
     <Content Include="Resources\Information\Admission.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\Base.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

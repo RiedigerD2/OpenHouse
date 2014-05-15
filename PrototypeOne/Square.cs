@@ -206,10 +206,8 @@ namespace PrototypeOne
         public TextBlock GetTextBlockTop()
         {
           
-            if (textBlock == null)
-            {
-                textBlock = new TextBlock();
-            }
+           
+            TextBlock textBlock = new TextBlock();
             textBlock.Inlines.Clear();
             
             //If it is placed on the top we will place the image in TreeMenu
@@ -218,7 +216,7 @@ namespace PrototypeOne
                
                 Image freshImage = new Image();
                 freshImage.Source = new BitmapImage(new Uri(this.singleImage.Path, UriKind.Relative));
-                freshImage.RenderTransformOrigin = new Point(singleImage.Width / 2, singleImage.Height);
+              
                 freshImage.HorizontalAlignment = HorizontalAlignment.Center;
                 freshImage.Width = this.singleImage.Width;
                 freshImage.Height = this.singleImage.Height;
@@ -237,14 +235,14 @@ namespace PrototypeOne
                 textBlock.Inlines.Add(new System.Windows.Documents.Run(Name));
             }
                 
-            textBlock.RenderTransform = new TranslateTransform(X, Y);
-            textBlock.Width = Width;
+           
             textBlock.Focusable = false;
             textBlock.IsHitTestVisible = false;
             textBlock.Foreground = TextBrush;
             textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
             textBlock.TextAlignment = TextAlignment.Left;
 
+            
            
             return textBlock;
         }     

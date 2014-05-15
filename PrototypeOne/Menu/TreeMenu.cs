@@ -375,7 +375,7 @@ namespace PrototypeOne
                         SetButton(button, block);
                         System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
                         bind.Source = button;
-
+                        bind.Converter = new BindReducer();
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.FontSize = 12;
                         txt.SetBinding(TextBlock.WidthProperty, bind);
@@ -394,8 +394,9 @@ namespace PrototypeOne
 
                         vb.Child = player;
                         vb.SetBinding(Viewbox.HeightProperty, vbBind);
-
                         panel.Children.Add(vb);
+
+                        FindRightFontSize(txt, block);
 
                         button.Content = panel;
                         canvas.Children.Add(button);
@@ -411,13 +412,11 @@ namespace PrototypeOne
 
                             System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
                             bind.Source = button;
-
+                            bind.Converter = new BindReducer();
                             TextBlock txt = block.GetTextBlockLeft();
-                            txt.FontSize = 12;
-                            txt.Measure(new Size(0, 0));
-                            txt.Arrange(new Rect(0, 0, 0, 0));
+                           
                             txt.SetBinding(TextBlock.WidthProperty, bind);
-                            // txt.Foreground = Brushes.Transparent;
+                          
                             StackPanel panel = new StackPanel();
 
 
@@ -451,56 +450,40 @@ namespace PrototypeOne
                             button.Content = panel;
 
 
-                            TextBlock visibleblock = block.GetTextBlockTop();
-                            System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
-                            fontSizebind.Source = visibleblock;
-                            txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
-                            visibleblock.Foreground = Brushes.Transparent;
-                            visibleblock.FontSize = 18;
-                            visibleblock.Measure(new Size(0, 0));
-                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
-                            while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 12)
-                            {
-                                visibleblock.FontSize--;
 
-                            }
-
+                            FindRightFontSize(txt, block);
                             canvas.Children.Add(button);
-                            //block.GetTextBlockTop().Height = txt.Height;
-                            //canvas.Children.Add(visibleblock);
+                            
 
                         }
                         else//inline
                         {
+                            TextBlock visibleblock = block.GetTextBlockTop();
+                            visibleblock.Measure(new Size(0, 0));
+                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
+
 
                             SurfaceButton button = new SurfaceButton();
                             SetButton(button, block);
+
                             System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
                             bind.Source = button;
+                            bind.Converter = new BindReducer();
+                            visibleblock.SetBinding(TextBlock.WidthProperty, bind);
 
-                            TextBlock txt = block.GetTextBlockLeft();
-                            txt.SetBinding(TextBlock.WidthProperty, bind);
-                            txt.Foreground = Brushes.Transparent;
-                            button.Content = txt;
+                            
 
-                            TextBlock visibleblock = block.GetTextBlockTop();
+                            System.Windows.Data.Binding binder = new System.Windows.Data.Binding("Height");
+                            binder.Source = button;
+                            binder.Converter = new BindReducer();
+                            visibleblock.SetBinding(TextBlock.HeightProperty, binder);
 
 
-                            System.Windows.Data.Binding fontSizebind = new System.Windows.Data.Binding("FontSize");
-                            fontSizebind.Source = visibleblock;
-                            txt.SetBinding(TextBlock.FontSizeProperty, fontSizebind);
-
-                            visibleblock.FontSize = 18;
-                            visibleblock.Measure(new Size(0, 0));
-                            visibleblock.Arrange(new Rect(0, 0, 0, 0));
-                            while (visibleblock.ActualHeight > block.Height && visibleblock.FontSize > 10)
-                            {
-                                block.GetTextBlockTop().FontSize--;
-                                visibleblock.Measure(new Size(0, 0));
-                                visibleblock.Arrange(new Rect(0, 0, 0, 0));
-                            }
+                            FindRightFontSize(visibleblock, block);
+                           
+                            button.Content = visibleblock;
                             canvas.Children.Add(button);
-                            canvas.Children.Add(visibleblock);
+                            
                         }
                     }
                     else if(block.Slides!=null && block.Slides.Count>0){
@@ -527,22 +510,12 @@ namespace PrototypeOne
                         SetButton(button, block);
                         System.Windows.Data.Binding bind = new System.Windows.Data.Binding("Width");
                         bind.Source = button;
-
+                        bind.Converter = new BindReducer();
                         TextBlock txt = block.GetTextBlockLeft();
                         txt.SetBinding(TextBlock.WidthProperty, bind);
                         txt.ClipToBounds = false;
-
-
-
-                        txt.FontSize = 18;
-                        txt.Measure(new Size(0, 0));
-                        txt.Arrange(new Rect(0, 0, 0, 0));
-                        while (txt.ActualHeight > block.Height && txt.FontSize > 10)
-                        {
-                            txt.FontSize--;
-                            txt.Measure(new Size(0, 0));
-                            txt.Arrange(new Rect(0, 0, 0, 0));
-                        }
+                        
+                        FindRightFontSize(txt, block);
                         button.Content = txt;
                         canvas.Children.Add(button);
 
@@ -571,7 +544,8 @@ namespace PrototypeOne
             button.RenderTransform = new TranslateTransform(block.X, block.Y);
             button.Foreground = block.TextBrush;
             button.BorderBrush = Brushes.Black;
-            button.Padding = new Thickness(0);
+            button.Padding = new Thickness(5, 5, 5, 0);
+           
             block.Button = button;
         }
         /// <summary>
@@ -592,13 +566,25 @@ namespace PrototypeOne
                 {
                     canvas.Children.Add(block.GetTextBlock());
                 }
-                else if (block.singleImage != null && block.singleImage.Placement==_Placement.Inline)
-                {
-                    canvas.Children.Add(block.GetTextBlockTop());
-                }
+               
                 
             }
         }
+
+
+        public void FindRightFontSize(TextBlock txt,Square block)
+        {
+            txt.FontSize = 18;
+            txt.Measure(new Size(0, 0));
+            txt.Arrange(new Rect(0, 0, 0, 0));
+            while (txt.ActualHeight > block.Height && txt.FontSize > 13)
+            {
+                txt.FontSize--;
+                txt.Measure(new Size(0, 0));
+                txt.Arrange(new Rect(0, 0, 0, 0));
+            }
+        }
+
         /// <summary>
         /// Whenever a TreeMenu is resized used to 
         /// replace and resize all buttons
@@ -949,6 +935,24 @@ namespace PrototypeOne
             actualHeight = menu.height * 0.85 - height;
 
             return actualHeight > 0 ? actualHeight : 0;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// Keeps height or length 95% of what it is bound to
+    /// </summary>
+    [ValueConversion(typeof(double), typeof(double))]
+    public class BindReducer : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+           //height is the actualheight of the txt block
+            return 0.95*(double)value;
+           
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
