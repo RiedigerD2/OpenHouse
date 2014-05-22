@@ -63,11 +63,15 @@ When a file is first added to a Visual studio project it first appears in Protot
 <Resource Include="Resources\Information\Top.xml" />
 
 simply change that line to look like this
+
     <Content Include="Resources\Information\Top.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
+
 Now it will update the correct files everytime you rebuild your solution.
+
+Any file in Resources\Images or Resources\Videos will be stored as resources and do not need this step
 
 LOGING 
 

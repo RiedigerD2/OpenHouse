@@ -135,7 +135,6 @@
     </Content>
     <Content Include="Resources\Information\Admission.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\Base.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -145,18 +144,21 @@
     </Content>
     <Content Include="Resources\Information\OurPeople.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\OurProgram.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Information\Professors.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Information\Streams.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Information\StudentProjects.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Information\Students.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Information\Tech.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -170,15 +172,9 @@
     <Content Include="Resources\Information\WhyMacewan.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Images\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Videos\Wildlife.wmv" />
-    <Resource Include="Resources\Images\Jon.jpg" />
-    <Resource Include="Resources\Images\Logo\circle.png" />
-    <Resource Include="Resources\Images\Logo\ring.png" />
-    <Resource Include="Resources\Images\Tuition.png" />
-    <Resource Include="Resources\Images\Logo\LogoOnlyb.png" />
+    <Resource Include="Resources\Videos\*" />
+    <Resource Include="Resources\Images\*" />
+    <Resource Include="Resources\Images\Logo\*" />
     <Resource Include="README.txt" />
   </ItemGroup>
   <ItemGroup />
