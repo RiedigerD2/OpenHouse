@@ -52,19 +52,7 @@
       <G>170</G>
       <B>67</B>
     </BackGroundColor>
-    <Slides>
-      <ImageFile Path="Jon.jpg"/>
-      <VideoFile Path="Wildlife.wmv"/> 
-      <ImageFile Path="Tuition.png"/>
-      <TextPage >
-        <Text>*A minimum of 24 credits of university-transferable coursework from a recognized institution
-*A minimum Admission Grade Point Average (AGPA) of 2.0 on a 4.0 scale.
-*Have completed core courses listed under the Regular or Mature Admission category.
-*Please see MacEwan website or talk with a Program Advisor for more details.
-       </Text> 
-      </TextPage>
-    </Slides>
-    <TextColor>
+   <TextColor>
       <A>255</A>
       <R>255</R>
       <G>255</G>
@@ -118,7 +106,6 @@
     <Explanation>*Have completed nine credits of university level coursework, with no grade less than C, or have completed more than nine credits of university level coursework with a minimum GPA of 2.0 on a 4.0 scale.
 *Please see MacEwan website or talk with a Program Advisor for more details.
     </Explanation>
-    <Video>Wildlife.wmv</Video>
   </Catagory>
   
 </ArrayOfCatagory>
